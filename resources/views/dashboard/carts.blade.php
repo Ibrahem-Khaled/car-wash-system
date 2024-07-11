@@ -50,8 +50,7 @@
                                     data-bs-target="#editCartModal{{ $cart->id }}">
                                     Edit
                                 </button>
-                                <form action="{{ route('carts.destroy', $cart->id) }}" method="POST"
-                                    class="d-inline">
+                                <form action="{{ route('carts.destroy', $cart->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -138,16 +137,6 @@
                                                 <label for="car_wash" class="form-label">Car Wash</label>
                                                 <input type="datetime-local" class="form-control" id="car_wash"
                                                     name="car_wash" value="{{ $cart->car_wash }}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="status" class="form-label">Status</label>
-                                                <select class="form-control" id="status" name="status">
-                                                    <option value="active"
-                                                        {{ $cart->status == 'active' ? 'selected' : '' }}>Active</option>
-                                                    <option value="inactive"
-                                                        {{ $cart->status == 'inactive' ? 'selected' : '' }}>Inactive
-                                                    </option>
-                                                </select>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="car_type" class="form-label">Car Type</label>
@@ -239,13 +228,6 @@
                         <div class="mb-3">
                             <label for="car_wash" class="form-label">Car Wash</label>
                             <input type="datetime-local" class="form-control" id="car_wash" name="car_wash">
-                        </div>
-                        <div class="mb-3">
-                            <label for="status" class="form-label">Status</label>
-                            <select class="form-control" id="status" name="status">
-                                <option value="active">Active</option>
-                                <option value="inactive">Inactive</option>
-                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="car_type" class="form-label">Car Type</label>

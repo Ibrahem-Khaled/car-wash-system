@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -53,12 +54,12 @@ class User extends Authenticatable
 
     public function userCart()
     {
-        return $this->hasMany(Cart::class, 'customer_id');
+        return $this->hasMany(Cart::class, 'customer_id', 'id');
     }
 
     public function factorCart()
     {
-        return $this->hasMany(Cart::class, 'factor_id');
+        return $this->hasMany(Cart::class, 'factor_id', 'id');
     }
 
     public function userRating()
@@ -69,5 +70,15 @@ class User extends Authenticatable
     public function factorRating()
     {
         return $this->hasMany(UserRating::class, 'factor_id');
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

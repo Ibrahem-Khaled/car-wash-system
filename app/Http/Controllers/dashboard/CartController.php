@@ -56,13 +56,13 @@ class CartController extends Controller
 
     public function acceptOrder(Cart $cart)
     {
-        $cart->update(['status' => 'active']);
+        $cart->update(['status' => 'acepted']);
         return redirect()->back()->with('success', 'Order accepted.');
     }
 
     public function declineOrder(Cart $cart)
     {
-        $cart->update(['status' => 'inactive']);
+        $cart->update(['status' => 'declined']);
         return redirect()->back()->with('success', 'Order declined.');
     }
 }
