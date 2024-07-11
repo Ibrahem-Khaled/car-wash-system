@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CarsController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
@@ -40,5 +41,7 @@ Route::group([], function () {
     Route::post('/store/carts', [CartController::class, 'store']);
     Route::delete('/delete/cart/{id}', [CartController::class, 'destroy']);
 
+    //this route for car
+    Route::get('/cars', [CarsController::class, 'index']);
 
 });
