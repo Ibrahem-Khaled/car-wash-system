@@ -35,9 +35,10 @@ Route::group([], function () {
 
     // this route for carts
     Route::get('/carts', [CartController::class, 'index']);
+    Route::get('/aceptedOrders', [CartController::class, 'aceptedOrders']);
     Route::get('/carts/{id}', [CartController::class, 'show']);
     Route::post('/store/carts', [CartController::class, 'store']);
     Route::delete('/delete/cart/{id}', [CartController::class, 'destroy']);
 
-    
+
 });

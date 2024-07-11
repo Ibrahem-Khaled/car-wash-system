@@ -17,8 +17,18 @@ class CartController extends Controller
         if (!$user) {
             return response()->json(['message' => 'User not authenticated'], 401);
         }
-        $carts = $user->userCart()->with('product', 'factor', 'car')->get();
+        $carts = $user->userCart()->whereIn('status', ['pending', 'acepted'])->with('product', 'factor', 'car')->get();
 
+        return response()->json($carts, 200);
+    }
+
+    public function aceptedOrders()
+    {
+        $user = Auth::guard('api')->user();
+        if (!$user) {
+            return response()->json(['message' => 'User not authenticated'], 401);
+        }
+        $carts = $user->userCart()->where('status', 'acepted')->with('product', 'factor', 'car')->get();
         return response()->json($carts, 200);
     }
 

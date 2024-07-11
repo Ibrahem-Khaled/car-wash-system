@@ -12,7 +12,8 @@ class CartController extends Controller
 {
     public function index()
     {
-        $carts = Cart::paginate(10);
+        $carts = Cart::whereIn('status', ['pending', 'acepted'])
+            ->paginate(10);
         $users = User::where('role', 'customer')->get();
         $factors = User::where('role', 'factor')->get();
         $products = Product::all();
