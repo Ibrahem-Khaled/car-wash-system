@@ -45,4 +45,7 @@ Route::group([], function () {
     //this route for car
     Route::get('/cars', [CarsController::class, 'index']);
 
+    //this route for slider
+    Route::get('/slider', [ProductController::class, 'slider']);
+
 });

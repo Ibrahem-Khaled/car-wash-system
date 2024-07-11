@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\SlideShow;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -33,6 +34,12 @@ class ProductController extends Controller
         $products = Product::where('name', 'like', '%' . $search . '%')
             ->orWhere('description', 'like', '%' . $search . '%')
             ->get();
+        return response()->json($products);
+    }
+
+    public function slider()
+    {
+        $products = SlideShow::all();
         return response()->json($products);
     }
 }
