@@ -1,36 +1,59 @@
-<footer class="footer pt-3  ">
+<footer class="footer pt-3">
     <div class="container-fluid">
-        <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-                <div class="copyright text-center text-sm text-muted text-lg-start">
-                    ©
-                    <script>
-                        document.write(new Date().getFullYear())
-                    </script>,
-                    made with <i class="fa fa-heart"></i> by
-                    <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-                    for a better web.
+        <div class="row align-items-center justify-content-between">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <div class="text-center text-md-start">
+                    <p class="mb-0 text-muted">
+                        &copy;
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>
+                        , made with <i class="fa fa-heart text-danger"></i> by
+                        <span class="font-weight-bold">Ibrahim Khalid</span> - Software Developer.
+                    </p>
+                    <p class="mb-0 text-muted">Crafting solutions for a better web experience.</p>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+            <div class="col-md-6">
+                <ul class="nav nav-footer justify-content-center justify-content-md-end">
                     <li class="nav-item">
-                        <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative
-                            Tim</a>
+                        <a href="https://www.linkedin.com/in/ibrahimkhalid" class="nav-link text-muted" target="_blank">LinkedIn</a>
                     </li>
                     <li class="nav-item">
-                        <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted"
-                            target="_blank">About Us</a>
+                        <a href="https://github.com/ibrahimkhalid" class="nav-link text-muted" target="_blank">GitHub</a>
                     </li>
                     <li class="nav-item">
-                        <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
+                        <a href="/about" class="nav-link text-muted" target="_blank">About Me</a>
                     </li>
                     <li class="nav-item">
-                        <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
-                            target="_blank">License</a>
+                        <a href="/contact" class="nav-link text-muted pe-0" target="_blank">Contact</a>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 </footer>
+
+<!-- CSS لتنسيق الفوتر -->
+<style>
+    .footer {
+        background-color: #f8f9fa;
+        padding: 20px 0;
+        border-top: 1px solid #e7e7e7;
+    }
+
+    .footer .nav-footer .nav-link {
+        font-size: 0.875rem;
+        color: #6c757d;
+        transition: color 0.2s ease-in-out;
+    }
+
+    .footer .nav-footer .nav-link:hover {
+        color: #343a40;
+    }
+
+    .footer .font-weight-bold {
+        font-weight: 600;
+        color: #343a40;
+    }
+</style>

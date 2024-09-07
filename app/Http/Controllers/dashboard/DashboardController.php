@@ -26,14 +26,21 @@ class DashboardController extends Controller
         $totalUsers = User::count();
         $totalProducts = DB::table('products')->count();
 
-        return view('dashboard.index', compact(
-            'successfulOperations',
-            'workerCount',
-            'totalEarnings',
-            'inactiveOperations',
-            'totalUsers',
-            'totalProducts'
-        )
+        return view(
+            'dashboard.index',
+            compact(
+                'successfulOperations',
+                'workerCount',
+                'totalEarnings',
+                'inactiveOperations',
+                'totalUsers',
+                'totalProducts'
+            )
         );
+    }
+
+    public function homePage()
+    {
+        return view('home');
     }
 }
