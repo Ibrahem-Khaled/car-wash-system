@@ -44,7 +44,7 @@
                             <td>{{ $user->city }}</td>
                             <td>{{ $user->status }}</td>
                             <td>{{ $user->role }}</td>
-                            <td>{{ $user->image }}</td>
+                            <td><img src="{{ $user->image }}" alt="User Image"></td>
                             <td>
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#editUserModal{{ $user->id }}">

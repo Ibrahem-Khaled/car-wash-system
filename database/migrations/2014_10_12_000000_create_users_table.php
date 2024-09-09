@@ -21,12 +21,12 @@ return new class extends Migration {
             $table->string('city')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->enum('role', ['admin', 'customer', 'factor'])->default('customer');
-            $table->string('image')->nullable();
+            $table->string('image')->nullable()->default('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.jQvFuRlmVesA7K6ArjfyrAHaH9%26pid%3DApi%26h%3D160&f=1&ipt=cf445510efbffaae5e0ba584d6e07fd887ed3424659c89452cd311e407bb287d&ipo=images');
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
-        }); 
+        });
 
         DB::table('users')->insert([
             'name' => 'admin',

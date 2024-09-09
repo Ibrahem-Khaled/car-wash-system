@@ -4,6 +4,7 @@ namespace App\Http\Controllers\dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,6 +42,8 @@ class DashboardController extends Controller
 
     public function homePage()
     {
-        return view('home');
+        $products = Product::all();
+        $workers = User::where('role', 'factor')->get();
+        return view('home', compact('products', 'workers'));
     }
 }
