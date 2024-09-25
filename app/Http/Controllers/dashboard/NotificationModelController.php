@@ -35,7 +35,7 @@ class NotificationModelController extends Controller
             'image' => $imagePath,
         ]);
 
-        $expoPushTokens = User::pluck('expo_push_token')->toArray();
+        $expoPushTokens = User::whereNotNull('expo_push_token')->pluck('expo_push_token')->toArray();
 
         foreach (array_chunk($expoPushTokens, 100) as $tokensChunk) {
             Notification::send(null, new UserNotification($request->title, $request->body, $tokensChunk));
@@ -59,7 +59,7 @@ class NotificationModelController extends Controller
         }
 
         $notification->update($request->only('title', 'description'));
-        $expoPushTokens = User::pluck('expo_push_token')->toArray();
+        $expoPushTokens = User::whereNotNull('expo_push_token')->pluck('expo_push_token')->toArray();
 
         foreach (array_chunk($expoPushTokens, 100) as $tokensChunk) {
             Notification::send(null, new UserNotification($request->title, $request->body, $tokensChunk));
