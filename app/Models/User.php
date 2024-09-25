@@ -30,7 +30,7 @@ class User extends Authenticatable implements JWTSubject
         'status',
         'role',
         'image',
-
+        'expo_push_token',
     ];
 
     /**

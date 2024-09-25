@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\dashboard\CarController;
 use App\Http\Controllers\dashboard\CartController;
 use App\Http\Controllers\dashboard\DashboardController;
+use App\Http\Controllers\dashboard\NotificationModelController;
 use App\Http\Controllers\dashboard\ProductController;
 use App\Http\Controllers\dashboard\SlideShowController;
 use App\Http\Controllers\dashboard\UserController;
@@ -61,5 +62,6 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'checkAdmin']], 
     // slide show routes
     Route::resource('slide_shows', SlideShowController::class);
 
-
+    //notification routes
+    Route::resource('notifications', NotificationModelController::class);
 });

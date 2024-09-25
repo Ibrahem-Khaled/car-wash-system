@@ -70,6 +70,31 @@ class AuthController extends Controller
         return response()->json($user, 200);
     }
 
+    public function deleteAccount()
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        $user->delete();
+        return response()->json(['message' => 'Account deleted successfully'], 200);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required',
+        ]);
+        $user = JWTAuth::parseToken()->authenticate();
+        if (!Hash::check($request->old_password, $user->password)) {
+            throw ValidationException::withMessages([
+                'old_password' => ['The password you entered is incorrect.'],
+            ]);
+        }
+        $user->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+        return response()->json(['message' => 'Password changed successfully'], 200);
+    }
+
     public function user(Request $request)
     {
         try {
@@ -96,5 +121,12 @@ class AuthController extends Controller
         } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
             return response()->json(['error' => 'Failed to logout, please try again'], 500);
         }
+    }
+
+    public function expoPushToken(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        $user->update(['expo_push_token' => $request->expoPushToken]);
+        return response()->json($user, 200);
     }
 }

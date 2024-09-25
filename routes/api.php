@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CarsController;
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\homeController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +23,10 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/user', [AuthController::class, 'user'])->middleware('jwt.auth');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('jwt.auth');
-Route::put('/update', [AuthController::class, 'update'])->middleware('jwt.auth');
+Route::put('/update-user', [AuthController::class, 'update'])->middleware('jwt.auth');
+Route::delete('/delete-account', [AuthController::class, 'deleteAccount'])->middleware('jwt.auth');
+Route::post('/change-password', [AuthController::class, 'changePassword'])->middleware('jwt.auth');
+Route::post('/expo-push-token', [AuthController::class, 'expoPushToken'])->middleware('jwt.auth');
 
 
 Route::group([], function () {
@@ -43,5 +47,8 @@ Route::group([], function () {
 
     //this route for slider
     Route::get('/slider', [ProductController::class, 'slider']);
+
+    //this main routes
+    Route::get('notification', [homeController::class, 'notification']);
 
 });
