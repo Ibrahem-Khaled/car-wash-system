@@ -34,12 +34,12 @@ Route::post('resetPassword', [AuthController::class, 'resetPassword'])->name('re
 Route::delete('account/delete', [AuthController::class, 'destroy'])->name('account.delete');
 
 
-Route::get('/', [DashboardController::class, 'homePage'])->name('landing.page');
+Route::get('/', [DashboardController::class, 'homePage'])->name('home');
 
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'checkAdmin']], function () {
 
-    Route::get('/', [DashboardController::class, 'index'])->name('home')->middleware('auth');
+    Route::get('/', [DashboardController::class, 'index'])->name('home.dashboard')->middleware('auth');
 
     // user routes
     Route::resource('users', UserController::class);

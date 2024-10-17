@@ -56,39 +56,43 @@ class CartController extends Controller
             return response()->json(['message' => 'User not authenticated'], 401);
         }
 
+        // البحث عن العامل الأنسب في نفس المدينة أو العامل صاحب أقل عدد من الطلبات
         $worker = User::where('role', 'factor')
-            ->where('city', 'like', '%' . $user->city . '%')
+            ->where(function ($query) use ($user) {
+                $query->where('city', 'like', '%' . $user->city . '%')
+                    ->orWhere('city', '=', null); // يدعم العمال بدون مدينة
+            })
             ->withCount('factorCart')
             ->orderBy('factor_cart_count', 'asc')
             ->first();
 
         if (!$worker) {
-            return response()->json(['message' => 'No workers available in your city'], 404);
+            return response()->json(['message' => 'No available worker found'], 404);
         }
 
-        $request->validate([
+        // التحقق من صحة البيانات
+        $validatedData = $request->validate([
             'product_id' => 'required|exists:products,id',
             'car_model' => 'required|exists:cars,id',
-            'car_color' => 'required|string',
-            'car_number' => 'required|string',
-            'car_wash' => 'required|string',
-            'car_type' => 'required|string',
-            'price' => 'required|numeric',
+            'car_color' => 'required|string|max:50',
+            'car_number' => 'required|string|max:20',
+            'car_wash' => 'required|string|max:20',
+            'car_type' => 'required|string|max:20',
+            'price' => 'required|numeric|min:0',
         ]);
 
-        $cart = $user->userCart()->create([
-            'product_id' => $request->product_id,
-            'car_model' => $request->car_model,
-            'car_color' => $request->car_color,
-            'car_number' => $request->car_number,
-            'car_wash' => $request->car_wash,
-            'car_type' => $request->car_type,
-            'price' => $request->price,
-            'customer_id' => $user->id,
-            'factor_id' => $worker->id,
-        ]);
+        try {
+            // إنشاء الطلب وتخصيصه للعامل
+            $cart = $user->userCart()->create(array_merge($validatedData, [
+                'customer_id' => $user->id,
+                'factor_id' => $worker->id,
+            ]));
 
-        return response()->json($cart, 201);
+            return response()->json($cart, 201);
+        } catch (\Exception $e) {
+            // معالجة الأخطاء في حالة حدوث مشكلة أثناء إنشاء الطلب
+            return response()->json(['message' => 'Failed to create cart', 'error' => $e->getMessage()], 500);
+        }
     }
 
     public function destroy($id)
