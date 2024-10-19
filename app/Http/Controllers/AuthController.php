@@ -53,7 +53,7 @@ class AuthController extends Controller
 
         if (auth()->attempt($credentials, $remember)) {
             if (auth()->user()->role == 'admin') {
-                return redirect()->route('home')->with('success', 'تم تسجيل الدخول بنجاح.');
+                return redirect()->route('home.dashboard')->with('success', 'تم تسجيل الدخول بنجاح.');
             } else {
                 $this->logout();
                 return redirect()->back()->with('error', 'ليس لديك صلاحية للدخول. يرجى المحاولة مرة أخرى.');

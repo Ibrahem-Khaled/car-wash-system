@@ -4,12 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معلومات عنا</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Fonts and icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+
     <style>
         body {
             font-family: 'Cairo', sans-serif;
+            direction: rtl;
             background-color: #f9f9f9;
         }
 
@@ -50,11 +55,9 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
     </style>
-</head>
 
 <body>
-
-    <!-- About Section -->
+    @include('homeLayouts.nav-bar')
     <section class="py-5 about-section" id="about">
         <div class="container">
             <div class="row gy-4 align-items-center">
@@ -119,8 +122,9 @@
             </div>
         </div>
     </section>
+    @include('homeLayouts.footer')
 
-    <!-- JavaScript -->
+    <!-- جافا سكريبت -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

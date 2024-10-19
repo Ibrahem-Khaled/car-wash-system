@@ -44,6 +44,7 @@ class DashboardController extends Controller
     {
         $products = Product::all();
         $workers = User::where('role', 'factor')->get();
-        return view('home', compact('products', 'workers'));
+        $companyUser = User::where('role', 'company')->first();
+        return view('home', compact('products', 'workers', 'companyUser'));
     }
 }

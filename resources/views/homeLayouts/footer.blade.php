@@ -4,9 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Footer عصري</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>المركبة المخملية </title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
     <style>
         body {
@@ -41,7 +39,7 @@
         }
 
         .footer a:hover {
-            color: #FFD700;
+            color: #ed0f7d;
         }
 
         .footer .social-icons a {
@@ -52,7 +50,7 @@
         }
 
         .footer .social-icons a:hover {
-            color: #FFD700;
+            color: #ed0f7d;
         }
 
         .footer .contact-info p {
@@ -63,7 +61,7 @@
 
         .footer .contact-info i {
             margin-right: 10px;
-            color: #FFD700;
+            color: #ed0f7d;
         }
 
         .footer-bottom {
@@ -132,20 +130,17 @@
             <div class="col-md-4">
                 <h5>اتصل بنا</h5>
                 <div class="contact-info">
-                    <p><i class="fas fa-phone"></i> +123 456 789</p>
-                    <p><i class="fas fa-envelope"></i> info@example.com</p>
-                    <p><i class="fas fa-map-marker-alt"></i> شارع المثال، مدينة الأمثلة</p>
+                    <p><i class="fas fa-phone"></i>{{ $companyUser->phone }}</p>
+                    <p><i class="fas fa-envelope"></i>{{ $companyUser->email }}</p>
+                    <p><i class="fas fa-map-marker-alt"></i>{{ $companyUser->address }}-{{ $companyUser->city }}</p>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 جميع الحقوق محفوظة. اسم شركتك.</p>
+            <p>&copy; {{ date('Y') }} جميع الحقوق محفوظة. المركبة المخملية.</p>
         </div>
     </footer>
 
-
-    <!-- JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

@@ -13,10 +13,12 @@
     <style>
         body {
             font-family: "Cairo", sans-serif;
+            direction: rtl;
+
             background-color: #f8f9fa;
         }
 
-        .user-card {
+        .user-card { 
             background-color: #fff;
             border-radius: 10px;
             padding: 20px;
@@ -111,7 +113,6 @@
 <body>
     @include('homeLayouts.nav-bar')
     @include('homeLayouts.hero-section')
-    @include('homeLayouts.about-us')
 
     <div class="container user-container">
         <h2>قائمة الخدمات</h2>
@@ -130,7 +131,6 @@
         </div>
     </div>
 
-    @include('homeLayouts.contact-us')
     @include('homeLayouts.footer')
 
     <!-- جافا سكريبت -->

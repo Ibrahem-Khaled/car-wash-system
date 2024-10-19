@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CarsController;
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\FactorOrderController;
 use App\Http\Controllers\Api\homeController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
@@ -50,5 +51,8 @@ Route::group([], function () {
 
     //this main routes
     Route::get('notification', [homeController::class, 'notification']);
+
+    //this route for factor 
+    Route::get('/factor/orders', [FactorOrderController::class, 'getFactorOrder']);
 
 });

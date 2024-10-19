@@ -3,12 +3,14 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\dashboard\CarController;
 use App\Http\Controllers\dashboard\CartController;
+use App\Http\Controllers\dashboard\ContactUsController;
 use App\Http\Controllers\dashboard\DashboardController;
 use App\Http\Controllers\dashboard\NotificationModelController;
 use App\Http\Controllers\dashboard\ProductController;
 use App\Http\Controllers\dashboard\SlideShowController;
 use App\Http\Controllers\dashboard\UserController;
 use App\Http\Controllers\dashboard\UserRatingController;
+use App\Http\Controllers\homeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,7 +36,17 @@ Route::post('resetPassword', [AuthController::class, 'resetPassword'])->name('re
 Route::delete('account/delete', [AuthController::class, 'destroy'])->name('account.delete');
 
 
-Route::get('/', [DashboardController::class, 'homePage'])->name('home');
+Route::group([], function () {
+    //this home screen
+    Route::get('/', [DashboardController::class, 'homePage'])->name('home');
+
+    //this contact us routes
+    Route::get('/contact-us', [homeController::class, 'contactUs'])->name('contact-us');
+    Route::post('/contact-us', [homeController::class, 'contactUsPost'])->name('contact-us.post');
+
+    Route::get('/about-us', [homeController::class, 'aboutUs'])->name('about-us');
+
+});
 
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'checkAdmin']], function () {
@@ -64,4 +76,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'checkAdmin']], 
 
     //notification routes
     Route::resource('notifications', NotificationModelController::class);
+
+    //this contact us routes
+    Route::resource('contact-us', ContactUsController::class);
+
 });
