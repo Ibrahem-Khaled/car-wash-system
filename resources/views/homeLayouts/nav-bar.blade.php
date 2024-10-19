@@ -112,8 +112,8 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('contact-us') }}">تواصل معنا</a>
                     </li>
-                     <!-- Dropdown Menu -->
-                     <li class="nav-item dropdown">
+                    <!-- Dropdown Menu -->
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             الخدمات والاشتراكات
@@ -129,8 +129,10 @@
             <div class="btn-container d-lg-flex">
                 @if (Auth::check())
                     <a class="btn-custom" href="{{ route('logout') }}">تسجيل الخروج</a>
-                    <a class="btn-primary-custom ms-2" href="{{ route('home.dashboard') }}">لوحة التحكم</a>
-                    <a class="btn-primary-custom ms-2" href="#">لوحة التحكم HR</a>
+                    @if (Auth::user()->role == 'admin')
+                        <a class="btn-primary-custom ms-2" href="{{ route('home.dashboard') }}">لوحة التحكم</a>
+                        <a class="btn-primary-custom ms-2" href="#">لوحة التحكم HR</a>
+                    @endif
                 @else
                     <a class="btn-custom" href="{{ route('login') }}">تسجيل الدخول</a>
                 @endif
