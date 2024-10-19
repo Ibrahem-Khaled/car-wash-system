@@ -4,34 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المركبة المخملية </title>
+    <title>المركبة المخملية</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: "Cairo", sans-serif;
             background-color: #ffffff;
+            margin: 0;
+            padding: 0;
         }
 
         /* Footer Styling */
         .footer {
-            background-color: #ffffff;
-            color: #4a2f85;
-            padding: 50px 0;
-            border-width: 1px;
-            border-style: solid;
-            border-color: #4a2f85;
-            border-radius: 10px;
-            justify-content: space-between;
+            background-color: #4a2f85;
+            color: #fff;
+            padding: 60px 0;
         }
 
         .footer h5 {
             font-weight: 700;
-            color: #4a2f85;
             margin-bottom: 20px;
         }
 
         .footer a {
-            color: #4a2f85;
+            color: #fff;
             text-decoration: none;
             margin-bottom: 10px;
             display: block;
@@ -43,9 +39,8 @@
         }
 
         .footer .social-icons a {
-            margin-right: 15px;
-            font-size: 20px;
-            color: #4a2f85;
+            margin: 0 10px;
+            font-size: 24px;
             transition: color 0.3s ease;
         }
 
@@ -54,34 +49,40 @@
         }
 
         .footer .contact-info p {
-            margin-bottom: 10px;
-            font-size: 14px;
-            color: #4a2f85;
+            margin-bottom: 8px;
+            font-size: 15px;
         }
 
         .footer .contact-info i {
-            margin-right: 10px;
+            margin-right: 8px;
             color: #ed0f7d;
         }
 
         .footer-bottom {
             text-align: center;
-            padding: 20px 0;
-            background-color: #f1f1f1;
-            color: #4a2f85;
+            padding: 15px 0;
+            background-color: #333;
+            color: #fff;
             font-size: 14px;
         }
 
-        /* توزيع العناصر بتناسق */
+        /* توزيع متناسق */
         .footer .container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            gap: 20px;
+            flex-wrap: wrap;
+            gap: 30px;
         }
 
-        .footer .col-md-4 {
-            margin-bottom: 20px;
+        .footer .col {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
         }
 
         /* مظهر متجاوب */
@@ -94,20 +95,17 @@
             .footer .social-icons {
                 justify-content: center;
             }
-
-            .footer .col-md-4 {
-                margin-bottom: 30px;
-            }
         }
     </style>
 </head>
 
 <body>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <!-- روابط سريعة -->
-            <div class="col-md-4">
+            <div class="col">
                 <h5>روابط سريعة</h5>
                 <a href="#">من نحن</a>
                 <a href="#">خدماتنا</a>
@@ -116,9 +114,9 @@
             </div>
 
             <!-- وسائل التواصل الاجتماعي -->
-            <div class="col-md-4 text-center">
+            <div class="col text-center">
                 <h5>تابعنا</h5>
-                <div class="social-icons d-flex justify-content-center">
+                <div class="social-icons">
                     <a href="#" class="fab fa-facebook"></a>
                     <a href="#" class="fab fa-twitter"></a>
                     <a href="#" class="fab fa-instagram"></a>
@@ -127,15 +125,16 @@
             </div>
 
             <!-- معلومات الاتصال -->
-            <div class="col-md-4">
+            <div class="col">
                 <h5>اتصل بنا</h5>
                 <div class="contact-info">
                     <p><i class="fas fa-phone"></i>{{ $companyUser->phone }}</p>
                     <p><i class="fas fa-envelope"></i>{{ $companyUser->email }}</p>
-                    <p><i class="fas fa-map-marker-alt"></i>{{ $companyUser->address }}-{{ $companyUser->city }}</p>
+                    <p><i class="fas fa-map-marker-alt"></i>{{ $companyUser->address }} - {{ $companyUser->city }}</p>
                 </div>
             </div>
         </div>
+
         <div class="footer-bottom">
             <p>&copy; {{ date('Y') }} جميع الحقوق محفوظة. المركبة المخملية.</p>
         </div>

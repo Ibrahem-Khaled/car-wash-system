@@ -119,8 +119,8 @@
                             الخدمات والاشتراكات
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
-                            <li><a class="dropdown-item" href="#">الخدمات</a></li>
-                            <li><a class="dropdown-item" href="#">الاشتراكات</a></li>
+                            <li><a class="dropdown-item" href="{{ route('services') }}">الخدمات</a></li>
+                            <li><a class="dropdown-item" href="{{ route('subscribtion') }}">الاشتراكات</a></li>
                         </ul>
                     </li>
                 </ul>

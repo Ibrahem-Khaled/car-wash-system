@@ -57,4 +57,20 @@ class homeController extends Controller
             'companyUser' => $this->companyUser,
         ]);
     }
+
+    public function services()
+    {
+        $services = Product::all();
+        return view('services', [
+            'companyUser' => $this->companyUser,
+            'services' => $services
+        ]);
+    }
+
+    public function subscribtion()
+    {
+        return view('subscribtion', [
+            'companyUser' => $this->companyUser,
+        ]);
+    }
 }
