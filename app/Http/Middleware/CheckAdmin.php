@@ -20,6 +20,6 @@ class CheckAdmin
             return $next($request);
         }
 
-        return redirect('/user')->with('error', 'You do not have admin access.');
+        return redirect()->back()->with('error', 'You do not have admin access.');
     }
 }

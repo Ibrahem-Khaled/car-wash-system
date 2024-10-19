@@ -52,12 +52,9 @@ class AuthController extends Controller
         $remember = $request->has('remember');
 
         if (auth()->attempt($credentials, $remember)) {
-            if (auth()->user()->role == 'admin') {
-                return redirect()->route('home.dashboard')->with('success', 'تم تسجيل الدخول بنجاح.');
-            } else {
-                $this->logout();
-                return redirect()->back()->with('error', 'ليس لديك صلاحية للدخول. يرجى المحاولة مرة أخرى.');
-            }
+
+            return redirect()->route('home.dashboard')->with('success', 'تم تسجيل الدخول بنجاح.');
+
         } else {
             return redirect()->back()->with('error', 'تفاصيل تسجيل الدخول غير صحيحة. يرجى المحاولة مرة أخرى.');
         }
