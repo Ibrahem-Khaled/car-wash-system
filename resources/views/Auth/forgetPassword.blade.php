@@ -8,51 +8,49 @@
     <title>استعادة كلمة المرور</title>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.min.css" rel="stylesheet" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;400;700&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
 
     <style>
         body {
-            color: #fff;
-            background-color: #53045F;
-            background-size: cover;
-            height: 100%;
-            direction: rtl;
-            font-family: "Cairo", sans-serif;
+            background-color: #f0f2f5;
+            font-family: 'Cairo', sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
+            height: 100vh;
             margin: 0;
-            padding: 0;
         }
 
         .container {
-            max-width: 900px;
-            background-color: #fff;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
-            display: flex;
+            max-width: 850px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
             overflow: hidden;
-            margin-top: 100px;
+            background-color: #fff;
+            display: flex;
+            flex-wrap: wrap;
         }
 
         .image-container {
-            background-image: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.lbCP5u8L8iojC-VZAOIj4wHaFV%26pid%3DApi&f=1&ipt=7d82991ca57d518a1e7c901caec8c53eb1b2d5e096d40f44524d1fc569200978&ipo=images');
+            background-image: url('https://tse1.mm.bing.net/th?id=OIP.lbCP5u8L8iojC-VZAOIj4wHaFV&pid=Api');
             background-size: cover;
             background-position: center;
             width: 50%;
-            height: auto;
+            min-height: 400px;
+        }
+
+        @media (max-width: 768px) {
+            .image-container {
+                display: none;
+            }
         }
 
         .form-container {
-            padding: 50px;
-            width: 50%;
-            background-color: #f8f9fa;
-            color: #000;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
         }
 
         .logo-container {
@@ -61,32 +59,36 @@
         }
 
         .logo-container img {
-            max-width: 120px;
+            max-width: 100px;
         }
 
         .btn-primary {
-            background-color: #ff5722;
+            background-color: #6200ea;
             border: none;
         }
 
         .btn-primary:hover {
-            background-color: #e64a19;
+            background-color: #4b00b5;
         }
 
         a {
-            color: #ff5722;
+            color: #6200ea;
+            text-decoration: none;
         }
 
         a:hover {
-            color: #e64a19;
-            text-decoration: none;
+            color: #4b00b5;
+        }
+
+        .text-muted {
+            font-size: 0.9rem;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="image-container"></div>
+        <div class="image-container d-none d-md-block"></div>
         <div class="form-container">
             <div class="logo-container">
                 <img src="{{ asset('assets/img/logo-ct-dark.png') }}" alt="Logo">
@@ -95,17 +97,16 @@
             <form method="POST" action="{{ route('resetPassword') }}">
                 @csrf
                 <div class="form-group mb-4">
-                    <label>البريد الإلكتروني</label>
-                    <input type="email" name="email" class="form-control" placeholder="أدخل بريدك الإلكتروني">
+                    <label for="email" class="form-label">البريد الإلكتروني</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="أدخل بريدك الإلكتروني" required>
                 </div>
                 <button type="submit" class="btn btn-primary w-100 mb-3">إرسال رابط استعادة كلمة المرور</button>
-                <small class="d-block text-center">تذكرت كلمة المرور؟ <a href="{{ route('login') }}">تسجيل
-                        الدخول</a></small>
+                <p class="text-center text-muted">تذكرت كلمة المرور؟ <a href="{{ route('login') }}">تسجيل الدخول</a></p>
             </form>
         </div>
     </div>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

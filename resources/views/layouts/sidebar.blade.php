@@ -11,7 +11,7 @@
         </button>
     </div>
     <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+    <div class="collapse navbar-collapse w-auto" style="height: 100%" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <!-- إنشاء مستخدم -->
             <li class="nav-item">
@@ -89,6 +89,12 @@
                 <a class="nav-link text-white" href="{{ route('contact-us.index') }}">
                     <i class="fas fa-envelope"></i>
                     <span class="nav-link-text ms-1"> التواصل معنا</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="{{ route('subscriptions.index') }}">
+                    <i class="fas fa-list"></i>
+                    <span class="nav-link-text ms-1">ادارة الاشتراك</span>
                 </a>
             </li>
         </ul>

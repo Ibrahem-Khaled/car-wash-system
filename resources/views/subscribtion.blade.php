@@ -57,82 +57,88 @@
 <body>
 
     @include('homeLayouts.nav-bar')
+    @include('homeLayouts.float-buttons')
 
     <section class="py-5 bg-light">
         <div class="container">
             <h2 class="section-title">باقات الاشتراك</h2>
             <div class="row gy-4">
-                <div class="col-md-6 col-lg-4">
-                    <div class="card package-card p-4 text-center">
-                        <i class="fas fa-gem package-icon"></i>
-                        <h3 class="h5 mb-3">الباقة الفضية</h3>
-                        <p class="text-secondary">3 غسلات شهريًا - غسيل خارجي وداخلي.</p>
-                        <h4 class="text-primary">100 ريال / شهر</h4>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#packageModal" data-package="الباقة الفضية" data-price="100" data-details="3 غسلات شهريًا مع غسيل خارجي وداخلي.">عرض التفاصيل</button>
+                @foreach ($subscriptions as $subscription)
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card package-card p-4 text-center">
+                            @if ($subscription->image)
+                                <img src="{{ asset('storage/' . $subscription->image) }}"
+                                    alt="{{ $subscription->name }}" class="img-thumbnail"
+                                    style="width: 100px; height: 100px;">
+                            @else
+                                <i class="fas fa-star package-icon" style="font-size: 2rem;"></i>
+                            @endif
+                            <h3 class="h5 mb-3">{{ $subscription->name }}</h3>
+                            <p class="text-secondary">{{ $subscription->description }}</p>
+                            <ul class="list-unstyled">
+                                @foreach ($subscription->products as $product)
+                                    <li>{{ $product->name }} - {{ $product->pivot->quantity }} غسلة</li>
+                                @endforeach
+                            </ul>
+                            <h4 class="text-primary">{{ $subscription->price }} ريال / شهر</h4>
+                            <form method="POST" action="#">
+                                @csrf
+                                <input type="hidden" name="subscription_id" value="{{ $subscription->id }}">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#paymentModal-{{ $subscription->id }}">
+                                    اشترك الآن
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-6 col-lg-4">
-                    <div class="card package-card p-4 text-center">
-                        <i class="fas fa-star package-icon"></i>
-                        <h3 class="h5 mb-3">الباقة الذهبية</h3>
-                        <p class="text-secondary">5 غسلات شهريًا مع تعقيم.</p>
-                        <h4 class="text-primary">150 ريال / شهر</h4>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#packageModal" data-package="الباقة الذهبية" data-price="150" data-details="5 غسلات شهريًا مع تعقيم داخلي وخارجي.">عرض التفاصيل</button>
-                    </div>
-                </div>
+                    <!-- Payment Modal -->
+                    <div class="modal fade" id="paymentModal-{{ $subscription->id }}" tabindex="-1"
+                        aria-labelledby="paymentModalLabel-{{ $subscription->id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="paymentModalLabel-{{ $subscription->id }}">إتمام الدفع
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" action="#">
+                                        @csrf
+                                        <input type="hidden" name="subscription_id" value="{{ $subscription->id }}">
 
-                <div class="col-md-6 col-lg-4">
-                    <div class="card package-card p-4 text-center">
-                        <i class="fas fa-crown package-icon"></i>
-                        <h3 class="h5 mb-3">الباقة البلاتينية</h3>
-                        <p class="text-secondary">عدد غير محدود من الغسلات مع فحص كامل.</p>
-                        <h4 class="text-primary">300 ريال / شهر</h4>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#packageModal" data-package="الباقة البلاتينية" data-price="300" data-details="عدد غير محدود من الغسلات مع فحص كامل للسيارة.">عرض التفاصيل</button>
+                                        <div class="mb-3">
+                                            <label class="form-label">اسم صاحب البطاقة</label>
+                                            <input type="text" class="form-control" name="card_name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">رقم البطاقة</label>
+                                            <input type="text" class="form-control" name="card_number" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">تاريخ الانتهاء</label>
+                                            <input type="text" class="form-control" name="expiry_date"
+                                                placeholder="MM/YY" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">الرمز السري (CVV)</label>
+                                            <input type="text" class="form-control" name="cvv" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100">إتمام الدفع</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
 
     @include('homeLayouts.footer')
 
-    <!-- Package Modal -->
-    <div class="modal fade" id="packageModal" tabindex="-1" aria-labelledby="packageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="packageModalLabel">تفاصيل الباقة</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h4 class="text-primary" id="modalPackageName"></h4>
-                    <p id="modalPackageDetails"></p>
-                    <h5 class="text-secondary">السعر: <span id="modalPackagePrice"></span> ريال / شهر</h5>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
-                    <button type="button" class="btn btn-primary">الدفع الآن</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const packageModal = document.getElementById('packageModal');
-        packageModal.addEventListener('show.bs.modal', event => {
-            const button = event.relatedTarget;
-            const packageName = button.getAttribute('data-package');
-            const packagePrice = button.getAttribute('data-price');
-            const packageDetails = button.getAttribute('data-details');
-
-            document.getElementById('modalPackageName').textContent = packageName;
-            document.getElementById('modalPackageDetails').textContent = packageDetails;
-            document.getElementById('modalPackagePrice').textContent = packagePrice;
-        });
-    </script>
-
 </body>
 
 </html>

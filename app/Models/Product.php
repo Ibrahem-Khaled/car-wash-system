@@ -26,4 +26,9 @@ class Product extends Model
         return $this->hasMany(Cart::class, 'product_id');
     }
 
+    public function subscriptions()
+    {
+        return $this->belongsToMany(Subscription::class, 'subscription_products');
+    }
+
 }

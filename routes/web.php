@@ -8,9 +8,11 @@ use App\Http\Controllers\dashboard\DashboardController;
 use App\Http\Controllers\dashboard\NotificationModelController;
 use App\Http\Controllers\dashboard\ProductController;
 use App\Http\Controllers\dashboard\SlideShowController;
+use App\Http\Controllers\dashboard\SubscriptionController;
 use App\Http\Controllers\dashboard\UserController;
 use App\Http\Controllers\dashboard\UserRatingController;
 use App\Http\Controllers\homeController;
+use App\Http\Controllers\UserCartController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +30,7 @@ Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('login', [AuthController::class, 'customLogin'])->name('customLogin');
 Route::get('register', [AuthController::class, 'register'])->name('register');
 Route::post('register', [AuthController::class, 'customRegister'])->name('customRegister');
-Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('profile', [AuthController::class, 'profile'])->name('profile')->middleware('auth');
 Route::post('/profile', [AuthController::class, 'update'])->name('profile.update');
 Route::get('forget-password', [AuthController::class, 'forgetPassword'])->name('forgetPassword');
@@ -50,6 +52,14 @@ Route::group([], function () {
 
     Route::get('/subscribtion', [homeController::class, 'subscribtion'])->name('subscribtion');
 
+    Route::get('/user/orders', [homeController::class, 'userOrders'])->name('user.orders');
+
+    Route::get('user/subscriptions', [homeController::class, 'userSubscriptions'])->name('user.subscriptions');
+
+
+    //this cart routes
+    Route::get('/carts', [UserCartController::class, 'index'])->name('user.carts')->middleware('auth');
+    Route::post('/carts', [UserCartController::class, 'store'])->name('user.carts.store')->middleware('auth');
 });
 
 
@@ -84,4 +94,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'checkAdmin']], 
     //this contact us routes
     Route::resource('contact-us', ContactUsController::class);
 
+    //this user route supscription
+    Route::resource('subscriptions', SubscriptionController::class);
+    Route::delete('subscriptions/{subscriptionId}/{productId}/removeProduct', [SubscriptionController::class, 'subscriptionsRemoveProduct'])->name('subscriptions.removeProduct');
 });

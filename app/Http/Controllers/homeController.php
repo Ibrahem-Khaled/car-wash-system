@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
 use App\Models\ContactUs;
 use App\Models\Product;
+use App\Models\Subscription;
+use App\Models\SubscriptionPrpduct;
 use App\Models\User;
+use App\Models\UserSubscription;
+use App\Models\UserSubscriptionProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class homeController extends Controller
 {
@@ -61,16 +68,57 @@ class homeController extends Controller
     public function services()
     {
         $services = Product::all();
+        $cars = Car::all();
         return view('services', [
             'companyUser' => $this->companyUser,
-            'services' => $services
+            'services' => $services,
+            'cars' => $cars
         ]);
+    }
+
+    public function getRemainingQuantity($userId, $subscriptionId, $productId)
+    {
+        $subscriptionProductQuantity = SubscriptionPrpduct::where('subscription_id', $subscriptionId)
+            ->where('product_id', $productId)
+            ->pluck('quantity')->first();
+
+        $consumedQuantity = UserSubscriptionProduct::where('user_id', $userId)
+            ->where('subscription_id', $subscriptionId)
+            ->where('product_id', $productId)
+            ->pluck('quantity')->first();
+
+        $sum = $subscriptionProductQuantity - $consumedQuantity;
+
+        return $sum < 0 ? 0 : $sum;
     }
 
     public function subscribtion()
     {
+        $subscriptions = Subscription::with('products')->get();
         return view('subscribtion', [
             'companyUser' => $this->companyUser,
+            'subscriptions' => $subscriptions
+        ]);
+    }
+
+    public function userOrders()
+    {
+        $user = User::find(Auth::id());
+        $orders = $user->userCart()->with('product', 'factor', 'car')->get();
+        return view('user-orders', [
+            'companyUser' => $this->companyUser,
+            'orders' => $orders
+        ]);
+    }
+
+    public function userSubscriptions()
+    {
+        $user = User::find(Auth::id());
+        $subscriptions = $user->subscriptions()->with('products')->get();
+
+        return view('user-subscriptions', [
+            'companyUser' => $this->companyUser,
+            'subscriptions' => $subscriptions
         ]);
     }
 }

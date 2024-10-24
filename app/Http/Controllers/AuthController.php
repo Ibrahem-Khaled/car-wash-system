@@ -10,8 +10,9 @@ class AuthController extends Controller
 {
     public function profile()
     {
+        $companyUser = User::where('role', 'company')->first();
         $user = User::find(Auth::id());
-        return view('Auth.proflie', compact('user'));
+        return view('Auth.proflie', compact('user', 'companyUser'));
     }
 
     public function update(Request $request)

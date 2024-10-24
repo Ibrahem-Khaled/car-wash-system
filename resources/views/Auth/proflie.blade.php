@@ -4,175 +4,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>الملف الشخصي</title>
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.min.css" rel="stylesheet" />
-
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>ملفي الشخصي</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
 
     <style>
         body {
-            background-color: #e1bee7;
-            background-image: linear-gradient(135deg, #8e24aa 30%, #e1bee7 100%);
+            font-family: 'Cairo', sans-serif;
+            background-image: linear-gradient(to right, #4a2f85, #ed0f7d);
+            color: white;
             height: 100vh;
+            overflow: hidden;
+            position: relative;
+            direction: rtl;
+
+        }
+
+        .profile-wrapper {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: "Cairo", sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #fff;
-            direction: rtl;
+            height: 100%;
+            position: relative;
         }
 
-        .container {
-            max-width: 600px;
-            width: 100%;
-            padding: 20px;
-        }
-
-        .card {
+        .profile-card {
+            width: 400px;
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-            background-color: #fff;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-top: -20px;
+            border: 5px solid white;
+        }
+
+        .profile-details h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #4a2f85;
+            margin-top: 10px;
+        }
+
+        .profile-details p {
+            font-size: 1rem;
+            margin: 5px 0;
             color: #333;
         }
 
-        .card-header {
-            background-color: #8e24aa;
-            color: #fff;
-            padding: 15px;
-            border-radius: 15px 15px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .status-active {
+            color: #28a745;
         }
 
-        .card-header h3 {
-            margin: 0;
-        }
-
-        .btn-primary, .btn-danger, .btn-delete {
-            width: 100%;
-            padding: 10px;
-            border-radius: 25px;
-            border: none;
-            transition: background-color 0.3s ease;
-            margin-bottom: 10px;
+        .status-inactive {
+            color: #dc3545;
         }
 
         .btn-primary {
-            background-color: #8e24aa;
+            background-color: #4a2f85;
+            border: none;
+            width: 100%;
+            margin-top: 15px;
+            transition: background-color 0.3s, transform 0.3s;
         }
 
         .btn-primary:hover {
-            background-color: #7b1fa2;
+            background-color: #ed0f7d;
+            transform: scale(1.05);
         }
 
-        .btn-danger {
-            background-color: #d32f2f;
+        .backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1610878180933-04ecba6b87d5');
+            background-size: cover;
+            background-position: center;
+            filter: blur(20px);
+            z-index: -1;
+            opacity: 0.7;
         }
 
-        .btn-danger:hover {
-            background-color: #c62828;
+        .social-icons {
+            margin-top: 20px;
         }
 
-        .btn-delete {
-            background-color: #9c27b0;
+        .social-icons a {
+            font-size: 1.5rem;
+            color: #4a2f85;
+            margin: 0 10px;
+            transition: color 0.3s, transform 0.3s;
         }
 
-        .btn-delete:hover {
-            background-color: #7b1fa2;
-        }
-
-        .form-control {
-            border-radius: 10px;
-            padding: 10px 20px;
-            margin-bottom: 15px;
-            border: 1px solid #e1bee7;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-control:focus {
-            border-color: #8e24aa;
-            box-shadow: none;
-        }
-
-        .alert-success {
-            background-color: #4caf50;
-            color: #fff;
-            border-radius: 25px;
-            padding: 10px 20px;
-            margin-bottom: 20px;
+        .social-icons a:hover {
+            color: #ed0f7d;
+            transform: scale(1.2);
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">الملف الشخصي</h3>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
-                    @csrf
-                    <button type="submit" class="btn btn-danger">تسجيل الخروج</button>
-                </form>
-            </div>
-            <div class="card-body">
-                @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
-                <form action="{{ route('profile.update') }}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <label for="name">الاسم الكامل</label>
-                        <input type="text" class="form-control" id="name" name="name"
-                            value="{{ old('name', $user->name) }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">البريد الإلكتروني</label>
-                        <input type="email" class="form-control" id="email" name="email"
-                            value="{{ old('email', $user->email) }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">العنوان</label>
-                        <input type="text" class="form-control" id="address" name="address"
-                            value="{{ old('address', $user->address) }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">رقم الهاتف</label>
-                        <input type="phone" class="form-control" id="phone" name="phone"
-                            value="{{ old('phone', $user->phone) }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">كلمة المرور الجديدة (اترك الحقل فارغًا إذا كنت لا ترغب في تغييرها)</label>
-                        <input type="password" class="form-control" id="password" name="password">
-                    </div>
-                    <div class="form-group">
-                        <label for="password_confirmation">تأكيد كلمة المرور</label>
-                        <input type="password" class="form-control" id="password_confirmation"
-                            name="password_confirmation">
-                    </div>
-                    <button type="submit" class="btn btn-primary">تحديث الملف الشخصي</button>
-                </form>
 
-                <form id="delete-account-form" action="{{ route('account.delete') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-delete">حذف الحساب</button>
-                </form>
+    @include('homeLayouts.nav-bar')
+
+    <div class="profile-wrapper">
+        <div class="profile-card">
+            <img src="{{ $user->image }}" alt="Profile Image" class="profile-img">
+            <div class="profile-details">
+                <h2>{{ $user->name }}</h2>
+                <p><strong>البريد الإلكتروني:</strong> {{ $user->email }}</p>
+                <p><strong>رقم الهاتف:</strong> {{ $user->phone ?? 'غير متوفر' }}</p>
+                <p><strong>العنوان:</strong> {{ $user->address ?? 'غير متوفر' }}</p>
+                <p><strong>المدينة:</strong> {{ $user->city ?? 'غير متوفر' }}</p>
+                <p>
+                    <strong>حالة الحساب:</strong>
+                    <span class="{{ $user->status == 'active' ? 'status-active' : 'status-inactive' }}">
+                        {{ $user->status == 'active' ? 'نشط' : 'غير نشط' }}
+                    </span>
+                </p>
+                <p><strong>نوع الحساب:</strong> {{ ucfirst($user->role) }}</p>
+            </div>
+
+            <a href="#" class="btn btn-primary">تعديل البيانات</a>
+
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.min.js"></script>
+    @include('homeLayouts.footer')
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

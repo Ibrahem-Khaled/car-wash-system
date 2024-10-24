@@ -34,12 +34,6 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
-        .service-icon {
-            font-size: 3rem;
-            color: #4a2f85;
-            margin-bottom: 15px;
-        }
-
         .btn-primary {
             background-color: #4a2f85;
             border: none;
@@ -54,35 +48,120 @@
 <body>
 
     @include('homeLayouts.nav-bar')
+    @include('homeLayouts.float-buttons')
 
     <section class="py-5">
         <div class="container">
             <h2 class="section-title">خدمات المغسلة المتنقلة</h2>
             <div class="row gy-4">
 
-
                 @foreach ($services as $service)
                     <div class="col-md-6 col-lg-4">
                         <div class="card service-card p-4 text-center">
-                            <i class="fas fa-car-wash service-icon">
-                                <img src="{{ asset('storage/' . $service->image) }}" alt="{{ $service->name }}">
-                            </i>
+                            <img src="{{ asset('storage/' . $service->image) }}" alt="{{ $service->name }}"
+                                class="img-fluid mb-3" style="max-height: 150px;">
                             <h3 class="h5 mb-3">{{ $service->name }}</h3>
-                            <p class="text-secondary">
-                                {{ $service->description }}
+                            <p class="text-secondary">{{ $service->description }}</p>
+                            <p class="text-info">
+                                نوع الخدمة: {{ $service->type == 'main' ? 'رئيسية' : 'فرعية' }}
                             </p>
-                            <a href="#" class="btn btn-primary">اطلب الخدمة</a>
+                            <button class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#orderModal-{{ $service->id }}">
+                                اطلب الخدمة
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="orderModal-{{ $service->id }}" tabindex="-1"
+                        aria-labelledby="orderModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="orderModalLabel">طلب خدمة - {{ $service->name }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form method="POST" action="{{ route('user.carts.store') }}">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <input type="hidden" name="product_id" value="{{ $service->id }}">
+
+                                        <div class="mb-3">
+                                            <label for="car_model" class="form-label">السيارة</label>
+                                            <select class="form-select" name="car_model" required>
+                                                @foreach ($cars as $car)
+                                                    <option value="{{ $car->id }}">{{ $car->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="car_type" class="form-label">نوع السيارة</label>
+                                            <select class="form-select" name="car_type" required id="car_type">
+                                                <option value="small">صغيرة - {{ $service->small_car_price }} ريال
+                                                </option>
+                                                <option value="medium">متوسطة - {{ $service->medium_car_price }} ريال
+                                                </option>
+                                                <option value="large">كبيرة - {{ $service->large_car_price }} ريال
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="car_color" class="form-label">لون السيارة</label>
+                                            <input type="text" class="form-control" name="car_color" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="car_number" class="form-label">رقم السيارة</label>
+                                            <div class="row gx-2">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control" name="car_number_letters"
+                                                        maxlength="3" placeholder="حروف" required>
+                                                </div>
+                                                <div class="col-8">
+                                                    <input type="text" class="form-control" name="car_number_digits"
+                                                        maxlength="4" placeholder="أرقام" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="car_wash" class="form-label">تاريخ الغسيل</label>
+                                            <input type="datetime-local" class="form-control" name="car_wash" required>
+                                        </div>
+
+                                        <input type="hidden" name="price" id="service_price"
+                                            value="{{ $service->small_car_price }}">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">إغلاق</button>
+                                        <button type="submit" class="btn btn-primary">أضف إلى السلة</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 @endforeach
+
             </div>
         </div>
     </section>
 
     @include('homeLayouts.footer')
 
-    <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelectorAll('#car_type').forEach(select => {
+            select.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const price = selectedOption.text.split('-')[1].trim().replace('ريال', '');
+                this.closest('form').querySelector('#service_price').value = price;
+            });
+        });
+    </script>
 </body>
 
 </html>

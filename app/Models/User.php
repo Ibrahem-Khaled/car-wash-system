@@ -31,6 +31,7 @@ class User extends Authenticatable implements JWTSubject
         'role',
         'image',
         'expo_push_token',
+        'points',
     ];
 
     /**
@@ -70,6 +71,17 @@ class User extends Authenticatable implements JWTSubject
     public function factorRating()
     {
         return $this->hasMany(UserRating::class, 'factor_id');
+    }
+
+    public function subscriptions()
+    {
+        return $this->belongsToMany(Subscription::class, 'user_subscriptions', 'user_id', 'subscription_id')
+            ->withPivot('status');
+    }
+
+    public function userSubscriptionProducts()
+    {
+        return $this->hasMany(UserSubscriptionProduct::class, 'user_id');
     }
 
     public function getJWTIdentifier()

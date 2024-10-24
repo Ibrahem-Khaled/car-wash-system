@@ -12,13 +12,12 @@ class CartController extends Controller
 {
     public function index()
     {
-        $carts = Cart::whereIn('status', ['pending', 'acepted'])
-            ->paginate(10);
+        $carts = Cart::paginate(10);
         $users = User::where('role', 'customer')->get();
         $factors = User::where('role', 'factor')->get();
         $products = Product::all();
         $cars = Car::all();
-        return view('dashboard.carts', compact('carts', 'users', 'factors', 'products', 'cars'));
+        return view('dashboard.carts.carts', compact('carts', 'users', 'factors', 'products', 'cars'));
     }
 
     public function store(Request $request)

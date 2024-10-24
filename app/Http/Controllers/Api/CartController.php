@@ -85,7 +85,7 @@ class CartController extends Controller
             // إنشاء الطلب وتخصيصه للعامل
             $cart = $user->userCart()->create(array_merge($validatedData, [
                 'customer_id' => $user->id,
-                'factor_id' => $worker->id,
+                'factor_id' => $worker->id, 
             ]));
 
             return response()->json($cart, 201);

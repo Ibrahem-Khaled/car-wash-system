@@ -29,42 +29,47 @@
             color: #ed0f7d;
         }
 
-        .btn-custom,
-        .btn-primary-custom {
-            display: inline-block;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 16px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            margin-right: 5px;
-        }
-
-        .btn-custom {
-            color: #4a2f85;
-        }
-
-        .btn-custom:hover {
-            background-color: #ed0f7d;
-            color: #fff;
-        }
-
-        .btn-primary-custom {
-            background-color: #4a2f85;
-            color: #fff;
-        }
-
-        .btn-primary-custom:hover {
-            background-color: #333;
-        }
-
         .navbar-toggler {
             border: none;
         }
 
         .dropdown-menu {
             text-align: right;
+        }
+
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .btn-custom {
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #4a2f85;
+            border: 1px solid #4a2f85;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: #ed0f7d;
+            color: white;
+        }
+
+        .cart-counter {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #ed0f7d;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            font-size: 12px;
+            line-height: 20px;
         }
 
         @media (max-width: 768px) {
@@ -76,12 +81,6 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-            }
-
-            .btn-custom,
-            .btn-primary-custom {
-                width: 100%;
-                margin-bottom: 10px;
             }
         }
     </style>
@@ -108,34 +107,63 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#privacy">سياسة الخصوصية</a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('contact-us') }}">تواصل معنا</a>
                     </li>
-                    <!-- Dropdown Menu -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            الخدمات والاشتراكات
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
-                            <li><a class="dropdown-item" href="{{ route('services') }}">الخدمات</a></li>
-                            <li><a class="dropdown-item" href="{{ route('subscribtion') }}">الاشتراكات</a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('services') }}">الخدمات</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('subscribtion') }}">الاشتراكات</a>
                     </li>
                 </ul>
-            </div>
 
-            <div class="btn-container d-lg-flex">
-                @if (Auth::check())
-                    <a class="btn-custom" href="{{ route('logout') }}">تسجيل الخروج</a>
-                    @if (Auth::user()->role == 'admin')
-                        <a class="btn-primary-custom ms-2" href="{{ route('home.dashboard') }}">لوحة التحكم</a>
-                        <a class="btn-primary-custom ms-2" href="#">لوحة التحكم HR</a>
+                <div class="btn-container d-lg-flex align-items-center">
+                    <!-- Cart Icon with Counter -->
+                    <div class="position-relative me-3">
+                        <a href="{{ route('user.carts') }}" class="text-decoration-none">
+                            <i class="fas fa-shopping-cart" style="font-size: 1.5rem; color: #4a2f85;"></i>
+                            {{-- <span class="cart-counter">{{ App\Models\Cart::count() }}</span> --}}
+                        </a>
+                    </div>
+
+                    @if (Auth::check())
+                        <!-- User Dropdown -->
+                        <div class="dropdown">
+                            <a href="#" class="d-flex align-items-center text-decoration-none" id="userDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{{ Auth::user()->image ?? asset('images/default-avatar.png') }}"
+                                    alt="User Avatar" class="user-icon me-2">
+                                <span>{{ Auth::user()->name }}</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="{{ route('profile') }}">الملف الشخصي</a></li>
+                                <li><a class="dropdown-item" href="{{ route('user.orders') }}">طلباتي</a></li>
+                                <li><a class="dropdown-item" href="{{ route('user.subscriptions') }}">اشتراكاتي</a>
+                                </li>
+                                @if (Auth::user()->role == 'admin')
+                                    <li><a class="dropdown-item" href="{{ route('home.dashboard') }}">لوحة التحكم</a>
+                                    </li>
+                                @endif
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        تسجيل الخروج
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        class="d-none">
+                                        @csrf
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    @else
+                        <a class="btn-custom" href="{{ route('login') }}">تسجيل الدخول</a>
                     @endif
-                @else
-                    <a class="btn-custom" href="{{ route('login') }}">تسجيل الدخول</a>
-                @endif
+                </div>
             </div>
         </div>
     </nav>

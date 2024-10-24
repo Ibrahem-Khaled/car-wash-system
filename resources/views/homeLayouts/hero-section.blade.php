@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>المركبة المخملية - غسيل متنقل</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+
     <style>
         body {
             font-family: "Cairo", sans-serif;
@@ -57,29 +57,62 @@
             text-align: right;
         }
 
-        .hero-btns .btn {
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-weight: 600;
-        }
-
         .btn {
             background-color: #4a2f85;
             color: #fff;
             border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s;
         }
 
-        .btn-primary:hover {
+        .btn:hover {
             background-color: #ed0f7d;
         }
 
-        .btn-outline-secondary {
-            border: 2px solid #6c757d;
-            color: #6c757d;
+        .modal-dialog {
+            max-width: 600px;
         }
 
-        .btn-outline-secondary:hover {
-            background-color: #6c757d;
+        .modal-body {
+            display: flex;
+            justify-content: space-between;
+            padding: 30px;
+        }
+
+        .btn-option {
+            width: 48%;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-option:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-services {
+            background-color: #4a2f85;
+            color: #fff;
+        }
+
+        .btn-services:hover {
+            background-color: #333;
+        }
+
+        .btn-subscriptions {
+            background-color: #f8f9fa;
+            border: 2px solid #4a2f85;
+            color: #4a2f85;
+        }
+
+        .btn-subscriptions:hover {
+            background-color: #4a2f85;
             color: #fff;
         }
     </style>
@@ -97,8 +130,7 @@
                     <p class="hero-text">نوفر لك خدمة غسيل متنقل تتيح لك الحفاظ على نظافة سيارتك بسهولة. اطلب الخدمة
                         وسنأتي إليك أينما كنت!</p>
                     <div class="hero-btns">
-                        <a href="#" class="btn btn">احجز الآن</a>
-                        <a href="#" class="btn btn-outline-secondary">استعرض جميع الخدمات</a>
+                        <button class="btn" data-bs-toggle="modal" data-bs-target="#serviceModal">احجز الآن</button>
                     </div>
                 </div>
 
@@ -108,6 +140,22 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="serviceModalLabel">اختر الخدمة أو الاشتراك</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <a href="{{ route('subscribtion') }}" class="btn-option btn-subscriptions">الاشتراكات</a>
+                    <a href="{{ route('services') }}" class="btn-option btn-services">الخدمات</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 

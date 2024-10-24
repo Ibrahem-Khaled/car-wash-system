@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
         body {
@@ -58,6 +59,8 @@
 
 <body>
     @include('homeLayouts.nav-bar')
+    @include('homeLayouts.float-buttons')
+
     <section class="py-5 about-section" id="about">
         <div class="container">
             <div class="row gy-4 align-items-center">

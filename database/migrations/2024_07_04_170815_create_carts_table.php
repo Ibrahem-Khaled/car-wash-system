@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('car_color')->nullable();
             $table->string('car_number')->nullable();
             $table->timestamp('car_wash')->nullable();
-            $table->enum('status', ['acepted', 'declined', 'pending'])->default('pending');
+            $table->enum('status', ['acepted', 'declined', 'pending', 'unpaid'])->default('unpaid');
             $table->enum('car_type', ['small', 'medium', 'large'])->default('small');
             $table->bigInteger('price')->nullable();
             $table->timestamps();
