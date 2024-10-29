@@ -112,6 +112,11 @@
                                             <button class="btn btn-primary" type="submit">تحديث</button>
                                         </div>
                                     </form>
+
+                                    <button class="btn btn-secondary mt-3"
+                                        onclick="openMap({{ $item->latitude }}, {{ $item->longitude }})">
+                                        عرض الموقع على الخريطة
+                                    </button>
                                 </div>
                             </div>
                         @endforeach
