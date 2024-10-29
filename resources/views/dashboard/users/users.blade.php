@@ -27,6 +27,11 @@
                     (Admins)</button>
             </li>
             <li class="nav-item" role="presentation">
+                <button class="nav-link" id="supervisor-tab" data-bs-toggle="tab" data-bs-target="#supervisor"
+                    type="button" role="tab" aria-controls="supervisor" aria-selected="false">المسؤولين
+                    (supervisor)</button>
+            </li>
+            <li class="nav-item" role="presentation">
                 <button class="nav-link" id="customer-users-tab" data-bs-toggle="tab" data-bs-target="#customer-users"
                     type="button" role="tab" aria-controls="customer-users" aria-selected="false">العملاء
                     (Customers)</button>
@@ -42,6 +47,10 @@
             <!-- Tab كل المستخدمين -->
             <div class="tab-pane fade show active" id="all-users" role="tabpanel" aria-labelledby="all-users-tab">
                 @include('dashboard.users.user_table', ['users' => $users])
+            </div>
+
+            <div class="tab-pane fade show active" id="supervisor" role="tabpanel" aria-labelledby="supervisor-tab">
+                @include('dashboard.users.user_table', ['users' => $users->where('role', 'supervisor')])
             </div>
 
             <!-- Tab Admins -->
@@ -103,6 +112,7 @@
                             <label for="role" class="form-label">الدور</label>
                             <select class="form-control" id="role" name="role">
                                 <option value="admin">مسؤول</option>
+                                <option value="supervisor">مشرف</option>
                                 <option value="customer">عميل</option>
                                 <option value="factor">عامل</option>
                             </select>

@@ -92,6 +92,8 @@
                                     <select class="form-control" id="role" name="role">
                                         <option value="company" {{ $user->role == 'company' ? 'selected' : '' }}>الشركة
                                         </option>
+                                        <option value="supervisor" {{ $user->role == 'supervisor' ? 'selected' : '' }}>مشرف
+                                        </option>
                                         <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>مسؤول
                                         </option>
                                         <option value="customer" {{ $user->role == 'customer' ? 'selected' : '' }}>عميل
