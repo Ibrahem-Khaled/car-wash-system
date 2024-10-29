@@ -90,8 +90,16 @@
                             <div class="col-md-6">
                                 <div class="order-card bg-white">
                                     <h5>طلب رقم #{{ $item->id }}</h5>
-                                    <p>{{ $item->product->name }}</p>
-                                    <p><strong>تاريخ الطلب:</strong> {{ $item->created_at->format('Y-m-d') }}</p>
+                                    <p><strong>المنتج:</strong> {{ $item->product->name }}</p>
+                                    <p><strong>السعر:</strong> {{ $item->price }} ريال</p>
+                                    <p><strong>نوع السيارة:</strong> {{ $item->car_type }}</p>
+                                    <p><strong>موديل السيارة:</strong> {{ $item->car_model }}</p>
+                                    <p><strong>لون السيارة:</strong> {{ $item->car_color }}</p>
+                                    <p><strong>رقم السيارة:</strong> {{ $item->car_number }}</p>
+                                    <p><strong>تاريخ الغسيل:</strong> {{ $item->car_wash }}</p>
+                                    <p><strong>الإحداثيات:</strong>
+                                        {{ $item->latitude }}, {{ $item->longitude }}
+                                    </p>
                                     <p class="order-status">حالة الطلب: {{ $item->status }}</p>
 
                                     <form action="{{ route('updateOrderStatus', $item->id) }}" method="POST">
@@ -107,7 +115,8 @@
                                                     {{ $item->status == 'pending' ? 'selected' : '' }}>قيد التنفيذ
                                                 </option>
                                                 <option value="unpaid"
-                                                    {{ $item->status == 'unpaid' ? 'selected' : '' }}>غير مدفوع</option>
+                                                    {{ $item->status == 'unpaid' ? 'selected' : '' }}>غير مدفوع
+                                                </option>
                                             </select>
                                             <button class="btn btn-primary" type="submit">تحديث</button>
                                         </div>
@@ -130,8 +139,12 @@
                             <div class="col-md-6">
                                 <div class="order-card bg-white">
                                     <h5>طلب رقم #{{ $item->id }}</h5>
-                                    <p>{{ $item->product->name }}</p>
-                                    <p><strong>تاريخ الطلب:</strong> {{ $item->created_at->format('Y-m-d') }}</p>
+                                    <p><strong>المنتج:</strong> {{ $item->product->name }}</p>
+                                    <p><strong>السعر:</strong> {{ $item->price }} ريال</p>
+                                    <p><strong>موديل السيارة:</strong> {{ $item->car_model }}</p>
+                                    <p><strong>لون السيارة:</strong> {{ $item->car_color }}</p>
+                                    <p><strong>رقم السيارة:</strong> {{ $item->car_number }}</p>
+                                    <p><strong>تاريخ الغسيل:</strong> {{ $item->car_wash }}</p>
                                     <p class="order-status">حالة الطلب: {{ $item->status }}</p>
                                 </div>
                             </div>
@@ -145,6 +158,18 @@
     @include('homeLayouts.footer')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function openMap(lat, lng) {
+            if (lat && lng) {
+                const googleMapUrl = `https://www.google.com/maps?q=${lat},${lng}`;
+                window.open(googleMapUrl, '_blank');
+            } else {
+                alert('إحداثيات الموقع غير متوفرة.');
+            }
+        }
+    </script>
+
 </body>
 
 </html>
