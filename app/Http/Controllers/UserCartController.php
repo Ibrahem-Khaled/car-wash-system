@@ -34,19 +34,19 @@ class UserCartController extends Controller
         $user = auth()->user();
         $car_number = $request->car_number_letters . ' ' . $request->car_number_digits;
 
-        $worker = User::where('role', 'factor')
-            ->where('city', 'like', '%' . $user->city . '%')
-            ->withCount('factorCart')
-            ->orderBy('factor_cart_count', 'asc')
+        $worker = User::where('role', 'supervisor')
+            // ->where('city', 'like', '%' . $user->city . '%')
+            // ->withCount('factorCart')
+            // ->orderBy('factor_cart_count', 'asc')
             ->first();
 
         if (!$worker) {
-            $worker = User::where('role', 'factor')
-                ->where(function ($query) use ($user) {
-                    $query->where('city', '!=', $user->city)->orWhereNull('city');
-                })
-                ->withCount('factorCart')
-                ->orderBy('factor_cart_count', 'asc')
+            $worker = User::where('role', 'supervisor')
+                // ->where(function ($query) use ($user) {
+                //     $query->where('city', '!=', $user->city)->orWhereNull('city');
+                // })
+                // ->withCount('factorCart')
+                // ->orderBy('factor_cart_count', 'asc')
                 ->first();
         }
 
