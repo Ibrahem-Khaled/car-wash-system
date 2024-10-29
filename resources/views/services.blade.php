@@ -22,6 +22,7 @@
             height: 300px;
             width: 100%;
         }
+
         .section-title {
             font-size: 2.5rem;
             font-weight: 700;
@@ -38,11 +39,6 @@
         .service-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .modal-map {
-            height: 300px;
-            width: 100%;
         }
 
         .btn-primary {
@@ -114,8 +110,7 @@
                                                 <option value="large">كبيرة - {{ $service->large_car_price }} ريال
                                                 </option>
                                                 <option value="x_large">كبيرة جدا - {{ $service->x_large_car_price }}
-                                                    ريال
-                                                </option>
+                                                    ريال</option>
                                             </select>
                                         </div>
 
@@ -128,10 +123,21 @@
                                             <label for="car_number" class="form-label">رقم السيارة</label>
                                             <div class="row gx-2">
                                                 <div class="col-4">
-                                                    <input type="text" class="form-control" name="car_number_letters"
-                                                        maxlength="3" placeholder="حروف" required>
+                                                    <input type="text" class="form-control"
+                                                        name="car_number_letters1" maxlength="1" placeholder="حروف"
+                                                        required>
                                                 </div>
-                                                <div class="col-8">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control"
+                                                        name="car_number_letters2" maxlength="1" placeholder="حروف"
+                                                        required>
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control"
+                                                        name="car_number_letters3" maxlength="1" placeholder="حروف"
+                                                        required>
+                                                </div>
+                                                <div class="col-12 mt-2">
                                                     <input type="text" class="form-control" name="car_number_digits"
                                                         maxlength="4" placeholder="أرقام" required>
                                                 </div>
@@ -140,7 +146,8 @@
 
                                         <div class="mb-3">
                                             <label for="car_wash" class="form-label">تاريخ الغسيل</label>
-                                            <input type="datetime-local" class="form-control" name="car_wash" required>
+                                            <input type="datetime-local" class="form-control" name="car_wash"
+                                                required id="car_wash">
                                         </div>
 
                                         <div class="mb-3">
@@ -173,36 +180,44 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha512-VNf5a2...=" crossorigin=""></script>
+
     <script>
-        document.querySelectorAll('[data-bs-toggle="modal"]').forEach((modalButton) => {
-            modalButton.addEventListener('click', function() {
-                const modalId = this.getAttribute('data-bs-target');
-                const mapId = modalId.replace('#orderModal-', 'map-');
+        document.addEventListener('DOMContentLoaded', function() {
+            const carWashInput = document.getElementById('car_wash');
+            const now = new Date();
+            now.setMinutes(0, 0, 0); // تعيين الدقائق والثواني إلى 0
+            carWashInput.min = now.toISOString().slice(0, 16); // تحديد الحد الأدنى للوقت الحالي
 
-                setTimeout(() => {
-                    const map = L.map(mapId).setView([24.7136, 46.6753], 12);
+            document.querySelectorAll('[data-bs-toggle="modal"]').forEach((modalButton) => {
+                modalButton.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-bs-target');
+                    const mapId = modalId.replace('#orderModal-', 'map-');
 
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    }).addTo(map);
+                    setTimeout(() => {
+                        const map = L.map(mapId).setView([24.7136, 46.6753], 12);
 
-                    const marker = L.marker([24.7136, 46.6753], {
-                        draggable: true
-                    }).addTo(map);
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        }).addTo(map);
 
-                    marker.on('dragend', function(e) {
-                        const {
-                            lat,
-                            lng
-                        } = e.target.getLatLng();
-                        document.getElementById(`latitude-${mapId.split('-')[1]}`).value =
-                            lat;
-                        document.getElementById(`longitude-${mapId.split('-')[1]}`).value =
-                            lng;
-                    });
+                        const marker = L.marker([24.7136, 46.6753], {
+                            draggable: true
+                        }).addTo(map);
 
-                    map.invalidateSize(); // هذا السطر مهم لتحديث أبعاد الخريطة بشكل صحيح
-                }, 200); // يتم الانتظار قليلاً حتى يتم عرض الـ Modal
+                        marker.on('dragend', function(e) {
+                            const {
+                                lat,
+                                lng
+                            } = e.target.getLatLng();
+                            document.getElementById(
+                                `latitude-${mapId.split('-')[1]}`).value = lat;
+                            document.getElementById(
+                                `longitude-${mapId.split('-')[1]}`).value = lng;
+                        });
+
+                        map.invalidateSize();
+                    }, 200);
+                });
             });
         });
     </script>
