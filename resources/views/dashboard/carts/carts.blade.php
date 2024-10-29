@@ -36,6 +36,7 @@
                         <table class="table table-striped">
                             <thead class="bg-primary text-white">
                                 <tr>
+                                    <th>#</th>
                                     <th>العميل</th>
                                     <th>العامل</th>
                                     <th>المنتج</th>

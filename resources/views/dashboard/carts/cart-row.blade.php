@@ -1,4 +1,5 @@
 <tr>
+    <td>{{ $cart->id }}</td>
     <td>{{ $cart->customer->name }}</td>
     <td>{{ $cart->factor->name ?? 'غير متوفر' }}</td>
     <td>{{ $cart->product->name }}</td>
