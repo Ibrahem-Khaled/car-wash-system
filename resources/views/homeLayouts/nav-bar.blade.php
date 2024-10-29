@@ -141,7 +141,7 @@
                                 <li><a class="dropdown-item" href="{{ route('user.orders') }}">طلباتي</a></li>
                                 <li><a class="dropdown-item" href="{{ route('user.subscriptions') }}">اشتراكاتي</a>
                                 </li>
-                                @if (Auth::user()->role == 'admin')
+                                @if (Auth::user()->role == 'admin' || Auth::user()->role == 'supervisor')
                                     <li><a class="dropdown-item" href="{{ route('home.dashboard') }}">لوحة التحكم</a>
                                     </li>
                                 @endif
