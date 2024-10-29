@@ -15,8 +15,6 @@ return new class extends Migration {
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone')->nullable()->unique();
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
@@ -36,8 +34,6 @@ return new class extends Migration {
                     'name' => 'admin',
                     'email' => 'admin@admin.com',
                     'phone' => '123456789',
-                    'latitude' => '35.6892',
-                    'longitude' => '51.3890',
                     'address' => 'Tehran',
                     'city' => 'Tehran',
                     'status' => 'active',
@@ -49,8 +45,6 @@ return new class extends Migration {
                     'name' => 'المركبة المخملية',
                     'email' => 'company@company.com',
                     'phone' => '1111111111',
-                    'latitude' => '35.6892',
-                    'longitude' => '51.3890',
                     'address' => 'saudi arabia',
                     'city' => 'saudi arabia city',
                     'status' => 'active',

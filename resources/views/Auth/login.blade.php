@@ -121,12 +121,19 @@
 
                 <div class="form-group mb-4">
                     <label for="email" class="form-label">البريد الإلكتروني</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="أدخل بريدك الإلكتروني" required>
+                    <input type="email" id="email" name="email" class="form-control"
+                        placeholder="أدخل بريدك الإلكتروني" required>
                 </div>
 
                 <div class="form-group mb-4">
                     <label for="password" class="form-label">كلمة المرور</label>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="أدخل كلمة المرور" required>
+                    <div class="input-group">
+                        <input type="password" id="password" name="password" class="form-control"
+                            placeholder="أدخل كلمة المرور" required>
+                        <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="form-group form-check mb-3 d-flex justify-content-between align-items-center">
@@ -144,11 +151,25 @@
                     <a href="#" class="btn btn-facebook w-48"><i class="fab fa-facebook-f me-2"></i>Facebook</a>
                 </div>
 
-                <p class="text-center text-muted mt-3">ليس لديك حساب؟ <a href="{{ route('register') }}">إنشاء حساب</a></p>
+                <p class="text-center text-muted mt-3">ليس لديك حساب؟ <a href="{{ route('register') }}">إنشاء حساب</a>
+                </p>
             </form>
         </div>
     </div>
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
 
+        togglePassword.addEventListener('click', function() {
+            // تغيير نوع الإدخال بين "password" و "text"
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // تغيير أيقونة العين
+            this.querySelector('i').classList.toggle('fa-eye');
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 

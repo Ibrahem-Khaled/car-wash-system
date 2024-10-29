@@ -15,6 +15,12 @@
         <ul class="navbar-nav">
             <!-- إنشاء مستخدم -->
             <li class="nav-item">
+                <a class="nav-link text-white" href="{{ route('home') }}">
+                    <i class="fas fa-home"></i>
+                    <span class="nav-link-text ms-1">الموقع الرئيسي</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link text-white" href="{{ route('users.index') }}">
                     <i class="fas fa-user-plus"></i>
                     <span class="nav-link-text ms-1">انشاء مستخدم او عامل</span>

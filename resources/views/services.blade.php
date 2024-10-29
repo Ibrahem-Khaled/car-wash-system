@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <style>
         body {
@@ -34,6 +35,11 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
+        .modal-map {
+            height: 300px;
+            width: 100%;
+        }
+
         .btn-primary {
             background-color: #4a2f85;
             border: none;
@@ -55,16 +61,13 @@
             <h2 class="section-title">خدمات المغسلة المتنقلة</h2>
             <div class="row gy-4">
 
-                @foreach ($services as $service)
+                @foreach ($mainProducts as $service)
                     <div class="col-md-6 col-lg-4">
                         <div class="card service-card p-4 text-center">
                             <img src="{{ asset('storage/' . $service->image) }}" alt="{{ $service->name }}"
                                 class="img-fluid mb-3" style="max-height: 150px;">
                             <h3 class="h5 mb-3">{{ $service->name }}</h3>
                             <p class="text-secondary">{{ $service->description }}</p>
-                            <p class="text-info">
-                                نوع الخدمة: {{ $service->type == 'main' ? 'رئيسية' : 'فرعية' }}
-                            </p>
                             <button class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#orderModal-{{ $service->id }}">
                                 اطلب الخدمة
@@ -105,6 +108,8 @@
                                                 </option>
                                                 <option value="large">كبيرة - {{ $service->large_car_price }} ريال
                                                 </option>
+                                                <option value="x_large">كبيرة جدا - {{ $service->x_large_car_price }} ريال
+                                                </option>
                                             </select>
                                         </div>
 
@@ -132,6 +137,14 @@
                                             <input type="datetime-local" class="form-control" name="car_wash" required>
                                         </div>
 
+                                        <div class="mb-3">
+                                            <label for="location" class="form-label">اختر الموقع على الخريطة</label>
+                                            <div id="map-{{ $service->id }}" class="modal-map"></div>
+                                            <input type="hidden" name="latitude" id="latitude-{{ $service->id }}">
+                                            <input type="hidden" name="longitude"
+                                                id="longitude-{{ $service->id }}">
+                                        </div>
+
                                         <input type="hidden" name="price" id="service_price"
                                             value="{{ $service->small_car_price }}">
                                     </div>
@@ -153,15 +166,30 @@
     @include('homeLayouts.footer')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        document.querySelectorAll('#car_type').forEach(select => {
-            select.addEventListener('change', function() {
-                const selectedOption = this.options[this.selectedIndex];
-                const price = selectedOption.text.split('-')[1].trim().replace('ريال', '');
-                this.closest('form').querySelector('#service_price').value = price;
+        @foreach ($mainProducts as $service)
+            const map{{ $service->id }} = L.map('map-{{ $service->id }}').setView([24.7136, 46.6753], 12);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map{{ $service->id }});
+
+            const marker = L.marker([24.7136, 46.6753], {
+                draggable: true
+            }).addTo(map{{ $service->id }});
+
+            marker.on('dragend', function(e) {
+                const {
+                    lat,
+                    lng
+                } = e.target.getLatLng();
+                document.getElementById('latitude-{{ $service->id }}').value = lat;
+                document.getElementById('longitude-{{ $service->id }}').value = lng;
             });
-        });
+        @endforeach
     </script>
+
 </body>
 
 </html>

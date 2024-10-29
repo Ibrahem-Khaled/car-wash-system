@@ -41,13 +41,13 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card text-white bg-secondary mb-3">
+                <a href="{{ route('users.index') }}" class="card text-white bg-secondary mb-3">
                     <div class="card-header">إجمالي المستخدمين</div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $totalUsers }}</h5>
                         <p class="card-text">إجمالي عدد المستخدمين.</p>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col-md-4">
                 <div class="card text-white bg-primary mb-3">

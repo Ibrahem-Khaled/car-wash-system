@@ -9,17 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'small_car_price', 'medium_car_price', 'large_car_price', 'image', 'type', 'parent_id', 'description'];
-
-    public function parent()
-    {
-        return $this->belongsTo(Product::class, 'parent_id');
-    }
-
-    public function children()
-    {
-        return $this->hasMany(Product::class, 'parent_id');
-    }
+    protected $fillable = ['name', 'small_car_price', 'medium_car_price', 'large_car_price', 'x_large_car_price', 'image', 'type', 'description'];
 
     public function cart()
     {

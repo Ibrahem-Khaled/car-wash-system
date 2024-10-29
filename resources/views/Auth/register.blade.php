@@ -145,14 +145,24 @@
 
                 <div class="form-group mb-4">
                     <label for="password" class="form-label">كلمة المرور</label>
-                    <input type="password" id="password" name="password" class="form-control"
-                        placeholder="أدخل كلمة المرور" required>
+                    <div class="input-group">
+                        <input type="password" id="password" name="password" class="form-control"
+                            placeholder="أدخل كلمة المرور" required>
+                        <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="form-group mb-4">
                     <label for="password_confirmation" class="form-label">تأكيد كلمة المرور</label>
-                    <input type="password" id="password_confirmation" name="password_confirmation" class="form-control"
-                        placeholder="أعد إدخال كلمة المرور" required>
+                    <div class="input-group">
+                        <input type="password" id="password_confirmation" name="password_confirmation"
+                            class="form-control" placeholder="أعد إدخال كلمة المرور" required>
+                        <button type="button" class="btn btn-outline-secondary" id="toggleConfirmPassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100 mb-3">تسجيل</button>
@@ -165,6 +175,27 @@
             </form>
         </div>
     </div>
+
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+        const confirmPasswordInput = document.getElementById('password_confirmation');
+
+        // دالة لتبديل رؤية كلمة المرور
+        function toggleVisibility(input, toggleButton) {
+            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+            input.setAttribute('type', type);
+
+            toggleButton.querySelector('i').classList.toggle('fa-eye');
+            toggleButton.querySelector('i').classList.toggle('fa-eye-slash');
+        }
+
+        togglePassword.addEventListener('click', () => toggleVisibility(passwordInput, togglePassword));
+        toggleConfirmPassword.addEventListener('click', () => toggleVisibility(confirmPasswordInput,
+        toggleConfirmPassword));
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>

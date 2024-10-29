@@ -4,8 +4,6 @@
             <th>الاسم</th>
             <th>البريد الإلكتروني</th>
             <th>الهاتف</th>
-            <th>خط العرض</th>
-            <th>خط الطول</th>
             <th>العنوان</th>
             <th>المدينة</th>
             <th>الحالة</th>
@@ -20,8 +18,6 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->phone }}</td>
-                <td>{{ $user->latitude }}</td>
-                <td>{{ $user->longitude }}</td>
                 <td>{{ $user->address }}</td>
                 <td>{{ $user->city }}</td>
                 <td>{{ $user->status }}</td>
@@ -43,13 +39,14 @@
             </tr>
 
             <!-- Edit User Modal -->
-            <div class="modal fade" id="editUserModal{{ $user->id }}" tabindex="-1" aria-labelledby="editUserModalLabel"
-                aria-hidden="true">
+            <div class="modal fade" id="editUserModal{{ $user->id }}" tabindex="-1"
+                aria-labelledby="editUserModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="editUserModalLabel">تعديل مستخدم</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form action="{{ route('users.update', $user->id) }}" method="POST">
@@ -70,8 +67,50 @@
                                     <input type="text" class="form-control" id="phone" name="phone"
                                         value="{{ $user->phone }}">
                                 </div>
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">العنوان</label>
+                                    <input type="text" class="form-control" id="address" name="address"
+                                        value="{{ $user->address }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="city" class="form-label">المدينة</label>
+                                    <input type="text" class="form-control" id="city" name="city"
+                                        value="{{ $user->city }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="status" class="form-label">الحالة</label>
+                                    <select class="form-control" id="status" name="status">
+                                        <option value="active" {{ $user->status == 'active' ? 'selected' : '' }}>نشط
+                                        </option>
+                                        <option value="inactive" {{ $user->status == 'inactive' ? 'selected' : '' }}>
+                                            غير
+                                            نشط</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="role" class="form-label">الدور</label>
+                                    <select class="form-control" id="role" name="role">
+                                        <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>مسؤول
+                                        </option>
+                                        <option value="customer" {{ $user->role == 'customer' ? 'selected' : '' }}>عميل
+                                        </option>
+                                        <option value="factor" {{ $user->role == 'factor' ? 'selected' : '' }}>عامل
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="image" class="form-label">صورة</label>
+                                    <input type="text" class="form-control" id="image" name="image"
+                                        value="{{ $user->image }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">كلمة المرور</label>
+                                    <input type="password" class="form-control" id="password" name="password"
+                                        placeholder="اتركه فارغًا إذا لم ترغب في تغييره">
+                                </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">إغلاق</button>
                                     <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
                                 </div>
                             </form>
@@ -87,7 +126,8 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="deleteUserModalLabel">تأكيد الحذف</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <p>هل أنت متأكد أنك تريد حذف المستخدم <strong>{{ $user->name }}</strong>؟</p>
@@ -96,7 +136,8 @@
                             <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">إلغاء</button>
                                 <button type="submit" class="btn btn-danger">حذف</button>
                             </form>
                         </div>

@@ -16,14 +16,14 @@ return new class extends Migration {
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->enum('type', ['main', 'sub'])->default('main');
-            $table->foreignId('parent_id')->nullable()->constrained('products')->onDelete('cascade');
             $table->decimal('small_car_price', 8, 2)->nullable();
             $table->decimal('medium_car_price', 8, 2)->nullable();
             $table->decimal('large_car_price', 8, 2)->nullable();
+            $table->decimal('x_large_car_price', 8, 2)->nullable();
             $table->timestamps();
         });
     }
- 
+
     /**
      * Reverse the migrations.
      */

@@ -20,6 +20,8 @@ class Cart extends Model
         'status',
         'car_type',
         'price',
+        'latitude',
+        'longitude',
     ];
 
     public function customer()

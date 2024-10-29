@@ -67,11 +67,13 @@ class homeController extends Controller
 
     public function services()
     {
-        $services = Product::all();
+        $mainProducts = Product::where('type', 'main')->get();
+        $subProducts = Product::where('type', 'sub')->get();
         $cars = Car::all();
         return view('services', [
             'companyUser' => $this->companyUser,
-            'services' => $services,
+            'mainProducts' => $mainProducts,
+            'subProducts' => $subProducts,
             'cars' => $cars
         ]);
     }

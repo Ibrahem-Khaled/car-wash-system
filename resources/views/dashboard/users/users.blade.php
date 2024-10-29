@@ -85,14 +85,6 @@
                             <input type="text" class="form-control" id="phone" name="phone">
                         </div>
                         <div class="mb-3">
-                            <label for="latitude" class="form-label">خط العرض</label>
-                            <input type="text" class="form-control" id="latitude" name="latitude">
-                        </div>
-                        <div class="mb-3">
-                            <label for="longitude" class="form-label">خط الطول</label>
-                            <input type="text" class="form-control" id="longitude" name="longitude">
-                        </div>
-                        <div class="mb-3">
                             <label for="address" class="form-label">العنوان</label>
                             <input type="text" class="form-control" id="address" name="address">
                         </div>

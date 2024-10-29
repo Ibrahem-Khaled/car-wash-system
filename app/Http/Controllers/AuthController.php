@@ -37,7 +37,7 @@ class AuthController extends Controller
     public function login()
     {
         if (Auth::check()) {
-            return redirect()->route('profile')->with('success', 'تم تسجيل الدخول بنجاح.');
+            return redirect()->route('home')->with('success', 'تم تسجيل الدخول بنجاح.');
         }
         return view('Auth.login');
     }
@@ -54,7 +54,7 @@ class AuthController extends Controller
 
         if (auth()->attempt($credentials, $remember)) {
 
-            return redirect()->route('home.dashboard')->with('success', 'تم تسجيل الدخول بنجاح.');
+            return redirect()->route('home')->with('success', 'تم تسجيل الدخول بنجاح.');
 
         } else {
             return redirect()->back()->with('error', 'تفاصيل تسجيل الدخول غير صحيحة. يرجى المحاولة مرة أخرى.');
@@ -81,14 +81,14 @@ class AuthController extends Controller
         $data = $request->all();
         $data['password'] = bcrypt($data['password']);
         $user = User::create($data);
-
+        Auth::login($user);
         return redirect()->back()->with('success', 'تم انشاء حسابك بنجاح');
     }
 
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('login')->with('success', 'Logout successful.');
+        return redirect()->route('home')->with('success', 'Logout successful.');
     }
 
     public function forgetPassword()
@@ -112,6 +112,6 @@ class AuthController extends Controller
     public function destroy()
     {
         Auth::user()->delete();
-        return redirect()->route('login')->with('success', 'Account deleted successfully.');
+        return redirect()->route('home')->with('success', 'Account deleted successfully.');
     }
 }
