@@ -128,9 +128,9 @@
             <div class="col">
                 <h5>اتصل بنا</h5>
                 <div class="contact-info">
-                    <p><i class="fas fa-phone"></i>{{ $companyUser->phone }}</p>
-                    <p><i class="fas fa-envelope"></i>{{ $companyUser->email }}</p>
-                    <p><i class="fas fa-map-marker-alt"></i>{{ $companyUser->address }} - {{ $companyUser->city }}</p>
+                    <p><i class="fas fa-phone"></i>{{ $companyUser?->phone }}</p>
+                    <p><i class="fas fa-envelope"></i>{{ $companyUser?->email }}</p>
+                    <p><i class="fas fa-map-marker-alt"></i>{{ $companyUser?->address }} - {{ $companyUser?->city }}</p>
                 </div>
             </div>
         </div>
