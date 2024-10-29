@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha512-sA+qNc3y...="
+        crossorigin="" />
 
     <style>
         body {
@@ -17,6 +18,10 @@
             direction: rtl;
         }
 
+        .modal-map {
+            height: 300px;
+            width: 100%;
+        }
         .section-title {
             font-size: 2.5rem;
             font-weight: 700;
@@ -108,7 +113,8 @@
                                                 </option>
                                                 <option value="large">كبيرة - {{ $service->large_car_price }} ريال
                                                 </option>
-                                                <option value="x_large">كبيرة جدا - {{ $service->x_large_car_price }} ريال
+                                                <option value="x_large">كبيرة جدا - {{ $service->x_large_car_price }}
+                                                    ريال
                                                 </option>
                                             </select>
                                         </div>
@@ -166,28 +172,39 @@
     @include('homeLayouts.footer')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha512-VNf5a2...=" crossorigin=""></script>
     <script>
-        @foreach ($mainProducts as $service)
-            const map{{ $service->id }} = L.map('map-{{ $service->id }}').setView([24.7136, 46.6753], 12);
+        document.querySelectorAll('[data-bs-toggle="modal"]').forEach((modalButton) => {
+            modalButton.addEventListener('click', function() {
+                const modalId = this.getAttribute('data-bs-target');
+                const mapId = modalId.replace('#orderModal-', 'map-');
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map{{ $service->id }});
+                setTimeout(() => {
+                    const map = L.map(mapId).setView([24.7136, 46.6753], 12);
 
-            const marker = L.marker([24.7136, 46.6753], {
-                draggable: true
-            }).addTo(map{{ $service->id }});
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }).addTo(map);
 
-            marker.on('dragend', function(e) {
-                const {
-                    lat,
-                    lng
-                } = e.target.getLatLng();
-                document.getElementById('latitude-{{ $service->id }}').value = lat;
-                document.getElementById('longitude-{{ $service->id }}').value = lng;
+                    const marker = L.marker([24.7136, 46.6753], {
+                        draggable: true
+                    }).addTo(map);
+
+                    marker.on('dragend', function(e) {
+                        const {
+                            lat,
+                            lng
+                        } = e.target.getLatLng();
+                        document.getElementById(`latitude-${mapId.split('-')[1]}`).value =
+                            lat;
+                        document.getElementById(`longitude-${mapId.split('-')[1]}`).value =
+                            lng;
+                    });
+
+                    map.invalidateSize(); // هذا السطر مهم لتحديث أبعاد الخريطة بشكل صحيح
+                }, 200); // يتم الانتظار قليلاً حتى يتم عرض الـ Modal
             });
-        @endforeach
+        });
     </script>
 
 </body>
