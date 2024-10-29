@@ -42,6 +42,8 @@ Route::group([], function () {
     Route::get('/subscribtion', [homeController::class, 'subscribtion'])->name('subscribtion');
 
     Route::get('/user/orders', [homeController::class, 'userOrders'])->name('user.orders');
+    Route::put('orders/{cart}/update-status', [homeController::class, 'updateStatus'])->name('updateOrderStatus');
+
 
     Route::get('user/subscriptions', [homeController::class, 'userSubscriptions'])->name('user.subscriptions');
 

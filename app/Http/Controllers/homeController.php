@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\Cart;
 use App\Models\ContactUs;
 use App\Models\Product;
 use App\Models\Subscription;
@@ -105,12 +106,35 @@ class homeController extends Controller
 
     public function userOrders()
     {
-        $user = User::find(Auth::id());
-        $orders = $user->userCart()->with('product', 'factor', 'car')->get();
-        return view('user-orders', [
-            'companyUser' => $this->companyUser,
-            'orders' => $orders
+        if (auth()->user()->role = 'factor') {
+            $user = User::find(Auth::id());
+            $orders = $user->factorCart()->with('product', 'car')->get();
+
+            return view('factor.orders', [
+                'companyUser' => $this->companyUser,
+                'orders' => $orders
+            ]);
+        } else {
+            $user = User::find(Auth::id());
+            $orders = $user->userCart()->with('product', 'car')->get();
+
+            return view('user-orders', [
+                'companyUser' => $this->companyUser,
+                'orders' => $orders
+            ]);
+        }
+    }
+
+    public function updateStatus(Request $request, Cart $cart)
+    {
+        $request->validate([
+            'status' => 'required|in:acepted,declined,pending,unpaid',
         ]);
+
+        $cart->status = $request->input('status');
+        $cart->save();
+
+        return back()->with('success', 'تم تحديث حالة الطلب بنجاح.');
     }
 
     public function userSubscriptions()

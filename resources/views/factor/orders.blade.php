@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الطلبات الحالية والسابقة</title>
+    <title>متابعة الطلبات</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -38,17 +38,9 @@
         }
 
         .order-status {
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 600;
-            margin-top: 5px;
-        }
-
-        .status-pending {
-            color: #ffc107;
-        }
-
-        .status-completed {
-            color: #28a745;
+            margin-bottom: 10px;
         }
 
         .btn-primary {
@@ -58,6 +50,11 @@
 
         .btn-primary:hover {
             background-color: #ed0f7d;
+        }
+
+        .input-group {
+            max-width: 300px;
+            margin: auto;
         }
     </style>
 </head>
@@ -69,7 +66,7 @@
 
     <section class="py-5">
         <div class="container">
-            <h2 class="section-title">طلبات المغسلة</h2>
+            <h2 class="section-title">متابعة الطلبات</h2>
 
             <ul class="nav nav-tabs mb-4" id="orderTabs" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -95,8 +92,26 @@
                                     <h5>طلب رقم #{{ $item->id }}</h5>
                                     <p>{{ $item->product->name }}</p>
                                     <p><strong>تاريخ الطلب:</strong> {{ $item->created_at->format('Y-m-d') }}</p>
-                                    <p class="order-status status-pending">قيد التنفيذ</p>
-                                    <a href="#" class="btn btn-primary">تفاصيل الطلب</a>
+                                    <p class="order-status">حالة الطلب: {{ $item->status }}</p>
+
+                                    <form action="{{ route('updateOrderStatus', $item->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="input-group mb-3">
+                                            <select class="form-select" name="status" required>
+                                                <option value="acepted"
+                                                    {{ $item->status == 'acepted' ? 'selected' : '' }}>مقبول</option>
+                                                <option value="declined"
+                                                    {{ $item->status == 'declined' ? 'selected' : '' }}>مرفوض</option>
+                                                <option value="pending"
+                                                    {{ $item->status == 'pending' ? 'selected' : '' }}>قيد التنفيذ
+                                                </option>
+                                                <option value="unpaid"
+                                                    {{ $item->status == 'unpaid' ? 'selected' : '' }}>غير مدفوع</option>
+                                            </select>
+                                            <button class="btn btn-primary" type="submit">تحديث</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         @endforeach
@@ -112,8 +127,7 @@
                                     <h5>طلب رقم #{{ $item->id }}</h5>
                                     <p>{{ $item->product->name }}</p>
                                     <p><strong>تاريخ الطلب:</strong> {{ $item->created_at->format('Y-m-d') }}</p>
-                                    <p class="order-status status-completed">مكتمل</p>
-                                    <a href="#" class="btn btn-primary">تفاصيل الطلب</a>
+                                    <p class="order-status">حالة الطلب: {{ $item->status }}</p>
                                 </div>
                             </div>
                         @endforeach
