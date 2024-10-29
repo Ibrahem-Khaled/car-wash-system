@@ -19,6 +19,7 @@ class UserCartController extends Controller
     public function index()
     {
         $carts = Cart::where('customer_id', auth()->user()->id)
+            ->where('status', 'unpaid')
             ->get();
         //return response()->json($carts);
 

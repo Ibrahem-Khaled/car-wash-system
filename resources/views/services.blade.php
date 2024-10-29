@@ -124,17 +124,17 @@
                                             <div class="row gx-2">
                                                 <div class="col-4">
                                                     <input type="text" class="form-control"
-                                                        name="car_number_letters1" maxlength="1" placeholder="حروف"
+                                                        name="car_number_letters1" maxlength="1" placeholder="الحرف الاول"
                                                         required>
                                                 </div>
                                                 <div class="col-4">
                                                     <input type="text" class="form-control"
-                                                        name="car_number_letters2" maxlength="1" placeholder="حروف"
+                                                        name="car_number_letters2" maxlength="1" placeholder="الحرف الثاني"
                                                         required>
                                                 </div>
                                                 <div class="col-4">
                                                     <input type="text" class="form-control"
-                                                        name="car_number_letters3" maxlength="1" placeholder="حروف"
+                                                        name="car_number_letters3" maxlength="1" placeholder="الحرف الثالث"
                                                         required>
                                                 </div>
                                                 <div class="col-12 mt-2">
