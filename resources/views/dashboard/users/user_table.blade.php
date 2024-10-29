@@ -90,6 +90,8 @@
                                 <div class="mb-3">
                                     <label for="role" class="form-label">الدور</label>
                                     <select class="form-control" id="role" name="role">
+                                        <option value="company" {{ $user->role == 'company' ? 'selected' : '' }}>الشركة
+                                        </option>
                                         <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>مسؤول
                                         </option>
                                         <option value="customer" {{ $user->role == 'customer' ? 'selected' : '' }}>عميل
