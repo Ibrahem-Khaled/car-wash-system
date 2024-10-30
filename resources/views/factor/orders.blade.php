@@ -77,7 +77,8 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="past-orders-tab" data-bs-toggle="tab" data-bs-target="#past-orders"
                         type="button" role="tab" aria-controls="past-orders" aria-selected="false">الطلبات
-                        السابقة</button>
+                        {{ auth()->user()->role == 'customer' ? 'السابقة' : 'المرفوضة' }}</button>
+                    </button>
                 </li>
             </ul>
 
@@ -171,6 +172,50 @@
                                     <p><strong>رقم السيارة:</strong> {{ $item->car_number }}</p>
                                     <p><strong>تاريخ الغسيل:</strong> {{ $item->car_wash }}</p>
                                     <p class="order-status">حالة الطلب: {{ $item->status }}</p>
+                                    <form action="{{ route('updateOrderStatus', $item->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+
+                                        <div class="mb-3">
+                                            <p>تغيير حالة الطلب:</p>
+
+                                            @if ($item->status == 'unpaid')
+                                                <button class="btn btn-success" name="status" value="acepted"
+                                                    type="submit">قبول الطلب</button>
+                                            @elseif ($item->status == 'acepted')
+                                                <button class="btn btn-warning" name="status" value="pending"
+                                                    type="submit">قيد التنفيذ</button>
+                                            @elseif ($item->status == 'pending')
+                                                <button class="btn btn-success" name="status" value="completed"
+                                                    type="submit">اكتمل</button>
+                                            @endif
+
+                                            <button class="btn btn-danger" type="button" id="declineButton">رفض
+                                                الطلب</button>
+                                        </div>
+
+                                        <div class="mb-3" id="reasonContainer" style="display: none;">
+                                            <label for="decline_reason" class="form-label">سبب الرفض</label>
+                                            <textarea class="form-control" name="decline_reason" id="decline_reason" rows="3"></textarea>
+                                            <button class="btn btn-danger mt-2" name="status" value="declined"
+                                                type="submit">تأكيد الرفض</button>
+                                        </div>
+
+                                        @if (Auth::check() && in_array(auth()->user()->role, ['factor', 'company', 'customer']))
+                                            <div class="mb-3">
+                                                <label for="worker_id" class="form-label">تحديد العامل المسؤول</label>
+                                                <select class="form-select" name="worker_id" id="worker_id">
+                                                    <option value="">-- اختر العامل --</option>
+                                                    @foreach ($workers as $worker)
+                                                        <option value="{{ $worker->id }}"
+                                                            {{ $item->worker_id == $worker->id ? 'selected' : '' }}>
+                                                            {{ $worker->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        @endif
+                                    </form>
                                 </div>
                             </div>
                         @endforeach
