@@ -106,13 +106,14 @@ class homeController extends Controller
 
     public function userOrders()
     {
-        if (auth()->user()->role = 'factor') {
+        if (auth()->user()->role = 'factor' || auth()->user()->role = 'supervisor') {
             $user = User::find(Auth::id());
             $orders = $user->factorCart()->with('product', 'car')->get();
-
+            $workers = User::where('role', 'factor')->get();
             return view('factor.orders', [
                 'companyUser' => $this->companyUser,
-                'orders' => $orders
+                'orders' => $orders,
+                'workers' => $workers
             ]);
         } else {
             $user = User::find(Auth::id());
@@ -128,11 +129,13 @@ class homeController extends Controller
     public function updateStatus(Request $request, Cart $cart)
     {
         $request->validate([
-            'status' => 'required|in:acepted,declined,pending',
-            'decline_reason' => 'required_if:status,declined|string|nullable'
+            'status' => 'required|in:acepted,declined,pending,completed,unpaid',
+            'worker_id' => 'required|exists:users,id',
+            'decline_reason' => 'required_if:status,declined|string|nullable',
         ]);
 
         $cart->status = $request->input('status');
+        $cart->factor_id = $request->input('worker_id');
 
         if ($request->input('status') == 'declined') {
             $cart->decline_reason = $request->input('decline_reason');
@@ -140,7 +143,7 @@ class homeController extends Controller
 
         $cart->save();
 
-        return back()->with('success', 'تم تحديث حالة الطلب بنجاح.');
+        return back()->with('success', 'تم تحديث حالة الطلب وتحديد العامل بنجاح.');
     }
 
     public function userSubscriptions()

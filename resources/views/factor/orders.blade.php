@@ -108,12 +108,20 @@
 
                                         <div class="mb-3">
                                             <p>تغيير حالة الطلب:</p>
-                                            <button class="btn btn-success" name="status" value="acepted"
-                                                type="submit">مقبول</button>
-                                            <button class="btn btn-warning" name="status" value="pending"
-                                                type="submit">قيد التنفيذ</button>
-                                            <button class="btn btn-danger" type="button"
-                                                id="declineButton">رفض</button>
+
+                                            @if ($item->status == 'unpaid')
+                                                <button class="btn btn-success" name="status" value="acepted"
+                                                    type="submit">قبول الطلب</button>
+                                            @elseif ($item->status == 'acepted')
+                                                <button class="btn btn-warning" name="status" value="pending"
+                                                    type="submit">قيد التنفيذ</button>
+                                            @elseif ($item->status == 'pending')
+                                                <button class="btn btn-success" name="status" value="completed"
+                                                    type="submit">اكتمل</button>
+                                            @endif
+
+                                            <button class="btn btn-danger" type="button" id="declineButton">رفض
+                                                الطلب</button>
                                         </div>
 
                                         <div class="mb-3" id="reasonContainer" style="display: none;">
@@ -122,8 +130,20 @@
                                             <button class="btn btn-danger mt-2" name="status" value="declined"
                                                 type="submit">تأكيد الرفض</button>
                                         </div>
-                                    </form>
 
+                                        <div class="mb-3">
+                                            <label for="worker_id" class="form-label">تحديد العامل المسؤول</label>
+                                            <select class="form-select" name="worker_id" id="worker_id" required>
+                                                <option value="">-- اختر العامل --</option>
+                                                @foreach ($workers as $worker)
+                                                    <option value="{{ $worker->id }}"
+                                                        {{ $item->worker_id == $worker->id ? 'selected' : '' }}>
+                                                        {{ $worker->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </form>
 
                                     <button class="btn btn-secondary mt-3"
                                         onclick="openMap({{ $item->latitude }}, {{ $item->longitude }})">
