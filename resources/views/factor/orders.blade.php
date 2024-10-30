@@ -131,18 +131,20 @@
                                                 type="submit">تأكيد الرفض</button>
                                         </div>
 
-                                        <div class="mb-3">
-                                            <label for="worker_id" class="form-label">تحديد العامل المسؤول</label>
-                                            <select class="form-select" name="worker_id" id="worker_id" required>
-                                                <option value="">-- اختر العامل --</option>
-                                                @foreach ($workers as $worker)
-                                                    <option value="{{ $worker->id }}"
-                                                        {{ $item->worker_id == $worker->id ? 'selected' : '' }}>
-                                                        {{ $worker->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                        @if (Auht::user()->role == 'admin' || Auht::user()->role == 'supervisor')
+                                            <div class="mb-3">
+                                                <label for="worker_id" class="form-label">تحديد العامل المسؤول</label>
+                                                <select class="form-select" name="worker_id" id="worker_id" required>
+                                                    <option value="">-- اختر العامل --</option>
+                                                    @foreach ($workers as $worker)
+                                                        <option value="{{ $worker->id }}"
+                                                            {{ $item->worker_id == $worker->id ? 'selected' : '' }}>
+                                                            {{ $worker->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        @endif
                                     </form>
 
                                     <button class="btn btn-secondary mt-3"
