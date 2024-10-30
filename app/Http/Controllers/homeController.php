@@ -130,7 +130,7 @@ class homeController extends Controller
     {
         $request->validate([
             'status' => 'required|in:acepted,declined,pending,completed,unpaid',
-            'worker_id' => 'required|exists:users,id',
+            'worker_id' => 'nullable|exists:users,id',
             'decline_reason' => 'required_if:status,declined|string|nullable',
         ]);
 

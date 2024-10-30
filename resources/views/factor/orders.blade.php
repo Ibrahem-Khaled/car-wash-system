@@ -131,10 +131,10 @@
                                                 type="submit">تأكيد الرفض</button>
                                         </div>
 
-                                        @if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'supervisor'))
+                                        @if (Auth::check() && in_array(Auth::user()->role, ['admin', 'supervisor']))
                                             <div class="mb-3">
                                                 <label for="worker_id" class="form-label">تحديد العامل المسؤول</label>
-                                                <select class="form-select" name="worker_id" id="worker_id" required>
+                                                <select class="form-select" name="worker_id" id="worker_id">
                                                     <option value="">-- اختر العامل --</option>
                                                     @foreach ($workers as $worker)
                                                         <option value="{{ $worker->id }}"
@@ -144,8 +144,6 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        @else
-                                        
                                         @endif
                                     </form>
 
