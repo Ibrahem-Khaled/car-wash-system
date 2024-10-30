@@ -125,22 +125,22 @@
                                         type="submit">تأكيد الرفض</button>
                                 </div>
 
-
-                                @if (Auth::check() && !in_array(auth()->user()->role, ['factor', 'company', 'customer']))
-                                    <div class="mb-3">
-                                        <label for="worker_id" class="form-label">تحديد العامل المسؤول</label>
-                                        <select class="form-select" name="worker_id" id="worker_id">
-                                            <option value="">-- اختر العامل --</option>
-                                            @foreach ($workers as $worker)
-                                                <option value="{{ $worker->id }}"
-                                                    {{ $item->worker_id == $worker->id ? 'selected' : '' }}>
-                                                    {{ $worker->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                @endif
+                             
                             </form>
+                            @if (Auth::check() && !in_array(auth()->user()->role, ['factor', 'company', 'customer']))
+                                <div class="mb-3">
+                                    <label for="worker_id" class="form-label">تحديد العامل المسؤول</label>
+                                    <select class="form-select" name="worker_id" id="worker_id">
+                                        <option value="">-- اختر العامل --</option>
+                                        @foreach ($workers as $worker)
+                                            <option value="{{ $worker->id }}"
+                                                {{ $item->worker_id == $worker->id ? 'selected' : '' }}>
+                                                {{ $worker->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @endif
 
                             <button class="btn btn-secondary mt-3"
                                 onclick="openMap({{ $item->latitude }}, {{ $item->longitude }})">
