@@ -133,12 +133,14 @@ class homeController extends Controller
             'worker_id' => 'nullable|exists:users,id',
             'decline_reason' => 'required_if:status,declined|string|nullable',
         ]);
+        $worker = User::where('role', 'supervisor')->first();
 
         $cart->status = $request->input('status');
         $cart->factor_id = $request->input('worker_id');
 
         if ($request->input('status') == 'declined') {
             $cart->decline_reason = $request->input('decline_reason');
+            $cart->factor_id = $worker->id;
         }
 
         $cart->save();
