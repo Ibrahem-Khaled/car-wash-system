@@ -86,7 +86,7 @@
                 <div class="tab-pane fade show active" id="current-orders" role="tabpanel"
                     aria-labelledby="current-orders-tab">
                     <div class="row">
-                        @foreach ($orders->whereIn('status', ['pending', 'unpaid']) as $item)
+                        @foreach ($orders->whereIn('status', ['pending', 'unpaid', 'accepted', 'paid_on_delivery']) as $item)
                             <div class="col-md-6">
                                 <div class="order-card bg-white">
                                     <h5>طلب رقم #{{ $item->id }}</h5>
@@ -158,7 +158,7 @@
                 <!-- الطلبات السابقة -->
                 <div class="tab-pane fade" id="past-orders" role="tabpanel" aria-labelledby="past-orders-tab">
                     <div class="row">
-                        @foreach ($orders->whereIn('status', ['acepted', 'declined']) as $item)
+                        @foreach ($orders->whereIn('status', ['completed', 'declined']) as $item)
                             <div class="col-md-6">
                                 <div class="order-card bg-white">
                                     <h5>طلب رقم #{{ $item->id }}</h5>
