@@ -50,7 +50,7 @@
             <button type="submit" class="btn btn-danger">حذف</button>
         </form>
 
-        <form action="{{ route('dashboard.carts.updateStatus', [$cart->id, 'acepted']) }}" method="POST"
+        {{-- <form action="{{ route('dashboard.carts.updateStatus', [$cart->id, 'acepted']) }}" method="POST"
             class="d-inline">
             @csrf
             <button type="submit" class="btn btn-success">قبول</button>
@@ -79,7 +79,7 @@
             @csrf
             <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
                 data-bs-target="#declineReasonModal{{ $cart->id }}">رفض</button>
-        </form>
+        </form> --}}
     </td>
 </tr>
 
