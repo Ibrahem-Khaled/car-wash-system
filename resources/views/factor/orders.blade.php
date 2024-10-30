@@ -131,7 +131,7 @@
                                                 type="submit">تأكيد الرفض</button>
                                         </div>
 
-                                        @if (Auth::check() && in_array(Auth::user()->role, ['admin', 'supervisor']))
+                                        @if (Auth::check() && in_array(auth()->user()->role, ['admin', 'supervisor']))
                                             <div class="mb-3">
                                                 <label for="worker_id" class="form-label">تحديد العامل المسؤول</label>
                                                 <select class="form-select" name="worker_id" id="worker_id">
