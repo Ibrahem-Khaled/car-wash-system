@@ -106,11 +106,19 @@ class homeController extends Controller
 
     public function userOrders()
     {
-        if (auth()->user()->role = 'factor' || auth()->user()->role = 'supervisor') {
+        if (auth()->user()->role = 'factor') {
             $user = User::find(Auth::id());
             $orders = $user->factorCart()->with('product', 'car')->get();
             $workers = User::where('role', 'factor')->get();
             return view('factor.orders', [
+                'companyUser' => $this->companyUser,
+                'orders' => $orders,
+            ]);
+        } elseif (auth()->user()->role = 'supervisor') {
+            $user = User::find(Auth::id());
+            $orders = $user->factorCart()->with('product', 'car')->get();
+            $workers = User::where('role', 'factor')->get();
+            return view('factor.supervisor', [
                 'companyUser' => $this->companyUser,
                 'orders' => $orders,
                 'workers' => $workers
