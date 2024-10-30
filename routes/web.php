@@ -69,8 +69,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'checkAdmin']], 
 
     // cart routes
     Route::resource('carts', CartController::class);
-    Route::post('carts/{cart}/accept', [CartController::class, 'acceptOrder'])->name('dashboard.carts.acceptOrder');
-    Route::post('carts/{cart}/decline', [CartController::class, 'declineOrder'])->name('dashboard.carts.declineOrder');
+    Route::post('carts/{cart}/accept', [CartController::class, 'updateStatus'])->name('dashboard.carts.updateStatus');
 
     // user rating routes
     Route::resource('user_ratings', UserRatingController::class);

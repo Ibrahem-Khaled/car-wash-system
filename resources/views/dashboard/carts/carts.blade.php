@@ -17,7 +17,15 @@
 
         <!-- Tabs -->
         <ul class="nav nav-tabs mb-4" id="cartTabs" role="tablist">
-            @foreach (['all' => 'كل الطلبات', 'accepted' => 'الطلبات المقبولة', 'declined' => 'الطلبات المرفوضة', 'pending' => 'الطلبات المعلقة', 'unpaid' => 'الطلبات غير المدفوعة'] as $key => $label)
+            @foreach ([
+            'all' => 'كل الطلبات',
+            'accepted' => 'الطلبات المقبولة',
+            'declined' => 'الطلبات المرفوضة',
+            'pending' => 'الطلبات المعلقة',
+            'unpaid' => 'الطلبات غير المدفوعة',
+            'paid_on_delivery' => 'مدفوعة عند التسليم',
+            'completed' => 'الطلبات المكتملة',
+        ] as $key => $label)
                 <li class="nav-item" role="presentation">
                     <button class="nav-link {{ $loop->first ? 'active' : '' }}" id="{{ $key }}-tab"
                         data-bs-toggle="tab" data-bs-target="#{{ $key }}" type="button" role="tab"
@@ -30,8 +38,17 @@
 
         <!-- Tab Content -->
         <div class="tab-content" id="cartTabsContent">
-            @foreach (['all' => $carts, 'accepted' => $carts->where('status', 'accepted'), 'declined' => $carts->where('status', 'declined'), 'pending' => $carts->where('status', 'pending'), 'unpaid' => $carts->where('status', 'unpaid')] as $key => $cartList)
-                <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="{{ $key }}" role="tabpanel" aria-labelledby="{{ $key }}-tab">
+            @foreach ([
+            'all' => $carts,
+            'accepted' => $carts->where('status', 'accepted'),
+            'declined' => $carts->where('status', 'declined'),
+            'pending' => $carts->where('status', 'pending'),
+            'unpaid' => $carts->where('status', 'unpaid'),
+            'paid_on_delivery' => $carts->where('status', 'paid_on_delivery'),
+            'completed' => $carts->where('status', 'completed'),
+        ] as $key => $cartList)
+                <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="{{ $key }}" role="tabpanel"
+                    aria-labelledby="{{ $key }}-tab">
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead class="bg-primary text-white">

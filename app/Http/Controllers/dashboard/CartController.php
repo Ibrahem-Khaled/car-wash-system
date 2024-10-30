@@ -54,15 +54,20 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Cart deleted successfully.');
     }
 
-    public function acceptOrder(Cart $cart)
+    public function updateStatus(Request $request, Cart $cart, $status)
     {
-        $cart->update(['status' => 'acepted']);
-        return redirect()->back()->with('success', 'Order accepted.');
-    }
+        $request->validate([
+            'decline_reason' => 'required_if:status,declined|string|nullable',
+        ]);
 
-    public function declineOrder(Cart $cart)
-    {
-        $cart->update(['status' => 'declined']);
-        return redirect()->back()->with('success', 'Order declined.');
+        $cart->status = $status;
+
+        if ($status == 'declined') {
+            $cart->decline_reason = $request->input('decline_reason');
+        }
+
+        $cart->save();
+
+        return back()->with('success', 'تم تحديث حالة الطلب بنجاح.');
     }
 }
