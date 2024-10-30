@@ -105,22 +105,25 @@
                                     <form action="{{ route('updateOrderStatus', $item->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <div class="input-group mb-3">
-                                            <select class="form-select" name="status" required>
-                                                <option value="acepted"
-                                                    {{ $item->status == 'acepted' ? 'selected' : '' }}>مقبول</option>
-                                                <option value="declined"
-                                                    {{ $item->status == 'declined' ? 'selected' : '' }}>مرفوض</option>
-                                                <option value="pending"
-                                                    {{ $item->status == 'pending' ? 'selected' : '' }}>قيد التنفيذ
-                                                </option>
-                                                <option value="unpaid"
-                                                    {{ $item->status == 'unpaid' ? 'selected' : '' }}>غير مدفوع
-                                                </option>
-                                            </select>
-                                            <button class="btn btn-primary" type="submit">تحديث</button>
+
+                                        <div class="mb-3">
+                                            <p>تغيير حالة الطلب:</p>
+                                            <button class="btn btn-success" name="status" value="acepted"
+                                                type="submit">مقبول</button>
+                                            <button class="btn btn-warning" name="status" value="pending"
+                                                type="submit">قيد التنفيذ</button>
+                                            <button class="btn btn-danger" type="button"
+                                                id="declineButton">رفض</button>
+                                        </div>
+
+                                        <div class="mb-3" id="reasonContainer" style="display: none;">
+                                            <label for="decline_reason" class="form-label">سبب الرفض</label>
+                                            <textarea class="form-control" name="decline_reason" id="decline_reason" rows="3"></textarea>
+                                            <button class="btn btn-danger mt-2" name="status" value="declined"
+                                                type="submit">تأكيد الرفض</button>
                                         </div>
                                     </form>
+
 
                                     <button class="btn btn-secondary mt-3"
                                         onclick="openMap({{ $item->latitude }}, {{ $item->longitude }})">
@@ -168,6 +171,12 @@
                 alert('إحداثيات الموقع غير متوفرة.');
             }
         }
+    </script>
+
+    <script>
+        document.getElementById('declineButton').addEventListener('click', function() {
+            document.getElementById('reasonContainer').style.display = 'block';
+        });
     </script>
 
 </body>

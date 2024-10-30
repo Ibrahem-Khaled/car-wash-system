@@ -128,10 +128,16 @@ class homeController extends Controller
     public function updateStatus(Request $request, Cart $cart)
     {
         $request->validate([
-            'status' => 'required|in:acepted,declined,pending,unpaid',
+            'status' => 'required|in:acepted,declined,pending',
+            'decline_reason' => 'required_if:status,declined|string|nullable'
         ]);
 
         $cart->status = $request->input('status');
+
+        if ($request->input('status') == 'declined') {
+            $cart->decline_reason = $request->input('decline_reason');
+        }
+
         $cart->save();
 
         return back()->with('success', 'تم تحديث حالة الطلب بنجاح.');

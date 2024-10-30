@@ -24,6 +24,7 @@ return new class extends Migration {
             $table->text('latitude')->nullable();
             $table->text('longitude')->nullable();
             $table->bigInteger('price')->nullable();
+            $table->text('decline_reason')->nullable();
             $table->timestamps();
         });
     }
