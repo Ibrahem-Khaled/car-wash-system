@@ -144,6 +144,8 @@
                                 @if (Auth::user()->role == 'admin' || Auth::user()->role == 'supervisor')
                                     <li><a class="dropdown-item" href="{{ route('home.dashboard') }}">لوحة التحكم</a>
                                     </li>
+                                @else
+                                    
                                 @endif
                                 <li>
                                     <hr class="dropdown-divider">
