@@ -110,15 +110,12 @@
                                         <div class="mb-3">
                                             <p>تغيير حالة الطلب:</p>
 
-                                            @if ($item->status == 'unpaid')
+                                            @if ($item->status == 'pending')
                                                 <button class="btn btn-success" name="status" value="acepted"
                                                     type="submit">قبول الطلب</button>
                                             @elseif ($item->status == 'acepted')
                                                 <button class="btn btn-warning" name="status" value="pending"
                                                     type="submit">قيد التنفيذ</button>
-                                            @elseif ($item->status == 'pending')
-                                                <button class="btn btn-success" name="status" value="completed"
-                                                    type="submit">اكتمل</button>
                                             @endif
 
                                             <button class="btn btn-danger" type="button" id="declineButton">رفض
