@@ -182,7 +182,9 @@
                                             @elseif ($item->status == 'pending')
                                                 <button class="btn btn-warning" name="status" value="acepted"
                                                     type="submit">قبول</button>
-                                            @elseif ($item->status == 'declined')
+                                                <input type="hidden" name="factor_id"
+                                                    value="{{ auth()->user()->id }}">
+                                            @elseif ($item->status == 'declined' && auth()->user()->role == 'supervisor')
                                                 <button class="btn btn-warning" name="status" value="pending"
                                                     type="submit">تحويل الطلب</button>
                                             @endif
