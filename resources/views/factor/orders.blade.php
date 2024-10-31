@@ -118,15 +118,15 @@
                                                     type="submit">قبول</button>
                                             @endif
 
-                                            <button class="btn btn-danger" type="button" id="declineButton">رفض
+                                            <button class="btn btn-danger" type="button" id="declineButton">ارجاع
                                                 الطلب</button>
                                         </div>
 
                                         <div class="mb-3" id="reasonContainer" style="display: none;">
-                                            <label for="decline_reason" class="form-label">سبب الرفض</label>
+                                            <label for="decline_reason" class="form-label">سبب الارجاع</label>
                                             <textarea class="form-control" name="decline_reason" id="decline_reason" rows="3"></textarea>
                                             <button class="btn btn-danger mt-2" name="status" value="declined"
-                                                type="submit">تأكيد الرفض</button>
+                                                type="submit">تأكيد الارجاع</button>
                                         </div>
 
                                         @if (Auth::check() && !in_array(auth()->user()->role, ['factor', 'company', 'customer']))
