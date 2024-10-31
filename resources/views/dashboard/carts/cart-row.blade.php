@@ -10,6 +10,24 @@
     <td>{{ $cart->car_type }}</td>
     <td>{{ $cart->price }}</td>
     <td>
+        @switch($cart->paid)
+            @case('paid')
+                <span class="badge bg-success">مدفوع</span>
+            @break
+
+            @case('unpaid')
+                <span class="badge bg-danger">غير مدفوع</span>
+            @break
+
+            @case('cash_on_delivery')
+                <span class="badge bg-info">الدفع عند الاستلام</span>
+            @break
+
+            @default
+                <span class="badge bg-secondary">غير معروف</span>
+        @endswitch
+    </td>
+    <td>
         @switch($cart->status)
             @case('acepted')
                 <span class="badge bg-success">مقبول</span>
@@ -20,15 +38,11 @@
             @break
 
             @case('pending')
-                <span class="badge bg-info">قيد التنفيذ</span>
-            @break
-
-            @case('unpaid')
-                <span class="badge bg-warning">غير مدفوع</span>
-            @break
-
-            @case('paid_on_delivery')
-                <span class="badge bg-primary">مدفوع عند التسليم</span>
+                @if ($cart->factor->role == 'superviser')
+                    <span class="badge bg-success">طلب جديد</span>
+                @else
+                    <span class="badge bg-info">قيد التنفيذ</span>
+                @endif
             @break
 
             @case('completed')

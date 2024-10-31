@@ -22,8 +22,6 @@
             'accepted' => 'الطلبات المقبولة',
             'declined' => 'الطلبات المرفوضة',
             'pending' => 'الطلبات المعلقة',
-            'unpaid' => 'الطلبات غير المدفوعة',
-            'paid_on_delivery' => 'مدفوعة عند التسليم',
             'completed' => 'الطلبات المكتملة',
         ] as $key => $label)
                 <li class="nav-item" role="presentation">
@@ -43,8 +41,6 @@
             'accepted' => $carts->where('status', 'accepted'),
             'declined' => $carts->where('status', 'declined'),
             'pending' => $carts->where('status', 'pending'),
-            'unpaid' => $carts->where('status', 'unpaid'),
-            'paid_on_delivery' => $carts->where('status', 'paid_on_delivery'),
             'completed' => $carts->where('status', 'completed'),
         ] as $key => $cartList)
                 <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="{{ $key }}" role="tabpanel"
@@ -63,6 +59,7 @@
                                     <th>تاريخ الغسيل</th>
                                     <th>نوع السيارة</th>
                                     <th>السعر</th>
+                                    <th>حالة الدفع</th>
                                     <th>الحالة</th>
                                     <th>الإجراءات</th>
                                 </tr>

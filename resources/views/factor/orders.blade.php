@@ -87,7 +87,7 @@
                 <div class="tab-pane fade show active" id="current-orders" role="tabpanel"
                     aria-labelledby="current-orders-tab">
                     <div class="row">
-                        @foreach ($orders->whereIn('status', ['pending', 'unpaid', 'acepted', 'paid_on_delivery']) as $item)
+                        @foreach ($orders->whereIn('status', ['pending', 'acepted']) as $item)
                             <div class="col-md-6">
                                 <div class="order-card bg-white">
                                     <h5>طلب رقم #{{ $item->id }}</h5>
