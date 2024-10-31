@@ -137,7 +137,7 @@ class homeController extends Controller
         $worker = User::where('role', 'supervisor')->first();
 
         $cart->status = $request->input('status');
-        $cart->factor_id = $request->input('worker_id');
+        $cart->factor_id = $request->input('worker_id') === null ? $cart->factor_id : $request->input('worker_id');
 
         if ($request->input('status') == 'declined') {
             $cart->decline_reason = $request->input('decline_reason');
