@@ -41,7 +41,7 @@
                 @if ($cart->factor->role == 'superviser')
                     <span class="badge bg-success">طلب جديد</span>
                 @else
-                    <span class="badge bg-info">قيد التنفيذ</span>
+                    <span class="badge bg-info">معلق</span>
                 @endif
             @break
 
