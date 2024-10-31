@@ -17,8 +17,9 @@
                         <select class="form-select" name="car_model" required>
                             @foreach ($cars as $car)
                                 <option value="{{ $car->id }}">
-                                    <img src="{{ asset('storage/' . $car->image) }}" alt="{{ $car->name }}"
-                                        width="50" height="50">
+                                    {{-- <img src="{{ asset('storage/' . $car->image) }}" alt="{{ $car->name }}"
+                                        width="50" height="50"> --}}
+                                    {{ $car->name }}
                                 </option>
                             @endforeach
                         </select>
