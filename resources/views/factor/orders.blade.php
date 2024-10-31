@@ -99,7 +99,7 @@
                                     <p><strong>رقم السيارة:</strong> {{ $item->car_number }}</p>
                                     <p><strong>تاريخ الغسيل:</strong> {{ $item->car_wash }}</p>
                                     <p><strong>الإحداثيات:</strong> {{ $item->latitude }}, {{ $item->longitude }}</p>
-                                    <p class="order-status">حالة الطلب: {{ $item->status }}</p>
+                                    {{-- <p class="order-status">حالة الطلب: {{ $item->status }}</p> --}}
 
                                     <!-- بيانات العميل -->
                                     <div class="customer-info mt-3">
@@ -124,6 +124,9 @@
                                             @elseif ($item->status == 'pending')
                                                 <button class="btn btn-warning" name="status" value="acepted"
                                                     type="submit">قبول</button>
+                                            @elseif ($item->status == 'acepted')
+                                                <button class="btn btn-success" name="status" value="completed"
+                                                    type="submit">استكمال الطلب</button>
                                             @endif
 
                                             <button class="btn btn-danger" type="button" id="declineButton">ارجاع
@@ -178,7 +181,7 @@
                                     <p><strong>رقم السيارة:</strong> {{ $item->car_number }}</p>
                                     <p><strong>تاريخ الغسيل:</strong> {{ $item->car_wash }}</p>
                                     <p><strong>الإحداثيات:</strong> {{ $item->latitude }}, {{ $item->longitude }}</p>
-                                    <p class="order-status">حالة الطلب: {{ $item->status }}</p>
+                                    {{-- <p class="order-status">حالة الطلب: {{ $item->status }}</p> --}}
 
                                     <!-- بيانات العميل -->
                                     <div class="customer-info mt-3">
