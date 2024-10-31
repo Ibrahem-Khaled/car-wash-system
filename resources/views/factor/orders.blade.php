@@ -91,18 +91,26 @@
                             <div class="col-md-6">
                                 <div class="order-card bg-white">
                                     <h5>طلب رقم #{{ $item->id }}</h5>
-                                    <p><strong>المنتج:</strong> {{ $item->product->name }}</p>
+                                    <p><strong>المنتج:</strong> {{ optional($item->product)->name }}</p>
                                     <p><strong>السعر:</strong> {{ $item->price }} ريال</p>
                                     <p><strong>نوع السيارة:</strong> {{ $item->car_type }}</p>
                                     <p><strong>موديل السيارة:</strong> {{ $item->car_model }}</p>
                                     <p><strong>لون السيارة:</strong> {{ $item->car_color }}</p>
                                     <p><strong>رقم السيارة:</strong> {{ $item->car_number }}</p>
                                     <p><strong>تاريخ الغسيل:</strong> {{ $item->car_wash }}</p>
-                                    <p><strong>الإحداثيات:</strong>
-                                        {{ $item->latitude }}, {{ $item->longitude }}
-                                    </p>
+                                    <p><strong>الإحداثيات:</strong> {{ $item->latitude }}, {{ $item->longitude }}</p>
                                     <p class="order-status">حالة الطلب: {{ $item->status }}</p>
 
+                                    <!-- بيانات العميل -->
+                                    <div class="customer-info mt-3">
+                                        <h6>بيانات العميل:</h6>
+                                        <p><strong>الاسم:</strong> {{ optional($item->customer)->name ?? 'غير متوفر' }}
+                                        </p>
+                                        <p><strong>البريد الإلكتروني:</strong>
+                                            {{ optional($item->customer)->email ?? 'غير متوفر' }}</p>
+                                        <p><strong>رقم الهاتف:</strong>
+                                            {{ optional($item->customer)->phone ?? 'غير متوفر' }}</p>
+                                    </div>
                                     <form action="{{ route('updateOrderStatus', $item->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
@@ -162,13 +170,27 @@
                             <div class="col-md-6">
                                 <div class="order-card bg-white">
                                     <h5>طلب رقم #{{ $item->id }}</h5>
-                                    <p><strong>المنتج:</strong> {{ $item->product->name }}</p>
+                                    <p><strong>المنتج:</strong> {{ optional($item->product)->name }}</p>
                                     <p><strong>السعر:</strong> {{ $item->price }} ريال</p>
+                                    <p><strong>نوع السيارة:</strong> {{ $item->car_type }}</p>
                                     <p><strong>موديل السيارة:</strong> {{ $item->car_model }}</p>
                                     <p><strong>لون السيارة:</strong> {{ $item->car_color }}</p>
                                     <p><strong>رقم السيارة:</strong> {{ $item->car_number }}</p>
                                     <p><strong>تاريخ الغسيل:</strong> {{ $item->car_wash }}</p>
+                                    <p><strong>الإحداثيات:</strong> {{ $item->latitude }}, {{ $item->longitude }}</p>
                                     <p class="order-status">حالة الطلب: {{ $item->status }}</p>
+
+                                    <!-- بيانات العميل -->
+                                    <div class="customer-info mt-3">
+                                        <h6>بيانات العميل:</h6>
+                                        <p><strong>الاسم:</strong> {{ optional($item->customer)->name ?? 'غير متوفر' }}
+                                        </p>
+                                        <p><strong>البريد الإلكتروني:</strong>
+                                            {{ optional($item->customer)->email ?? 'غير متوفر' }}</p>
+                                        <p><strong>رقم الهاتف:</strong>
+                                            {{ optional($item->customer)->phone ?? 'غير متوفر' }}</p>
+                                    </div>
+
                                     <form action="{{ route('updateOrderStatus', $item->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
