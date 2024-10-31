@@ -92,18 +92,17 @@
         <h2 class="section-title">عربة الطلبات</h2>
         <form method="POST" action="{{ route('user.carts.updatePayment') }}">
             @csrf
-            <div class="mb-3">
-                <label for="payment_method" class="form-label">طريقة الدفع:</label>
-                <select class="form-select" id="payment_method" name="payment_method" required>
-                    <option value="paid">بطاقة</option>
-                    <option value="cash_on_delivery">عند الاستلام</option>
-                </select>
-            </div>
-
             <div class="row">
                 @if (count($carts) == 0)
                     <p class="text-center">لا يوجد طلبات في العربة</p>
                 @else
+                    <div class="mb-3">
+                        <label for="payment_method" class="form-label">طريقة الدفع:</label>
+                        <select class="form-select" id="payment_method" name="payment_method" required>
+                            <option value="paid">بطاقة</option>
+                            <option value="cash_on_delivery">عند الاستلام</option>
+                        </select>
+                    </div>
                     @foreach ($carts as $item)
                         <div class="col-md-6">
                             <div class="cart-item">
