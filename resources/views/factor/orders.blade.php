@@ -111,11 +111,11 @@
                                             <p>تغيير حالة الطلب:</p>
 
                                             @if ($item->status == 'pending')
-                                                <button class="btn btn-success" name="status" value="acepted"
-                                                    type="submit">قبول الطلب</button>
-                                            @elseif ($item->status == 'acepted')
-                                                <button class="btn btn-warning" name="status" value="pending"
-                                                    type="submit">قيد التنفيذ</button>
+                                                <button class="btn btn-success" name="status" value="pending"
+                                                    type="submit">تحويل الطلب</button>
+                                            @elseif ($item->status == 'pending')
+                                                <button class="btn btn-warning" name="status" value="acepted"
+                                                    type="submit">قبول</button>
                                             @endif
 
                                             <button class="btn btn-danger" type="button" id="declineButton">رفض
