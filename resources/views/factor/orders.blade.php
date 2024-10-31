@@ -77,7 +77,7 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="past-orders-tab" data-bs-toggle="tab" data-bs-target="#past-orders"
                         type="button" role="tab" aria-controls="past-orders" aria-selected="false">الطلبات
-                        {{ auth()->user()->role == 'customer' ? 'السابقة' : 'المرفوضة' }}</button>
+                        {{ auth()->user()->role == 'customer' ? 'السابقة' : 'الرجيعة' }}</button>
                     </button>
                 </li>
             </ul>
@@ -176,29 +176,26 @@
                                         <div class="mb-3">
                                             <p>تغيير حالة الطلب:</p>
 
-                                            @if ($item->status == 'unpaid')
-                                                <button class="btn btn-success" name="status" value="acepted"
-                                                    type="submit">قبول الطلب</button>
-                                            @elseif ($item->status == 'acepted')
-                                                <button class="btn btn-warning" name="status" value="pending"
-                                                    type="submit">قيد التنفيذ</button>
+                                            @if ($item->status == 'pending' && auth()->user()->role == 'supervisor')
+                                                <button class="btn btn-success" name="status" value="pending"
+                                                    type="submit">تحويل الطلب</button>
                                             @elseif ($item->status == 'pending')
-                                                <button class="btn btn-success" name="status" value="completed"
-                                                    type="submit">اكتمل</button>
+                                                <button class="btn btn-warning" name="status" value="acepted"
+                                                    type="submit">قبول</button>
                                             @endif
 
-                                            <button class="btn btn-danger" type="button" id="declineButton">رفض
+                                            <button class="btn btn-danger" type="button" id="declineButton">ارجاع
                                                 الطلب</button>
                                         </div>
 
                                         <div class="mb-3" id="reasonContainer" style="display: none;">
-                                            <label for="decline_reason" class="form-label">سبب الرفض</label>
+                                            <label for="decline_reason" class="form-label">سبب الارجاع</label>
                                             <textarea class="form-control" name="decline_reason" id="decline_reason" rows="3"></textarea>
                                             <button class="btn btn-danger mt-2" name="status" value="declined"
-                                                type="submit">تأكيد الرفض</button>
+                                                type="submit">تأكيد الارجاع</button>
                                         </div>
 
-                                        @if (Auth::check() && in_array(auth()->user()->role, ['factor', 'company', 'customer']))
+                                        @if (Auth::check() && !in_array(auth()->user()->role, ['factor', 'company', 'customer']))
                                             <div class="mb-3">
                                                 <label for="worker_id" class="form-label">تحديد العامل المسؤول</label>
                                                 <select class="form-select" name="worker_id" id="worker_id">
@@ -213,6 +210,7 @@
                                             </div>
                                         @endif
                                     </form>
+
                                 </div>
                             </div>
                         @endforeach
