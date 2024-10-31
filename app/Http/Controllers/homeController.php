@@ -109,7 +109,7 @@ class homeController extends Controller
         $user = Auth::user(); // الحصول على المستخدم الحالي
 
         if ($user->role === 'factor' || $user->role === 'supervisor') {
-            $orders = $user->factorCart()->with('product', 'car')->get();
+            $orders = $user->factorCart()->with('product', 'car', 'customer')->get();
             $workers = User::where('role', 'factor')->get();
 
             return view('factor.orders', [
@@ -118,7 +118,7 @@ class homeController extends Controller
                 'workers' => $workers
             ]);
         } else {
-            $orders = $user->userCart()->with('product')->get(); // التأكد من جلب المنتجات مع الطلبات
+            $orders = $user->userCart()->with('product', 'car', 'customer')->get(); // التأكد من جلب المنتجات مع الطلبات
 
             return view('user-orders', [
                 'companyUser' => $this->companyUser,

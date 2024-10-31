@@ -30,7 +30,7 @@
     <td>
         @switch($cart->status)
             @case('acepted')
-                <span class="badge bg-success">مقبول</span>
+                <span class="badge bg-success">قيد التنفيذ</span>
             @break
 
             @case('declined')

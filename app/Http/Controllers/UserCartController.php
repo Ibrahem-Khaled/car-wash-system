@@ -33,7 +33,7 @@ class UserCartController extends Controller
     {
         //return response()->json($request->all());
         $user = auth()->user();
-        $car_number = $request->car_number_letters1 . $request->car_number_letters2 . $request->car_number_letters3 . ' ' . $request->car_number_digits;
+        $car_number = $request->car_number_letters1 . '' . $request->car_number_letters2 . '' . $request->car_number_letters3 . '' . ' ' . $request->car_number_digits;
 
         $worker = User::where('role', 'supervisor')
             // ->where('city', 'like', '%' . $user->city . '%')
