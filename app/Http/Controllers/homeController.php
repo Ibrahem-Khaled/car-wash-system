@@ -117,7 +117,7 @@ class homeController extends Controller
             ]);
         } else {
             $user = User::find(Auth::id());
-            $orders = $user->userCart()->with('product', 'car')->get();
+            $orders = $user->userCart()->get();
 
             return view('user-orders', [
                 'companyUser' => $this->companyUser,
