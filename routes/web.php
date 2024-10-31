@@ -51,6 +51,8 @@ Route::group([], function () {
     //this cart routes
     Route::get('/carts', [UserCartController::class, 'index'])->name('user.carts')->middleware('auth');
     Route::post('/carts', [UserCartController::class, 'store'])->name('user.carts.store')->middleware('auth');
+    Route::post('/carts/update-payment', [UserCartController::class, 'updatePayment'])->name('user.carts.updatePayment')->middleware('auth');
+
 });
 
 

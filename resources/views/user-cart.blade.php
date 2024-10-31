@@ -87,54 +87,69 @@
 
 <body>
     @include('homeLayouts.nav-bar')
+
     <div class="container py-5">
         <h2 class="section-title">عربة الطلبات</h2>
-        <div class="row">
-            @if (count($carts) == 0)
-                <p class="text-center">لا يوجد طلبات في العربة</p>
-            @else
-                @foreach ($carts as $item)
-                    <div class="col-md-6">
-                        <div class="cart-item">
-                            <img src="{{ asset('storage/' . optional($item->product)->image) }}"
-                                alt="{{ optional($item->product)->name ?? 'لا يوجد اسم' }}">
-                            <div class="item-details">
-                                <h5>{{ optional($item->product)->name ?? 'اسم غير متوفر' }}</h5>
-                                <p>نوع السيارة: {{ ucfirst($item->car_type ?? 'غير محدد') }}</p>
-                                <p>لون السيارة: {{ $item->car_color ?? 'غير محدد' }}</p>
-                                <p>رقم السيارة: {{ $item->car_number ?? 'غير محدد' }}</p>
-                                <p><strong>تاريخ الغسيل:</strong>
-                                    {{ $item->car_wash ? $item->car_wash : 'لم يتم التحديد' }}
-                                </p>
-                                <p class="order-status">
-                                    @switch($item->status)
-                                        @case('pending')
-                                            <span class="status-pending">قيد التنفيذ</span>
-                                        @break
+        <form method="POST" action="{{ route('user.carts.updatePayment') }}">
+            @csrf
+            <div class="mb-3">
+                <label for="payment_method" class="form-label">طريقة الدفع:</label>
+                <select class="form-select" id="payment_method" name="payment_method" required>
+                    <option value="paid">بطاقة</option>
+                    <option value="cash_on_delivery">عند الاستلام</option>
+                </select>
+            </div>
 
-                                        @case('acepted')
-                                            <span class="status-accepted">مقبول</span>
-                                        @break
+            <div class="row">
+                @if (count($carts) == 0)
+                    <p class="text-center">لا يوجد طلبات في العربة</p>
+                @else
+                    @foreach ($carts as $item)
+                        <div class="col-md-6">
+                            <div class="cart-item">
+                                <img src="{{ asset('storage/' . optional($item->product)->image) }}"
+                                    alt="{{ optional($item->product)->name ?? 'لا يوجد اسم' }}">
+                                <div class="item-details">
+                                    <h5>{{ optional($item->product)->name ?? 'اسم غير متوفر' }}</h5>
+                                    <p>نوع السيارة: {{ ucfirst($item->car_type ?? 'غير محدد') }}</p>
+                                    <p>لون السيارة: {{ $item->car_color ?? 'غير محدد' }}</p>
+                                    <p>رقم السيارة: {{ $item->car_number ?? 'غير محدد' }}</p>
+                                    <p><strong>تاريخ الغسيل:</strong>
+                                        {{ $item->car_wash ? $item->car_wash : 'لم يتم التحديد' }}
+                                    </p>
+                                    <p class="order-status">
+                                        @switch($item->status)
+                                            @case('pending')
+                                                <span class="status-pending">قيد التنفيذ</span>
+                                            @break
 
-                                        @case('unpaid')
-                                            <span class="status-unpaid">غير مدفوع</span>
-                                        @break
+                                            @case('acepted')
+                                                <span class="status-accepted">مقبول</span>
+                                            @break
 
-                                        @default
-                                            <span>مرفوض</span>
-                                    @endswitch
-                                </p>
-                            </div>
-                            <div class="text-end">
-                                <p><strong>السعر:</strong> {{ $item->price ?? 'غير محدد' }} ريال</p>
-                                {{-- <a href="#" class="btn btn-primary">تفاصيل الطلب</a> --}}
+                                            @case('unpaid')
+                                                <span class="status-unpaid">غير مدفوع</span>
+                                            @break
+
+                                            @default
+                                                <span>مرفوض</span>
+                                        @endswitch
+                                    </p>
+                                </div>
+                                <div class="text-end">
+                                    <p><strong>السعر:</strong> {{ $item->price ?? 'غير محدد' }} ريال</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-            @endif
-        </div>
+                    @endforeach
+                @endif
+            </div>
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary">تحديث طريقة الدفع</button>
+            </div>
+        </form>
     </div>
+
     @include('homeLayouts.footer')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -71,4 +71,14 @@ class UserCartController extends Controller
         return redirect()->back()->with('success', 'تم إضافة الطلب بنجاح');
     }
 
+    public function updatePayment(Request $request)
+    {
+        $paymentMethod = $request->input('payment_method');
+
+        // تحديث طريقة الدفع لجميع الطلبات في العربة
+        Cart::query()->update(['paid' => $paymentMethod]);
+
+        return redirect()->back()->with('success', 'تم تحديث طريقة الدفع بنجاح.');
+    }
+
 }
