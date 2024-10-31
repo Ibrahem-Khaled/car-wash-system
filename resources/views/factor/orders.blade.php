@@ -182,6 +182,9 @@
                                             @elseif ($item->status == 'pending')
                                                 <button class="btn btn-warning" name="status" value="acepted"
                                                     type="submit">قبول</button>
+                                            @elseif ($item->status == 'declined')
+                                                <button class="btn btn-warning" name="status" value="pending"
+                                                    type="submit">تحويل الطلب</button>
                                             @endif
 
                                             <button class="btn btn-danger" type="button" id="declineButton">ارجاع
