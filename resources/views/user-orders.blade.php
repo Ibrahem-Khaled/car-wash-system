@@ -121,7 +121,7 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="إغلاق"></button>
                                         </div>
-                                        <form action="{{ route('add.review', $item->id) }}" method="POST">
+                                        <form action="{{ route('worker.rate', $item->id) }}" method="POST">
                                             @csrf
                                             <div class="modal-body">
                                                 <input type="hidden" name="order_id" value="{{ $item->id }}">
