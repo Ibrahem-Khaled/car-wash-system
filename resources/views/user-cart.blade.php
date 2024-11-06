@@ -7,6 +7,7 @@
     <title>عربة التسوق</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
         body {
@@ -129,13 +130,17 @@
                             <p>رقم السيارة: {{ $item->car_number ?? 'غير محدد' }}</p>
                             <p><strong>تاريخ الغسيل:</strong> {{ $item->car_wash ? $item->car_wash : 'لم يتم التحديد' }}
                             </p>
-                            <div class="quantity-selector">
+                            {{-- <div class="quantity-selector">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">-</button>
                                 <input type="number" name="quantity[{{ $item->id }}]" value="1"
                                     min="1">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">+</button>
-                            </div>
-                            <span class="remove-link">إزالة</span>
+                            </div> --}}
+                            <form method="POST" action="{{ route('user.carts.destroy', $item->id) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="remove-link">إزالة</button>
+                            </form>
                         </div>
                         <div class="price-container">
                             <p><strong>السعر:</strong> {{ $item->price ?? 'غير محدد' }} ريال</p>

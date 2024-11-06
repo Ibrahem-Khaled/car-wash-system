@@ -54,6 +54,7 @@ Route::group([], function () {
     Route::post('/carts', [UserCartController::class, 'store'])->name('user.carts.store')->middleware('auth');
     Route::post('/carts/update-payment', [UserCartController::class, 'updatePayment'])->name('user.carts.updatePayment')->middleware('auth');
     Route::post('/carts/add-reference-number', [UserCartController::class, 'addReferenceNumber'])->name('user.carts.addReferenceNumber')->middleware('auth');
+    Route::delete('/carts/{cart}', [UserCartController::class, 'destroy'])->name('user.carts.destroy')->middleware('auth');
 
     //this add review routes
     Route::get('/add-review/{cart}', [addRatingsController::class, 'index'])->name('add.review')->middleware('auth');
