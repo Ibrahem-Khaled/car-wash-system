@@ -122,7 +122,10 @@ class homeController extends Controller
                 'allOrdersToSupervisor' => $allOrdersToSupervisor
             ]);
         } else {
-            $orders = $user->userCart()->with('product', 'car', 'customer')->get(); // التأكد من جلب المنتجات مع الطلبات
+            $orders = $user->userCart()
+                ->whereIn('paid', ['paid', 'cash_on_delivery'])
+                ->with('product', 'car', 'customer')
+                ->get(); // التأكد من جلب المنتجات مع الطلبات
 
             return view('user-orders', [
                 'companyUser' => $this->companyUser,

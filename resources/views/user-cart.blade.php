@@ -164,7 +164,7 @@
                 </div>
 
                 <div class="text-center">
-                    <button type="submit" class="btn btn-update">تحديث طريقة الدفع</button>
+                    <button type="submit" class="btn btn-update"> الدفع</button>
                 </div>
             @endif
         </form>
