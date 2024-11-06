@@ -87,7 +87,7 @@ class UserCartController extends Controller
             'car_number' => $car_number
         ]));
 
-        return redirect()->back()->with('success', 'تم إضافة الطلب بنجاح');
+        return redirect()->back()->with('success', 'تم إضافة الطلب في السلة بنجاح');
     }
 
     public function updatePayment(Request $request)

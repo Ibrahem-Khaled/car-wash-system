@@ -36,7 +36,6 @@
 
                 <div class="mb-3">
                     <p>تغيير حالة الطلب:</p>
-
                     @if ($item->status == 'pending' && auth()->user()->role == 'supervisor')
                         <button class="btn btn-success" name="status" value="pending" type="submit">تحويل الطلب</button>
                     @elseif ($item->status == 'pending')
@@ -45,7 +44,9 @@
                         <button class="btn btn-success" name="status" value="completed" type="submit">استكمال
                             الطلب</button>
                     @endif
-                    <button class="btn btn-danger" type="button" id="declineButton">ارجاع الطلب</button>
+                    @if (auth()->user()->role == 'factor')
+                        <button class="btn btn-danger" type="button" id="declineButton">ارجاع الطلب</button>
+                    @endif
                 </div>
 
                 <div class="mb-3" id="reasonContainer" style="display: none;">
@@ -68,7 +69,8 @@
                             @endforeach
                         </select>
                     </div>
-                    <button class="btn btn-secondary mt-3" type="submit" value="pending" name="status">تحديد العامل المسؤول</button>
+                    <button class="btn btn-success mt-3" type="submit" value="pending" name="status">تحديد العامل
+                        الجديد</button>
                 @endif
 
 

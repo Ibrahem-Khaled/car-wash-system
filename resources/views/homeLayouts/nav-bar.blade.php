@@ -123,7 +123,8 @@
                     <div class="position-relative me-3">
                         <a href="{{ route('user.carts') }}" class="text-decoration-none">
                             <i class="fas fa-shopping-cart" style="font-size: 1.5rem; color: #4a2f85;"></i>
-                            {{-- <span class="cart-counter">{{ App\Models\Cart::count() }}</span> --}}
+                            <span
+                                class="cart-counter">{{ App\Models\Cart::where('user_id', Auth::id())->where('paid', 'unpaid')->where('status', 'pending')->count() }}</span>
                         </a>
                     </div>
 
