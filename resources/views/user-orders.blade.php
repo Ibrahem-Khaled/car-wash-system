@@ -84,22 +84,28 @@
                 </li>
             </ul>
 
+
             <div class="tab-content" id="orderTabsContent">
                 <!-- الطلبات الحالية -->
                 <div class="tab-pane fade show active" id="current-orders" role="tabpanel"
                     aria-labelledby="current-orders-tab">
                     <div class="row">
-                        @foreach ($orders->whereIn('status', ['acepted', 'pending', 'completed'])->doesntHave('reviews') as $item)
+                        @foreach ($orders->whereIn('status', ['acepted', 'pending', 'completed'])->filter(function ($item) {
+        return $item->reviews->isEmpty(); // التحقق من أن الطلب ليس له تقييمات
+    }) as $item)
                             <div class="col-md-6">
                                 <div class="order-card bg-white">
                                     <h5>طلب رقم #{{ $item->id }}</h5>
                                     <p>{{ $item->product->name }}</p>
                                     <p><strong>تاريخ الطلب:</strong> {{ $item->created_at->format('Y-m-d') }}</p>
-                                    <p class="order-status status-pending">قيد التنفيذ</p>
+                                    <p
+                                        class="order-status status-{{ $item->status == 'completed' ? 'completed' : 'pending' }}">
+                                        {{ $item->status == 'completed' ? 'مكتمل' : 'قيد التنفيذ' }}
+                                    </p>
                                     <a href="#" class="btn btn-primary">تفاصيل الطلب</a>
-                                    <a href="#"
-                                        class="btn btn-success mt-2">تقييم العامل</a>
-
+                                    @if ($item->status == 'completed')
+                                        <a href="#" class="btn btn-success mt-2">تقييم العامل</a>
+                                    @endif
                                 </div>
                             </div>
                         @endforeach
@@ -109,7 +115,9 @@
                 <!-- الطلبات السابقة -->
                 <div class="tab-pane fade" id="past-orders" role="tabpanel" aria-labelledby="past-orders-tab">
                     <div class="row">
-                        @foreach ($orders->whereIn('status', ['declined', 'completed'])->have('reviews') as $item)
+                        @foreach ($orders->whereIn('status', ['declined', 'completed'])->filter(function ($item) {
+        return $item->reviews->isNotEmpty(); // التحقق من أن الطلب يحتوي على تقييمات
+    }) as $item)
                             <div class="col-md-6">
                                 <div class="order-card bg-white">
                                     <h5>طلب رقم #{{ $item->id }}</h5>
@@ -123,6 +131,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 
