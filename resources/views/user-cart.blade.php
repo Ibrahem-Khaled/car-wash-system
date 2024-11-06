@@ -139,7 +139,7 @@
                             <form method="POST" action="{{ route('user.carts.destroy', $item->id) }}">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="remove-link">إزالة</button>
+                                <button type="submit" class="remove-link btn btn-sm btn-outline-danger">إزالة</button>
                             </form>
                         </div>
                         <div class="price-container">
