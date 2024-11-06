@@ -163,10 +163,10 @@
                     </select>
                 </div>
 
-                <div class="text-center">
-                    <button type="submit" class="btn btn-update"> الدفع</button>
-                </div>
             @endif
+            <div class="text-center">
+                <button type="submit" class="btn btn-update"> الدفع</button>
+            </div>
         </form>
     </div>
     @include('homeLayouts.footer')
