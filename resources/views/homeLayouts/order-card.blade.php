@@ -46,7 +46,7 @@
                             الطلب</button>
                     @endif
 
-                    <button class="btn btn-danger" type="submit" id="declineButton">ارجاع الطلب</button>
+                    <button class="btn btn-danger" type="button" id="declineButton">ارجاع الطلب</button>
                 </div>
 
                 <div class="mb-3" id="reasonContainer" style="display: none;">
@@ -71,39 +71,40 @@
                     </div>
                 @endif
 
-                @if (Auth::check() && $item->status == 'acepted' && $item->paid == 'cash_on_delivery')
-                    <form action="{{ route('user.carts.addReferenceNumber') }}" method="POST">
-                        @csrf
 
-                        <div class="mb-3">
-                            <label for="payment_method" class="form-label">طريقة الدفع</label>
-                            <select class="form-select @error('payment_method') is-invalid @enderror"
-                                id="payment_method" name="payment_method" required>
-                                <option value="cash_on_delivery">كاش</option>
-                                <option value="mada"
-                                    {{ old('payment_method', $item->reference_number !== null ? 'mada' : '') == 'mada' ? 'selected' : '' }}>
-                                    مدى</option>
-                            </select>
-                            @error('payment_method')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3" id="reference_number_container" style="display: none;">
-                            <label for="reference_number" class="form-label">رقم المرجعي</label>
-                            <input type="text" class="form-control @error('reference_number') is-invalid @enderror"
-                                id="reference_number" name="reference_number"
-                                value="{{ old('reference_number', $item?->reference_number ?? '') }}">
-                            <input type="hidden" name="cart_id" value="{{ $item->id }}">
-                            @error('reference_number')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <button type="submit" class="btn btn-primary" id="submit_button">حفظ الطلب</button>
-                    </form>
-                @endif
             </form>
+            @if (Auth::check() && $item->status == 'acepted' && $item->paid == 'cash_on_delivery')
+                <form action="{{ route('user.carts.addReferenceNumber') }}" method="POST">
+                    @csrf
+
+                    <div class="mb-3">
+                        <label for="payment_method" class="form-label">طريقة الدفع</label>
+                        <select class="form-select @error('payment_method') is-invalid @enderror" id="payment_method"
+                            name="payment_method" required>
+                            <option value="cash_on_delivery">كاش</option>
+                            <option value="mada"
+                                {{ old('payment_method', $item->reference_number !== null ? 'mada' : '') == 'mada' ? 'selected' : '' }}>
+                                مدى</option>
+                        </select>
+                        @error('payment_method')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3" id="reference_number_container" style="display: none;">
+                        <label for="reference_number" class="form-label">رقم المرجعي</label>
+                        <input type="text" class="form-control @error('reference_number') is-invalid @enderror"
+                            id="reference_number" name="reference_number"
+                            value="{{ old('reference_number', $item?->reference_number ?? '') }}">
+                        <input type="hidden" name="cart_id" value="{{ $item->id }}">
+                        @error('reference_number')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="submit_button">حفظ الطلب</button>
+                </form>
+            @endif
         @endif
 
         <button class="btn btn-secondary mt-3" onclick="openMap({{ $item->latitude }}, {{ $item->longitude }})">عرض
