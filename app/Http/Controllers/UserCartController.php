@@ -129,8 +129,9 @@ class UserCartController extends Controller
         return redirect()->back()->with('success', 'تم تحديث رقم المرجع بنجاح.');
     }
 
-    public function destroy(Cart $cart)
+    public function destroy($cart)
     {
+        $cart = Cart::find($cart);
         $cart->delete();
         return redirect()->back()->with('success', 'تم حذف الطلب بنجاح.');
     }
