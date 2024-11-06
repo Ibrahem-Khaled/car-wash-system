@@ -64,7 +64,7 @@
                                     required>
                             </div>
                             <div class="col-12 mt-2">
-                                <input type="text" class="form-control" name="car_number_digits" maxlength="4"
+                                <input type="number" class="form-control" name="car_number_digits" maxlength="4"
                                     placeholder="أرقام" required pattern="\d{1,4}" title="يجب إدخال 1 إلى 4 أرقام فقط">
                             </div>
                         </div>

@@ -151,7 +151,8 @@
                 <div class="total-summary">
                     <p><strong>الإجمالي:</strong> {{ $carts->sum('price') }} ريال</p>
                     <p><strong>الضريبة:</strong> {{ $carts->sum('price') * 0.15 }} ريال</p>
-                    <p><strong>الإجمالي الكلي:</strong> {{ $carts->sum('price') * 0.15 }} ريال</p>
+                    <p><strong>الإجمالي الكلي:</strong> {{ $carts->sum('price') * 0.15 + $carts->sum('price') }} ريال
+                    </p>
                 </div>
 
                 <div class="mb-3 mt-4">
