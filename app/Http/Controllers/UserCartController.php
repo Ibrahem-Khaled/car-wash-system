@@ -108,7 +108,7 @@ class UserCartController extends Controller
     {
 
         $referenceNumber = $request->input('reference_number');
-        $cart = Cart::findOrFail($request->input('cart_id'));
+        $cart = Cart::find($request->input('cart_id'));
 
         $cart->reference_number = $referenceNumber;
 
