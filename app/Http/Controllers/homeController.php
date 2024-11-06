@@ -109,7 +109,9 @@ class homeController extends Controller
         $user = Auth::user(); // الحصول على المستخدم الحالي
 
         if ($user->role === 'factor' || $user->role === 'supervisor') {
-            $orders = $user->factorCart()->with('product', 'car', 'customer')->get();
+            $orders = $user->factorCart()
+                ->whereIn('paid', ['paid', 'cash_on_delivery'])
+                ->with('product', 'car', 'customer')->get();
             $workers = User::where('role', 'factor')->get();
             $allOrdersToSupervisor = Cart::get();
 
