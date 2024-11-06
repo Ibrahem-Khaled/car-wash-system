@@ -45,7 +45,6 @@
                         <button class="btn btn-success" name="status" value="completed" type="submit">استكمال
                             الطلب</button>
                     @endif
-
                     <button class="btn btn-danger" type="button" id="declineButton">ارجاع الطلب</button>
                 </div>
 
@@ -69,6 +68,7 @@
                             @endforeach
                         </select>
                     </div>
+                    <button class="btn btn-secondary mt-3" type="submit" value="pending" name="status">تحديد العامل المسؤول</button>
                 @endif
 
 
