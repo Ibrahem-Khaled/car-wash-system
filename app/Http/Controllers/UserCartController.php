@@ -106,16 +106,27 @@ class UserCartController extends Controller
 
     public function addReferenceNumber(Request $request)
     {
+        // التحقق من صحة الإدخالات
+        $request->validate([
+            'reference_number' => 'required_if:payment_method,mada|string|max:255',
+            'cart_id' => 'required|exists:carts,id',
+        ], [
+            'reference_number.required_if' => 'رقم المرجع مطلوب عند اختيار مدى.',
+            'reference_number.string' => 'رقم المرجع يجب أن يكون نصًا.',
+            'reference_number.max' => 'رقم المرجع يجب ألا يتجاوز 255 حرفًا.',
+            'cart_id.required' => 'معرّف السلة مطلوب.',
+            'cart_id.exists' => 'السلة المحددة غير موجودة.',
+        ]);
 
+        // الحصول على البيانات
         $referenceNumber = $request->input('reference_number');
         $cart = Cart::find($request->input('cart_id'));
 
+        // تحديث رقم المرجع
         $cart->reference_number = $referenceNumber;
-
         $cart->save();
 
         return redirect()->back()->with('success', 'تم تحديث رقم المرجع بنجاح.');
-
     }
 
 }
