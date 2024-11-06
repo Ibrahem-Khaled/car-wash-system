@@ -89,7 +89,7 @@
                 <div class="tab-pane fade show active" id="current-orders" role="tabpanel"
                     aria-labelledby="current-orders-tab">
                     <div class="row">
-                        @foreach ($orders->whereIn('status', ['acepted', 'pending']) as $item)
+                        @foreach ($orders->whereIn('status', ['acepted', 'pending', 'completed'])->doesntHave('reviews') as $item)
                             <div class="col-md-6">
                                 <div class="order-card bg-white">
                                     <h5>طلب رقم #{{ $item->id }}</h5>
@@ -97,6 +97,9 @@
                                     <p><strong>تاريخ الطلب:</strong> {{ $item->created_at->format('Y-m-d') }}</p>
                                     <p class="order-status status-pending">قيد التنفيذ</p>
                                     <a href="#" class="btn btn-primary">تفاصيل الطلب</a>
+                                    <a href="#"
+                                        class="btn btn-success mt-2">تقييم العامل</a>
+
                                 </div>
                             </div>
                         @endforeach
@@ -106,7 +109,7 @@
                 <!-- الطلبات السابقة -->
                 <div class="tab-pane fade" id="past-orders" role="tabpanel" aria-labelledby="past-orders-tab">
                     <div class="row">
-                        @foreach ($orders->whereIn('status', ['declined', 'completed']) as $item)
+                        @foreach ($orders->whereIn('status', ['declined', 'completed'])->have('reviews') as $item)
                             <div class="col-md-6">
                                 <div class="order-card bg-white">
                                     <h5>طلب رقم #{{ $item->id }}</h5>

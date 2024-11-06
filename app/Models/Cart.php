@@ -44,4 +44,9 @@ class Cart extends Model
     {
         return $this->belongsTo(Car::class, 'car_model', 'id');
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(UserRating::class, 'cart_id');
+    }
 }

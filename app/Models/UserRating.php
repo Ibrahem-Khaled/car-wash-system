@@ -12,6 +12,7 @@ class UserRating extends Model
     protected $fillable = [
         'user_id',
         'factor_id',
+        'cart_id',
         'rating',
         'comment',
         'status',
@@ -25,5 +26,10 @@ class UserRating extends Model
     public function factor()
     {
         return $this->belongsTo(User::class, 'factor_id');
+    }
+
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class, 'cart_id');
     }
 }
