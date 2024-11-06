@@ -79,7 +79,7 @@
                     <div class="mb-3" id="reference_number_container" style="display: none;">
                         <label for="reference_number" class="form-label">رقم المرجعي</label>
                         <input type="text" class="form-control" id="reference_number" name="reference_number"
-                            value="{{ $item?->reference_number }}">
+                            value="{{ $item?->reference_number ?? '' }}">
                         <input type="hidden" name="cart_id" value="{{ $item->id }}">
                     </div>
 
