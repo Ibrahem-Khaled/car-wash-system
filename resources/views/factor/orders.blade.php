@@ -77,7 +77,7 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="past-orders-tab" data-bs-toggle="tab" data-bs-target="#past-orders"
                         type="button" role="tab" aria-controls="past-orders" aria-selected="false">الطلبات
-                        {{ auth()->user()->role == 'customer' ? 'السابقة' : 'الرجيعة' }}</button>
+                        {{ auth()->user()->role == 'factor' ? 'السابقة' : 'الرجيعة' }}</button>
                     </button>
                 </li>
             </ul>
@@ -172,6 +172,16 @@
                         @foreach ($orders->whereIn('status', ['completed', 'declined']) as $item)
                             <div class="col-md-6">
                                 <div class="order-card bg-white">
+                                    <!-- بيانات العميل -->
+                                    <div class="customer-info mt-3">
+                                        <h6>بيانات العميل:</h6>
+                                        <p><strong>الاسم:</strong> {{ optional($item->customer)->name ?? 'غير متوفر' }}
+                                        </p>
+                                        <p><strong>البريد الإلكتروني:</strong>
+                                            {{ optional($item->customer)->email ?? 'غير متوفر' }}</p>
+                                        <p><strong>رقم الهاتف:</strong>
+                                            {{ optional($item->customer)->phone ?? 'غير متوفر' }}</p>
+                                    </div>
                                     <h5>طلب رقم #{{ $item->id }}</h5>
                                     <p><strong>المنتج:</strong> {{ optional($item->product)->name }}</p>
                                     <p><strong>السعر:</strong> {{ $item->price }} ريال</p>
@@ -183,16 +193,7 @@
                                     <p><strong>الإحداثيات:</strong> {{ $item->latitude }}, {{ $item->longitude }}</p>
                                     {{-- <p class="order-status">حالة الطلب: {{ $item->status }}</p> --}}
 
-                                    <!-- بيانات العميل -->
-                                    <div class="customer-info mt-3">
-                                        <h6>بيانات العميل:</h6>
-                                        <p><strong>الاسم:</strong> {{ optional($item->customer)->name ?? 'غير متوفر' }}
-                                        </p>
-                                        <p><strong>البريد الإلكتروني:</strong>
-                                            {{ optional($item->customer)->email ?? 'غير متوفر' }}</p>
-                                        <p><strong>رقم الهاتف:</strong>
-                                            {{ optional($item->customer)->phone ?? 'غير متوفر' }}</p>
-                                    </div>
+
 
                                     <form action="{{ route('updateOrderStatus', $item->id) }}" method="POST">
                                         @csrf

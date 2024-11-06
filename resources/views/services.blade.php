@@ -58,6 +58,16 @@
     @include('homeLayouts.float-buttons')
 
     <section class="py-5">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <div class="container">
             <h2 class="section-title">خدمات المغسلة المتنقلة</h2>
             <div class="row gy-4">
@@ -88,7 +98,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha512-VNf5a2...=" crossorigin=""></script>
 
-   
+
 
 </body>
 

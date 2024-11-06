@@ -16,11 +16,7 @@
                         <label for="car_model" class="form-label">السيارة</label>
                         <select class="form-select" name="car_model" required>
                             @foreach ($cars as $car)
-                                <option value="{{ $car->id }}">
-                                    {{-- <img src="{{ asset('storage/' . $car->image) }}" alt="{{ $car->name }}"
-                                        width="50" height="50"> --}}
-                                    {{ $car->name }}
-                                </option>
+                                <option value="{{ $car->id }}">{{ $car->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -28,14 +24,10 @@
                     <div class="mb-3">
                         <label for="car_type" class="form-label">نوع السيارة</label>
                         <select class="form-select" name="car_type" required id="car_type">
-                            <option value="small">صغيرة - {{ $service->small_car_price }} ريال
-                            </option>
-                            <option value="medium">متوسطة - {{ $service->medium_car_price }} ريال
-                            </option>
-                            <option value="large">كبيرة - {{ $service->large_car_price }} ريال
-                            </option>
-                            <option value="x_large">كبيرة جدا - {{ $service->x_large_car_price }}
-                                ريال</option>
+                            <option value="small">صغيرة - {{ $service->small_car_price }} ريال</option>
+                            <option value="medium">متوسطة - {{ $service->medium_car_price }} ريال</option>
+                            <option value="large">كبيرة - {{ $service->large_car_price }} ريال</option>
+                            <option value="x_large">كبيرة جدا - {{ $service->x_large_car_price }} ريال</option>
                         </select>
                     </div>
 
@@ -58,19 +50,22 @@
                         <div class="row gx-2">
                             <div class="col-4">
                                 <input type="text" class="form-control" name="car_number_letters1" maxlength="1"
-                                    placeholder="الحرف الاول" required>
+                                    pattern="[a-zA-Z]" title="يجب إدخال حرف إنجليزي واحد" placeholder="الحرف الاول"
+                                    required>
                             </div>
                             <div class="col-4">
                                 <input type="text" class="form-control" name="car_number_letters2" maxlength="1"
-                                    placeholder="الحرف الثاني" required>
+                                    pattern="[a-zA-Z]" title="يجب إدخال حرف إنجليزي واحد" placeholder="الحرف الثاني"
+                                    required>
                             </div>
                             <div class="col-4">
                                 <input type="text" class="form-control" name="car_number_letters3" maxlength="1"
-                                    placeholder="الحرف الثالث" required>
+                                    pattern="[a-zA-Z]" title="يجب إدخال حرف إنجليزي واحد" placeholder="الحرف الثالث"
+                                    required>
                             </div>
                             <div class="col-12 mt-2">
-                                <input type="number" class="form-control" name="car_number_digits" maxlength="4"
-                                    placeholder="أرقام" required>
+                                <input type="text" class="form-control" name="car_number_digits" maxlength="4"
+                                    placeholder="أرقام" required pattern="\d{1,4}" title="يجب إدخال 1 إلى 4 أرقام فقط">
                             </div>
                         </div>
                     </div>
@@ -87,7 +82,8 @@
                         <input type="hidden" name="longitude" id="longitude-{{ $service->id }}">
                     </div>
 
-                    <input type="hidden" name="price" id="service_price" value="{{ $service->small_car_price }}">
+                    <input type="hidden" name="price" id="service_price"
+                        value="{{ $service->small_car_price }}">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
@@ -144,6 +140,40 @@
                     map.invalidateSize();
                 }, 200);
             });
+        });
+
+        // تحقق من الإدخالات قبل الإرسال
+        document.querySelector('form').addEventListener('submit', function(event) {
+            const requiredFields = ['car_model', 'car_type', 'car_color', 'car_number_letters1',
+                'car_number_letters2', 'car_number_letters3', 'car_number_digits', 'car_wash',
+                'latitude', 'longitude'
+            ];
+            let isValid = true;
+
+            requiredFields.forEach(fieldName => {
+                const field = document.querySelector(`[name="${fieldName}"]`);
+                if (!field || !field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('is-invalid'); // إضافة تنسيق عند عدم ملء الحقل
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
+
+            // التحقق من إدخال الحروف الإنجليزية في الحقول
+            ['car_number_letters1', 'car_number_letters2', 'car_number_letters3'].forEach(fieldName => {
+                const field = document.querySelector(`[name="${fieldName}"]`);
+                if (field && !/^[a-zA-Z]+$/.test(field.value)) {
+                    isValid = false;
+                    field.classList.add('is-invalid');
+                    alert('يرجى إدخال حروف إنجليزية فقط في حقول الحروف.');
+                }
+            });
+
+            if (!isValid) {
+                event.preventDefault(); // منع الإرسال إذا كانت البيانات غير مكتملة
+                alert('يرجى ملء جميع الحقول المطلوبة وتحديد الوقت لإكمال الطلب.');
+            }
         });
     });
 </script>

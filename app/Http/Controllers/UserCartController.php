@@ -20,6 +20,7 @@ class UserCartController extends Controller
     {
         $carts = Cart::where('customer_id', auth()->user()->id)
             ->where('paid', 'unpaid')
+            ->where('status', 'pending')
             ->get();
         //return response()->json($carts);
 
@@ -60,6 +61,24 @@ class UserCartController extends Controller
             'price' => 'required|numeric|min:0',
             'latitude' => 'required',
             'longitude' => 'required',
+        ], [
+            'product_id.required' => 'معرّف المنتج مطلوب.',
+            'product_id.exists' => 'المنتج المحدد غير موجود.',
+            'car_model.required' => 'نموذج السيارة مطلوب.',
+            'car_model.exists' => 'نموذج السيارة المحدد غير موجود.',
+            'car_color.required' => 'لون السيارة مطلوب.',
+            'car_color.string' => 'يجب أن يكون لون السيارة نصًا.',
+            'car_color.max' => 'لون السيارة يجب ألا يتجاوز 50 حرفًا.',
+            'car_wash.required' => 'تاريخ الغسيل مطلوب.',
+            'car_wash.date' => 'يجب أن يكون تاريخ الغسيل تاريخًا صالحًا.',
+            'car_type.required' => 'نوع السيارة مطلوب.',
+            'car_type.string' => 'نوع السيارة يجب أن يكون نصًا.',
+            'car_type.max' => 'نوع السيارة يجب ألا يتجاوز 20 حرفًا.',
+            'price.required' => 'السعر مطلوب.',
+            'price.numeric' => 'يجب أن يكون السعر رقمًا.',
+            'price.min' => 'السعر يجب أن يكون على الأقل 0.',
+            'latitude.required' => 'خط العرض مطلوب.',
+            'longitude.required' => 'خط الطول مطلوب.',
         ]);
 
         $cart = $user->userCart()->create(array_merge($validatedData, [
