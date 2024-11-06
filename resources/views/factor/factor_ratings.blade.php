@@ -44,14 +44,14 @@
 <body>
     @include('homeLayouts.nav-bar')
     @include('homeLayouts.float-buttons')
-    
+
     <section class="py-5">
         <div class="container">
             <h2 class="section-title">تقييم العامل</h2>
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="form-container">
-                        <form action="{{ route('worker.rate', ['order_id' => $order->id]) }}" method="POST">
+                        <form action="{{ route('worker.rate') }}" method="POST">
                             @csrf
                             <input type="hidden" name="order_id" value="{{ $order->id }}">
                             <div class="mb-3">

@@ -57,6 +57,7 @@ Route::group([], function () {
 
     //this add review routes
     Route::get('/add-review/{cart}', [addRatingsController::class, 'index'])->name('add.review')->middleware('auth');
+    Route::post('/add-review', [addRatingsController::class, 'store'])->name('worker.rate')->middleware('auth');
 
 });
 
