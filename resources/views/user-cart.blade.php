@@ -136,11 +136,10 @@
                                     min="1">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">+</button>
                             </div> --}}
-                            <form method="POST" action="{{ route('user.carts.destroy', $item->id) }}">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="remove-link btn btn-sm btn-outline-danger">إزالة</button>
-                            </form>
+
+                            <a href="{{ route('user.carts.destroy', $item->id) }}"
+                                class="remove-link text-danger text-decoration-underline">حذف</a>
+
                         </div>
                         <div class="price-container">
                             <p><strong>السعر:</strong> {{ $item->price ?? 'غير محدد' }} ريال</p>
@@ -163,10 +162,10 @@
                     </select>
                 </div>
 
+                <div class="text-center">
+                    <button type="submit" class="btn btn-update"> الدفع</button>
+                </div>
             @endif
-            <div class="text-center">
-                <button type="submit" class="btn btn-update"> الدفع</button>
-            </div>
         </form>
     </div>
     @include('homeLayouts.footer')
