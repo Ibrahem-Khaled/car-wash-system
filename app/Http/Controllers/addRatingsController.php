@@ -11,7 +11,7 @@ class addRatingsController extends Controller
     public function index($cart)
     {
         $order = Cart::find($cart);
-        return view('factors.factor_ratings', compact('order'));
+        return view('factor.factor_ratings', compact('order'));
     }
 
     public function store(Request $request)
