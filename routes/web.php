@@ -52,6 +52,7 @@ Route::group([], function () {
     Route::get('/carts', [UserCartController::class, 'index'])->name('user.carts')->middleware('auth');
     Route::post('/carts', [UserCartController::class, 'store'])->name('user.carts.store')->middleware('auth');
     Route::post('/carts/update-payment', [UserCartController::class, 'updatePayment'])->name('user.carts.updatePayment')->middleware('auth');
+    Route::post('/carts/add-reference-number', [UserCartController::class, 'addReferenceNumber'])->name('user.carts.addReferenceNumber')->middleware('auth');
 
 });
 

@@ -3,7 +3,7 @@
         <h5>طلب رقم #{{ $item->id }}</h5>
         <p><strong>المنتج:</strong> {{ optional($item->product)->name }}</p>
         <p><strong>السعر:</strong> {{ $item->price }} ريال</p>
-        <p><strong>نوع السيارة:</strong> {{ $item->car_type }}</p>
+        <p><strong>حجم السيارة:</strong> {{ $item->car_type }}</p>
         <p><strong>موديل السيارة:</strong> {{ $item->car->name }}</p>
         <p><strong>لون السيارة:</strong> {{ $item->car_color }}</p>
         <p><strong>رقم السيارة:</strong> {{ $item->car_number }}</p>
@@ -29,14 +29,12 @@
                 <p>تغيير حالة الطلب:</p>
 
                 @if ($item->status == 'pending' && auth()->user()->role == 'supervisor')
-                    <button class="btn btn-success" name="status" value="pending"
-                        type="submit">تحويل الطلب</button>
+                    <button class="btn btn-success" name="status" value="pending" type="submit">تحويل الطلب</button>
                 @elseif ($item->status == 'pending')
-                    <button class="btn btn-warning" name="status" value="acepted"
-                        type="submit">قبول</button>
+                    <button class="btn btn-warning" name="status" value="acepted" type="submit">قبول</button>
                 @elseif ($item->status == 'acepted')
-                    <button class="btn btn-success" name="status" value="completed"
-                        type="submit">استكمال الطلب</button>
+                    <button class="btn btn-success" name="status" value="completed" type="submit">استكمال
+                        الطلب</button>
                 @endif
 
                 <button class="btn btn-danger" type="button" id="declineButton">ارجاع
@@ -46,8 +44,8 @@
             <div class="mb-3" id="reasonContainer" style="display: none;">
                 <label for="decline_reason" class="form-label">سبب الارجاع</label>
                 <textarea class="form-control" name="decline_reason" id="decline_reason" rows="3"></textarea>
-                <button class="btn btn-danger mt-2" name="status" value="declined"
-                    type="submit">تأكيد الارجاع</button>
+                <button class="btn btn-danger mt-2" name="status" value="declined" type="submit">تأكيد
+                    الارجاع</button>
             </div>
 
             @if (Auth::check() && !in_array(auth()->user()->role, ['factor', 'company', 'customer']))
@@ -64,10 +62,22 @@
                     </select>
                 </div>
             @endif
+            @if (Auth::check() && $item->status == 'acepted' && $item->paid == 'cash_on_delivery')
+                <form action="{{ route('user.carts.addReferenceNumber') }}" method="POST">
+                    @csrf
+
+                    <div class="mb-3">
+                        <label for="reference_number" class="form-label">رقم المرجعي</label>
+                        <input type="text" class="form-control" id="reference_number" name="reference_number"
+                            required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">حفظ رقم المرجعي</button>
+                </form>
+            @endif
         </form>
 
-        <button class="btn btn-secondary mt-3"
-            onclick="openMap({{ $item->latitude }}, {{ $item->longitude }})">
+        <button class="btn btn-secondary mt-3" onclick="openMap({{ $item->latitude }}, {{ $item->longitude }})">
             عرض الموقع على الخريطة
         </button>
     </div>

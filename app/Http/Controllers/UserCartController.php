@@ -103,4 +103,19 @@ class UserCartController extends Controller
         return redirect()->back()->with('success', 'تم تحديث طريقة الدفع بنجاح.');
     }
 
+
+    public function addReferenceNumber(Request $request)
+    {
+
+        $referenceNumber = $request->input('reference_number');
+        $cart = Cart::findOrFail($request->input('cart_id'));
+
+        $cart->reference_number = $referenceNumber;
+
+        $cart->save();
+
+        return redirect()->back()->with('success', 'تم تحديث رقم المرجع بنجاح.');
+
+    }
+
 }
