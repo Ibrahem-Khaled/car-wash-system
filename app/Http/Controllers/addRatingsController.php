@@ -17,14 +17,22 @@ class addRatingsController extends Controller
     public function store(Request $request)
     {
         $order = Cart::find($request->order_id);
+        if (!$order) {
+            return redirect()->back()->with('error', 'الطلب غير موجود.');
+        }
 
-        UserRating::create([
-            'user_id' => auth()->user()->id,
-            'factor_id' => $order->factor_id,
-            'cart_id' => $order->id,
-            'rating' => $request->rating,
-            'comment' => $request->comment
-        ]);
-        return redirect()->back()->with('success', 'تم التقييم بنجاح');
+        UserRating::updateOrCreate(
+            [
+                'user_id' => auth()->user()->id,
+                'factor_id' => $order->factor_id,
+                'cart_id' => $order->id
+            ],
+            [
+                'rating' => $request->rating,
+                'comment' => $request->comment
+            ]
+        );
+
+        return redirect()->back()->with('success', 'تم التقييم بنجاح.');
     }
 }

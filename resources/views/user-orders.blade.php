@@ -104,9 +104,53 @@
                                     </p>
                                     <a href="#" class="btn btn-primary">تفاصيل الطلب</a>
                                     @if ($item->status == 'completed')
-                                        <a href="{{ route('add.review', $item->id) }}" class="btn btn-success mt-2">تقييم
-                                            العامل</a>
+                                        <button type="button" class="btn btn-success mt-2" data-bs-toggle="modal"
+                                            data-bs-target="#reviewModal-{{ $item->id }}">تقييم العامل</button>
                                     @endif
+                                </div>
+                            </div>
+
+                            <!-- Modal للتقييم -->
+                            <div class="modal fade" id="reviewModal-{{ $item->id }}" tabindex="-1"
+                                aria-labelledby="reviewModalLabel-{{ $item->id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="reviewModalLabel-{{ $item->id }}">تقييم
+                                                العامل - طلب رقم #{{ $item->id }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="إغلاق"></button>
+                                        </div>
+                                        <form action="{{ route('add.review', $item->id) }}" method="POST">
+                                            @csrf
+                                            <div class="modal-body">
+                                                <input type="hidden" name="order_id" value="{{ $item->id }}">
+                                                <div class="mb-3">
+                                                    <label for="rating-{{ $item->id }}" class="form-label">التقييم
+                                                        (من 1 إلى 5)</label>
+                                                    <select class="form-select" id="rating-{{ $item->id }}"
+                                                        name="rating" required>
+                                                        <option value="1">1 - ضعيف</option>
+                                                        <option value="2">2 - مقبول</option>
+                                                        <option value="3">3 - جيد</option>
+                                                        <option value="4">4 - جيد جدًا</option>
+                                                        <option value="5">5 - ممتاز</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="comment-{{ $item->id }}"
+                                                        class="form-label">تعليق</label>
+                                                    <textarea class="form-control" id="comment-{{ $item->id }}" name="comment" rows="4"
+                                                        placeholder="اكتب تعليقك هنا..."></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">إغلاق</button>
+                                                <button type="submit" class="btn btn-primary">إرسال التقييم</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
