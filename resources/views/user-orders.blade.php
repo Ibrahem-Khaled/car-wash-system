@@ -104,7 +104,8 @@
                                     </p>
                                     <a href="#" class="btn btn-primary">تفاصيل الطلب</a>
                                     @if ($item->status == 'completed')
-                                        <a href="#" class="btn btn-success mt-2">تقييم العامل</a>
+                                        <a href="{{ route('add.review', $item->id) }}" class="btn btn-success mt-2">تقييم
+                                            العامل</a>
                                     @endif
                                 </div>
                             </div>

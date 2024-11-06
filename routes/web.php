@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\addRatingsController;
 use App\Http\Controllers\dashboard\CarController;
 use App\Http\Controllers\dashboard\CartController;
 use App\Http\Controllers\dashboard\ContactUsController;
@@ -53,6 +54,9 @@ Route::group([], function () {
     Route::post('/carts', [UserCartController::class, 'store'])->name('user.carts.store')->middleware('auth');
     Route::post('/carts/update-payment', [UserCartController::class, 'updatePayment'])->name('user.carts.updatePayment')->middleware('auth');
     Route::post('/carts/add-reference-number', [UserCartController::class, 'addReferenceNumber'])->name('user.carts.addReferenceNumber')->middleware('auth');
+
+    //this add review routes
+    Route::get('/add-review/{cart}', [addRatingsController::class, 'index'])->name('add.review')->middleware('auth');
 
 });
 

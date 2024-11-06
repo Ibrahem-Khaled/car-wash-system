@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->text('comment')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
-        });
+        }); 
     }
 
     /**
