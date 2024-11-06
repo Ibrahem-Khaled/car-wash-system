@@ -143,7 +143,7 @@
                                         @if (Auth::check() && !in_array(auth()->user()->role, ['factor', 'company', 'customer']))
                                             <div class="mb-3">
                                                 <label for="worker_id" class="form-label">تحديد العامل المسؤول</label>
-                                                <select class="form-select" name="worker_id" id="worker_id">
+                                                <select class="form-select" name="worker_id" id="worker_id" required>
                                                     <option value="">-- اختر العامل --</option>
                                                     @foreach ($workers as $worker)
                                                         <option value="{{ $worker->id }}"
