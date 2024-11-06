@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('factor_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('cart_id')->constrained('carts')->onDelete('cascade');
             $table->integer('rating');
             $table->text('comment')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');

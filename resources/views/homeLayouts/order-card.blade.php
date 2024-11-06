@@ -67,12 +67,21 @@
                     @csrf
 
                     <div class="mb-3">
-                        <label for="reference_number" class="form-label">رقم المرجعي</label>
-                        <input type="text" class="form-control" id="reference_number" name="reference_number"
-                            required>
+                        <label for="payment_method" class="form-label">طريقة الدفع</label>
+                        <select class="form-select" id="payment_method" name="payment_method" required>
+                            <option value="cash_on_delivery" {{ $item->paid == 'cash_on_delivery' ? 'selected' : '' }}>
+                                نقدًا عند التسليم</option>
+                            <option value="mada" {{ $item->paid == 'mada' ? 'selected' : '' }}>مدى</option>
+                        </select>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">حفظ رقم المرجعي</button>
+                    <div class="mb-3" id="reference_number_container" style="display: none;">
+                        <label for="reference_number" class="form-label">رقم المرجعي</label>
+                        <input type="text" class="form-control" id="reference_number" name="reference_number"
+                            value="{{ $item->reference_number ?? '' }}">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="submit_button">حفظ الطلب</button>
                 </form>
             @endif
         </form>
@@ -82,3 +91,28 @@
         </button>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const paymentMethod = document.getElementById('payment_method');
+        const referenceNumberContainer = document.getElementById('reference_number_container');
+        const referenceNumberInput = document.getElementById('reference_number');
+        const submitButton = document.getElementById('submit_button');
+
+        function toggleReferenceField() {
+            if (paymentMethod.value === 'mada') {
+                referenceNumberContainer.style.display = 'block';
+                referenceNumberInput.required = true; // اجعل الحقل مطلوبًا إذا كان الدفع بـ "مدى"
+            } else {
+                referenceNumberContainer.style.display = 'none';
+                referenceNumberInput.required = false;
+            }
+        }
+
+        // عند تغيير القيمة في القائمة المنسدلة
+        paymentMethod.addEventListener('change', toggleReferenceField);
+
+        // تأكد من التحقق عند تحميل الصفحة
+        toggleReferenceField();
+    });
+</script>
