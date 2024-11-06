@@ -72,7 +72,7 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="current-orders-tab" data-bs-toggle="tab"
                         data-bs-target="#current-orders" type="button" role="tab" aria-controls="current-orders"
-                        aria-selected="true">الطلبات الحالية</button>
+                        aria-selected="true">الطلبات الجديدة</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="past-orders-tab" data-bs-toggle="tab" data-bs-target="#past-orders"
