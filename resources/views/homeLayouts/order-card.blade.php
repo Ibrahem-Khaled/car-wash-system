@@ -44,9 +44,9 @@
                     @elseif ($item->status == 'acepted')
                         <button class="btn btn-success" name="status" value="completed" type="submit">استكمال
                             الطلب</button>
-                    @elseif($item->status == 'declined')
-                        <button class="btn btn-danger" type="button" id="declineButton">تحويل الطلب</button>
                     @endif
+
+                    <button class="btn btn-danger" type="submit" id="declineButton">ارجاع الطلب</button>
                 </div>
 
                 <div class="mb-3" id="reasonContainer" style="display: none;">
