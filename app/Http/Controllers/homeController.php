@@ -111,11 +111,13 @@ class homeController extends Controller
         if ($user->role === 'factor' || $user->role === 'supervisor') {
             $orders = $user->factorCart()->with('product', 'car', 'customer')->get();
             $workers = User::where('role', 'factor')->get();
+            $allOrdersToSupervisor = Cart::get();
 
             return view('factor.orders', [
                 'companyUser' => $this->companyUser,
                 'orders' => $orders,
-                'workers' => $workers
+                'workers' => $workers,
+                'allOrdersToSupervisor' => $allOrdersToSupervisor
             ]);
         } else {
             $orders = $user->userCart()->with('product', 'car', 'customer')->get(); // التأكد من جلب المنتجات مع الطلبات

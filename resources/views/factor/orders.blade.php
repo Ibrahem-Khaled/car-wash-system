@@ -78,8 +78,25 @@
                     <button class="nav-link" id="past-orders-tab" data-bs-toggle="tab" data-bs-target="#past-orders"
                         type="button" role="tab" aria-controls="past-orders" aria-selected="false">الطلبات
                         {{ auth()->user()->role == 'factor' ? 'السابقة' : 'الرجيعة' }}</button>
-                    </button>
                 </li>
+                @if (auth()->user()->role == 'supervisor')
+                    <!-- إضافة تبويبات لحالات الطلبات إذا كان المستخدم مشرفًا -->
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="accepted-orders-tab" data-bs-toggle="tab"
+                            data-bs-target="#accepted-orders" type="button" role="tab"
+                            aria-controls="accepted-orders" aria-selected="false">الطلبات قيد التنفيذ</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="declined-orders-tab" data-bs-toggle="tab"
+                            data-bs-target="#declined-orders" type="button" role="tab"
+                            aria-controls="declined-orders" aria-selected="false">الطلبات المرفوضة</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="completed-orders-tab" data-bs-toggle="tab"
+                            data-bs-target="#completed-orders" type="button" role="tab"
+                            aria-controls="completed-orders" aria-selected="false">الطلبات المكتملة</button>
+                    </li>
+                @endif
             </ul>
 
             <div class="tab-content" id="orderTabsContent">
@@ -101,6 +118,38 @@
                         @endforeach
                     </div>
                 </div>
+
+                @if (auth()->user()->role == 'supervisor')
+                    <!-- الطلبات المقبولة -->
+                    <div class="tab-pane fade" id="accepted-orders" role="tabpanel"
+                        aria-labelledby="accepted-orders-tab">
+                        <div class="row">
+                            @foreach ($allOrdersToSupervisor->where('status', 'acepted') as $item)
+                                @include('homeLayouts.order-card', ['item' => $item])
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <!-- الطلبات المرفوضة -->
+                    <div class="tab-pane fade" id="declined-orders" role="tabpanel"
+                        aria-labelledby="declined-orders-tab">
+                        <div class="row">
+                            @foreach ($allOrdersToSupervisor->where('status', 'declined') as $item)
+                                @include('homeLayouts.order-card', ['item' => $item])
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <!-- الطلبات المكتملة -->
+                    <div class="tab-pane fade" id="completed-orders" role="tabpanel"
+                        aria-labelledby="completed-orders-tab">
+                        <div class="row">
+                            @foreach ($allOrdersToSupervisor->where('status', 'completed') as $item)
+                                @include('homeLayouts.order-card', ['item' => $item])
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </section>
