@@ -133,8 +133,12 @@
 
                 <div class="form-group mb-4">
                     <label for="phone" class="form-label">رقم الهاتف</label>
-                    <input type="tel" id="phone" name="phone" class="form-control"
-                        placeholder="أدخل رقم هاتفك" required>
+                    <div class="input-group">
+                        <span class="input-group-text">966</span>
+                        <input type="tel" id="phone" name="phone" class="form-control"
+                            placeholder="أدخل رقم هاتفك (بدون مفتاح الدولة)" pattern="\d{9}"
+                            title="يرجى إدخال 9 أرقام فقط بعد مفتاح الدولة" required>
+                    </div>
                 </div>
 
                 <div class="form-group mb-4">
@@ -194,7 +198,7 @@
 
         togglePassword.addEventListener('click', () => toggleVisibility(passwordInput, togglePassword));
         toggleConfirmPassword.addEventListener('click', () => toggleVisibility(confirmPasswordInput,
-        toggleConfirmPassword));
+            toggleConfirmPassword));
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

@@ -23,6 +23,7 @@ class Cart extends Model
         'latitude',
         'longitude',
         'reference_number',
+        'paid',
     ];
 
     public function customer()

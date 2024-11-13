@@ -84,7 +84,8 @@ class UserCartController extends Controller
         $cart = $user->userCart()->create(array_merge($validatedData, [
             'customer_id' => $user->id,
             'factor_id' => $worker->id,
-            'car_number' => $car_number
+            'car_number' => $car_number,
+            'paid' => $request->payment_method,
         ]));
 
         return redirect()->back()->with('success', 'تم إضافة الطلب في السلة بنجاح');

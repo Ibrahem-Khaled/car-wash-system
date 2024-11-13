@@ -42,28 +42,28 @@ Route::group([], function () {
 
     Route::get('/subscribtion', [homeController::class, 'subscribtion'])->name('subscribtion');
 
-    Route::get('/user/orders', [homeController::class, 'userOrders'])->name('user.orders');
-    Route::put('orders/{cart}/update-status', [homeController::class, 'updateStatus'])->name('updateOrderStatus');
+    Route::get('/user/orders', [homeController::class, 'userOrders'])->name('user.orders')->middleware('checkOtpVerification');
+    Route::put('orders/{cart}/update-status', [homeController::class, 'updateStatus'])->name('updateOrderStatus')->middleware('checkOtpVerification');
 
 
-    Route::get('user/subscriptions', [homeController::class, 'userSubscriptions'])->name('user.subscriptions');
+    Route::get('user/subscriptions', [homeController::class, 'userSubscriptions'])->name('user.subscriptions')->middleware('checkOtpVerification');
 
 
     //this cart routes
-    Route::get('/carts', [UserCartController::class, 'index'])->name('user.carts')->middleware('auth');
-    Route::post('/carts', [UserCartController::class, 'store'])->name('user.carts.store')->middleware('auth');
-    Route::post('/carts/update-payment', [UserCartController::class, 'updatePayment'])->name('user.carts.updatePayment')->middleware('auth');
-    Route::post('/carts/add-reference-number', [UserCartController::class, 'addReferenceNumber'])->name('user.carts.addReferenceNumber')->middleware('auth');
-    Route::get('user/delete/cart/{cart}', [UserCartController::class, 'destroy'])->name('user.carts.destroy')->middleware('auth');
+    Route::get('/carts', [UserCartController::class, 'index'])->name('user.carts')->middleware(['auth', 'checkOtpVerification']);
+    Route::post('/carts', [UserCartController::class, 'store'])->name('user.carts.store')->middleware(['auth', 'checkOtpVerification']);
+    Route::post('/carts/update-payment', [UserCartController::class, 'updatePayment'])->name('user.carts.updatePayment')->middleware(['auth', 'checkOtpVerification']);
+    Route::post('/carts/add-reference-number', [UserCartController::class, 'addReferenceNumber'])->name('user.carts.addReferenceNumber')->middleware(['auth', 'checkOtpVerification']);
+    Route::get('user/delete/cart/{cart}', [UserCartController::class, 'destroy'])->name('user.carts.destroy')->middleware(['auth', 'checkOtpVerification']);
 
     //this add review routes
-    Route::get('/add-review/{cart}', [addRatingsController::class, 'index'])->name('add.review')->middleware('auth');
-    Route::post('/add-review', [addRatingsController::class, 'store'])->name('worker.rate')->middleware('auth');
+    Route::get('/add-review/{cart}', [addRatingsController::class, 'index'])->name('add.review')->middleware(['auth', 'checkOtpVerification']);
+    Route::post('/add-review', [addRatingsController::class, 'store'])->name('worker.rate')->middleware(['auth', 'checkOtpVerification']);
 
 });
 
 
-Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'checkAdmin']], function () {
+Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'checkAdmin', 'checkOtpVerification']], function () {
 
     Route::get('/', [DashboardController::class, 'index'])->name('home.dashboard')->middleware('auth');
 

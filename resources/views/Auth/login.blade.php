@@ -144,6 +144,11 @@
                     <a href="{{ route('forgetPassword') }}" class="text-muted">نسيت كلمة المرور؟</a>
                 </div>
 
+                <!-- Google reCAPTCHA -->
+                <div class="mb-3">
+                    <div class="g-recaptcha" data-sitekey="6LcHi3gqAAAAAJ05RrvUlAZIwul9-dQGqPoI8TIN"></div>
+                </div>
+
                 <button type="submit" class="btn btn-primary w-100 mb-3">دخول</button>
 
                 <div class="d-flex justify-content-between">
@@ -156,6 +161,10 @@
             </form>
         </div>
     </div>
+
+    <!-- reCAPTCHA API -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
     <script>
         const togglePassword = document.getElementById('togglePassword');
         const passwordInput = document.getElementById('password');
