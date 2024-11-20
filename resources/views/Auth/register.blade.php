@@ -136,7 +136,7 @@
                     <div class="input-group">
                         <span class="input-group-text">966</span>
                         <input type="tel" id="phone" name="phone" class="form-control"
-                            placeholder="أدخل رقم هاتفك (بدون مفتاح الدولة)" pattern="\d{9}"
+                            placeholder="5xxxxxxxxx" pattern="\d{9}"
                             title="يرجى إدخال 9 أرقام فقط بعد مفتاح الدولة" required>
                     </div>
                 </div>
