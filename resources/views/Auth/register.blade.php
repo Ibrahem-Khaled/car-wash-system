@@ -136,8 +136,8 @@
                     <div class="input-group">
                         <span class="input-group-text">966</span>
                         <input type="tel" id="phone" name="phone" class="form-control"
-                            placeholder="5xxxxxxxxx" pattern="\d{9}"
-                            title="يرجى إدخال 9 أرقام فقط بعد مفتاح الدولة" required>
+                            placeholder="5xxxxxxxxx" pattern="\d{9}" title="يرجى إدخال 9 أرقام فقط بعد مفتاح الدولة"
+                            required>
                     </div>
                 </div>
 
@@ -151,7 +151,9 @@
                     <label for="password" class="form-label">كلمة المرور</label>
                     <div class="input-group">
                         <input type="password" id="password" name="password" class="form-control"
-                            placeholder="أدخل كلمة المرور" required>
+                            placeholder="أدخل كلمة المرور" required
+                            pattern="^(?!.*(\d)\1{2})(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+                            title="يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل، وحرف واحد على الأقل ورقم واحد على الأقل، ولا يُسمح بأرقام متتالية فقط.">
                         <button type="button" class="btn btn-outline-secondary" id="togglePassword">
                             <i class="fas fa-eye"></i>
                         </button>
@@ -162,7 +164,9 @@
                     <label for="password_confirmation" class="form-label">تأكيد كلمة المرور</label>
                     <div class="input-group">
                         <input type="password" id="password_confirmation" name="password_confirmation"
-                            class="form-control" placeholder="أعد إدخال كلمة المرور" required>
+                            class="form-control" placeholder="أعد إدخال كلمة المرور" required
+                            pattern="^(?!.*(\d)\1{2})(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+                            title="يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل، وحرف واحد على الأقل ورقم واحد على الأقل، ولا يُسمح بأرقام متتالية فقط.">
                         <button type="button" class="btn btn-outline-secondary" id="toggleConfirmPassword">
                             <i class="fas fa-eye"></i>
                         </button>
