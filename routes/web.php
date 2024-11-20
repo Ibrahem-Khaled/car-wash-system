@@ -56,6 +56,9 @@ Route::group([], function () {
     Route::post('/carts/add-reference-number', [UserCartController::class, 'addReferenceNumber'])->name('user.carts.addReferenceNumber')->middleware(['auth', 'checkOtpVerification']);
     Route::get('user/delete/cart/{cart}', [UserCartController::class, 'destroy'])->name('user.carts.destroy')->middleware(['auth', 'checkOtpVerification']);
 
+    //this route add subscriptions
+    Route::post('add-subscription', [homeController::class, 'addSubscribtionToUser'])->name('add.subscription')->middleware(['auth', 'checkOtpVerification']);
+
     //this add review routes
     Route::get('/add-review/{cart}', [addRatingsController::class, 'index'])->name('add.review')->middleware(['auth', 'checkOtpVerification']);
     Route::post('/add-review', [addRatingsController::class, 'store'])->name('worker.rate')->middleware(['auth', 'checkOtpVerification']);

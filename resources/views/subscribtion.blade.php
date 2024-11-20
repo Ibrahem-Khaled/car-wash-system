@@ -104,7 +104,7 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form method="POST" action="#">
+                                    <form method="POST" action="{{ route('add.subscription') }}">
                                         @csrf
                                         <input type="hidden" name="subscription_id" value="{{ $subscription->id }}">
 

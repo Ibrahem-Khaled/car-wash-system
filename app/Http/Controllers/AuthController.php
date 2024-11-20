@@ -67,6 +67,8 @@ class AuthController extends Controller
 
     public function otp()
     {
+        // Session::put('otp_verified', true);
+        // return redirect()->route('home')->with('info', 'يرجى إدخال رمز التحقق OTP.');
         // التحقق من حالة التحقق من OTP
         if (Session::get('otp_verified') === true) {
             return redirect()->route('home');
@@ -84,7 +86,7 @@ class AuthController extends Controller
 
             // محتوى الرسالة المحسّن
             $body = "رمز التحقق للدخول إلى منصة velvet هو: $otp. يرجى إدخال الرمز لإكمال التحقق.";
-            $recipients = [Auth::user()->phone ?? '']; // تأكد من أن رقم الهاتف موجود
+            $recipients = [Auth::user()->phone ?? ''];
             $sender = 'velvet';
             $smsId = '25489';
 

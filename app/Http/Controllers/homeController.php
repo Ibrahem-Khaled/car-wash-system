@@ -104,6 +104,18 @@ class homeController extends Controller
         ]);
     }
 
+    public function addSubscribtionToUser(Request $request)
+    {
+        $request->validate([
+            'subscription_id' => 'required|exists:subscriptions,id',
+
+        ]);
+
+        $user = Auth::user();
+        $user->subscriptions()->attach($request->subscription_id);
+        return redirect()->back()->with('success', 'تم اضافة الاشتراك بنجاح');
+    }
+
     public function userOrders()
     {
         $user = Auth::user(); // الحصول على المستخدم الحالي
