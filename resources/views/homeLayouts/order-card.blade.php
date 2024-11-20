@@ -38,9 +38,9 @@
                     <p>تغيير حالة الطلب:</p>
                     @if ($item->status == 'declined' && auth()->user()->role == 'supervisor')
                         <button class="btn btn-success" name="status" value="pending" type="submit">تحويل الطلب</button>
-                    @elseif ($item->status == 'pending')
+                    @elseif ($item->status == 'pending' && auth()->user()->role == 'factor')
                         <button class="btn btn-warning" name="status" value="acepted" type="submit">قبول</button>
-                    @elseif ($item->status == 'acepted')
+                    @elseif ($item->status == 'acepted' && auth()->user()->role == 'factor')
                         <button class="btn btn-success" name="status" value="completed" type="submit">استكمال
                             الطلب</button>
                     @endif
