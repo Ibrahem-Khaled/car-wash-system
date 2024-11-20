@@ -3,9 +3,9 @@
 @section('content')
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h3>المنتجات</h3>
+            <h3>الخدمات</h3>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
-                إضافة منتج
+                إضافة خدمة
             </button>
         </div>
 

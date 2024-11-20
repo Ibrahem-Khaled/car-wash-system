@@ -31,7 +31,7 @@
             <li class="nav-item">
                 <a class="nav-link text-white" href="{{ route('products.index') }}">
                     <i class="fas fa-box"></i>
-                    <span class="nav-link-text ms-1">المنتجات</span>
+                    <span class="nav-link-text ms-1">الخدمات</span>
                 </a>
             </li>
 
