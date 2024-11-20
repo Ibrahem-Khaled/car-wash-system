@@ -123,7 +123,6 @@
                                 </ul>
                             </div>
 
-                            <a href="#" class="btn btn-primary mt-3">عرض المزيد</a>
                         </div>
                     </div>
                 @endforeach

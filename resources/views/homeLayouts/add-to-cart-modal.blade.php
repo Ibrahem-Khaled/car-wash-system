@@ -197,19 +197,19 @@
             steps.forEach((step, i) => {
                 step.classList.toggle('d-none', i !== index);
             });
-            document.querySelector('.step-prev').classList.toggle('d-none', index === 0);
-            document.querySelector('.step-next').classList.toggle('d-none', index === steps.length - 1);
-            document.getElementById('final-submit').classList.toggle('d-none', index !== steps.length - 1);
+            document.querySelector('.step-prev')?.classList.toggle('d-none', index === 0);
+            document.querySelector('.step-next')?.classList.toggle('d-none', index === steps.length - 1);
+            document.getElementById('final-submit')?.classList.toggle('d-none', index !== steps.length - 1);
         }
 
-        document.querySelector('.step-next').addEventListener('click', () => {
+        document.querySelector('.step-next')?.addEventListener('click', () => {
             if (currentStep < steps.length - 1) {
                 currentStep++;
                 showStep(currentStep);
             }
         });
 
-        document.querySelector('.step-prev').addEventListener('click', () => {
+        document.querySelector('.step-prev')?.addEventListener('click', () => {
             if (currentStep > 0) {
                 currentStep--;
                 showStep(currentStep);
