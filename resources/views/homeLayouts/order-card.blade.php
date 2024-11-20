@@ -36,8 +36,8 @@
 
                 <div class="mb-3">
                     <p>تغيير حالة الطلب:</p>
-                    @if ($item->status == 'pending' && auth()->user()->role == 'supervisor')
-                        {{-- <button class="btn btn-success" name="status" value="pending" type="submit">تحويل الطلب</button> --}}
+                    @if ($item->status == 'declined' && auth()->user()->role == 'supervisor')
+                        <button class="btn btn-success" name="status" value="pending" type="submit">تحويل الطلب</button>
                     @elseif ($item->status == 'pending')
                         <button class="btn btn-warning" name="status" value="acepted" type="submit">قبول</button>
                     @elseif ($item->status == 'acepted')
