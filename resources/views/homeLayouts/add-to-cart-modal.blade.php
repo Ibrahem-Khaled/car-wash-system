@@ -94,17 +94,17 @@
                             <div class="row gx-2">
                                 <div class="col-4">
                                     <input type="text" class="form-control" name="car_number_letters1"
-                                        maxlength="1" pattern="[a-zA-Z]" title="يجب إدخال حرف إنجليزي واحد"
+                                        maxlength="1" pattern="[A-Za-z]" title="يجب إدخال حرف إنجليزي فقط"
                                         placeholder="الحرف الاول" required>
                                 </div>
                                 <div class="col-4">
                                     <input type="text" class="form-control" name="car_number_letters2"
-                                        maxlength="1" pattern="[a-zA-Z]" title="يجب إدخال حرف إنجليزي واحد"
+                                        maxlength="1" pattern="[A-Za-z]" title="يجب إدخال حرف إنجليزي فقط"
                                         placeholder="الحرف الثاني" required>
                                 </div>
                                 <div class="col-4">
                                     <input type="text" class="form-control" name="car_number_letters3"
-                                        maxlength="1" pattern="[a-zA-Z]" title="يجب إدخال حرف إنجليزي واحد"
+                                        maxlength="1" pattern="[A-Za-z]" title="يجب إدخال حرف إنجليزي فقط"
                                         placeholder="الحرف الثالث" required>
                                 </div>
                                 <div class="col-12 mt-2">
@@ -114,6 +114,7 @@
                                 </div>
                             </div>
                         </div>
+
 
                         <div class="mb-3">
                             <label for="car_wash" class="form-label">تاريخ ووقت الغسيل</label>
