@@ -55,9 +55,11 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users|max:255',
             'password' => 'required|min:6|confirmed',
+            'phone' => 'required|numeric|unique:users',
+            'address' => 'nullable|string|max:255',
         ]);
 
-        $data = $request->only('name', 'email', 'password');
+        $data = $request->only('name', 'email', 'password', 'phone', 'address');
         $data['password'] = bcrypt($data['password']);
         $user = User::create($data);
         Auth::login($user);
