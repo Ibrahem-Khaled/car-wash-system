@@ -125,7 +125,7 @@ class homeController extends Controller
         ]);
 
         $worker = User::where('role', 'supervisor')
-         
+
             ->first();
 
         // تحقق من الاشتراك وحالته
@@ -160,16 +160,18 @@ class homeController extends Controller
         ]);
 
         // إضافة الطلب إلى سلة المشتريات
-        Cart::create([
-            'customer_id' => auth()->id(),
-            'factor_id' => $worker->id,
-            'product_id' => $validated['product_id'],
-            'quantity' => $validated['quantity'],
-            'car_model' => $request->input('car_model'),
-            'car_color' => $request->input('car_color'),
-            'status' => 'pending',
-            'paid' => 'paid',
-        ]);
+        for ($i = 0; $i < $validated['quantity']; $i++) {
+            Cart::create([
+                'customer_id' => auth()->id(),
+                'factor_id' => $worker->id,
+                'product_id' => $validated['product_id'],
+                'quantity' => $validated['quantity'],
+                'car_model' => $request->input('car_model'),
+                'car_color' => $request->input('car_color'),
+                'status' => 'pending',
+                'paid' => 'paid',
+            ]);
+        }
 
         return redirect()->back()->with('success', 'تم تقديم الطلب بنجاح.');
     }
