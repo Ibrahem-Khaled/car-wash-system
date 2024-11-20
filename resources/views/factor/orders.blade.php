@@ -124,7 +124,7 @@
                     <div class="tab-pane fade" id="accepted-orders" role="tabpanel"
                         aria-labelledby="accepted-orders-tab">
                         <div class="row">
-                            @foreach ($allOrdersToSupervisor->where('status', 'acepted') as $item)
+                            @foreach ($allOrdersToSupervisor->where('status', 'pending') as $item)
                                 @include('homeLayouts.order-card', ['item' => $item])
                             @endforeach
                         </div>
