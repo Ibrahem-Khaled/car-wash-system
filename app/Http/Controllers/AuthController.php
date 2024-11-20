@@ -88,7 +88,7 @@ class AuthController extends Controller
             $body = "رمز التحقق للدخول إلى منصة velvet هو: $otp. يرجى إدخال الرمز لإكمال التحقق.";
             $recipients = [Auth::user()->phone ?? ''];
             $sender = 'velvet';
-            $smsId = '25489';
+            $smsId = auth()->user()->id;
 
             try {
                 if (empty($recipients[0])) {
