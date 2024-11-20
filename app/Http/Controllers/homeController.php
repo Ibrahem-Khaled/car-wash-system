@@ -100,7 +100,7 @@ class homeController extends Controller
         $subscriptions = Subscription::with('products')->get();
         return view('subscribtion', [
             'companyUser' => $this->companyUser,
-            'subscriptions' => $subscriptions
+            'subscriptions' => $subscriptions,
         ]);
     }
 
@@ -114,6 +114,64 @@ class homeController extends Controller
         $user = Auth::user();
         $user->subscriptions()->attach($request->subscription_id);
         return redirect()->back()->with('success', 'تم اضافة الاشتراك بنجاح');
+    }
+
+    public function requestService(Request $request)
+    {
+        $validated = $request->validate([
+            'subscription_id' => 'required|exists:subscriptions,id',
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        $worker = User::where('role', 'supervisor')
+         
+            ->first();
+
+        // تحقق من الاشتراك وحالته
+        $subscription = UserSubscription::where('user_id', auth()->id())
+            ->where('subscription_id', $validated['subscription_id'])
+            ->where('status', 'active')
+            ->first();
+
+        if (!$subscription) {
+            return redirect()->back()->with('error', 'الاشتراك غير نشط أو غير موجود.');
+        }
+
+        // تحقق من الكمية المتبقية للمنتج
+        $remainingQuantity = app()->call(
+            'App\Http\Controllers\homeController@getRemainingQuantity',
+            [
+                'userId' => auth()->id(),
+                'subscriptionId' => $validated['subscription_id'],
+                'productId' => $validated['product_id'],
+            ]
+        );
+
+        if ($validated['quantity'] > $remainingQuantity) {
+            return redirect()->back()->with('error', 'الكمية المطلوبة غير متوفرة.');
+        }
+
+        UserSubscriptionProduct::create([
+            'user_id' => auth()->id(),
+            'subscription_id' => $validated['subscription_id'],
+            'product_id' => $validated['product_id'],
+            'quantity' => $validated['quantity'],
+        ]);
+
+        // إضافة الطلب إلى سلة المشتريات
+        Cart::create([
+            'customer_id' => auth()->id(),
+            'factor_id' => $worker->id,
+            'product_id' => $validated['product_id'],
+            'quantity' => $validated['quantity'],
+            'car_model' => $request->input('car_model'),
+            'car_color' => $request->input('car_color'),
+            'status' => 'pending',
+            'paid' => 'paid',
+        ]);
+
+        return redirect()->back()->with('success', 'تم تقديم الطلب بنجاح.');
     }
 
     public function userOrders()
@@ -172,10 +230,11 @@ class homeController extends Controller
     {
         $user = User::find(Auth::id());
         $subscriptions = $user->subscriptions()->with('products')->get();
-
+        $cars = Car::all();
         return view('user-subscriptions', [
             'companyUser' => $this->companyUser,
-            'subscriptions' => $subscriptions
+            'subscriptions' => $subscriptions,
+            'cars' => $cars
         ]);
     }
 }

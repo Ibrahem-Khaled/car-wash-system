@@ -123,11 +123,74 @@
                                 </ul>
                             </div>
 
+                            <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal"
+                                data-bs-target="#requestServiceModal-{{ $subscription['id'] }}">طلب خدمة</button>
+
+
                         </div>
                     </div>
                 @endforeach
             </div>
+            <!-- Modal -->
+            <div class="modal fade" id="requestServiceModal-{{ $subscription['id'] }}" tabindex="-1"
+                aria-labelledby="requestServiceModalLabel-{{ $subscription['id'] }}" aria-hidden="true">
 
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="requestServiceModalLabel">طلب خدمة من الاشتراك -
+                                {{ $subscription['name'] }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <form method="POST" action="{{ route('user.requestService') }}">
+                            @csrf
+                            <div class="modal-body">
+                                <input type="hidden" name="subscription_id" value="{{ $subscription['id'] }}">
+
+                                <!-- اختيار المنتج -->
+                                <div class="mb-3">
+                                    <label for="product_id" class="form-label">اختر المنتج</label>
+                                    <select class="form-select" name="product_id" required>
+                                        @foreach ($subscription['products'] as $product)
+                                            <option value="{{ $product['id'] }}">
+                                                {{ $product['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <!-- الحقول الإضافية (اختياري) -->
+                                <div class="mb-3">
+                                    <label for="quantity" class="form-label">الكمية المطلوبة</label>
+                                    <input type="number" class="form-control" name="quantity" min="1"
+                                        max="{{ $remainingQuantity }}" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="car_model" class="form-label">موديل السيارة
+                                        (اختياري)</label>
+                                    <select class="form-select" name="car_model">
+                                        @foreach ($cars as $car)
+                                            <option value="{{ $car->id }}">{{ $car->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="car_color" class="form-label">لون السيارة
+                                        (اختياري)</label>
+                                    <input type="text" class="form-control" name="car_color">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                                <button type="submit" class="btn btn-primary">تقديم الطلب</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 

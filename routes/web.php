@@ -58,7 +58,8 @@ Route::group([], function () {
 
     //this route add subscriptions
     Route::post('add-subscription', [homeController::class, 'addSubscribtionToUser'])->name('add.subscription')->middleware(['auth', 'checkOtpVerification']);
-
+    Route::post('request-service', [homeController::class, 'requestService'])->name('user.requestService')->middleware(['auth', 'checkOtpVerification']);
+    
     //this add review routes
     Route::get('/add-review/{cart}', [addRatingsController::class, 'index'])->name('add.review')->middleware(['auth', 'checkOtpVerification']);
     Route::post('/add-review', [addRatingsController::class, 'store'])->name('worker.rate')->middleware(['auth', 'checkOtpVerification']);

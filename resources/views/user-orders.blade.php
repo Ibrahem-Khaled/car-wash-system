@@ -91,7 +91,7 @@
                     aria-labelledby="current-orders-tab">
                     <div class="row">
                         @foreach ($orders->whereIn('status', ['acepted', 'pending', 'completed'])->filter(function ($item) {
-        return $item->reviews->isEmpty(); // التحقق من أن الطلب ليس له تقييمات
+        return $item?->reviews->isEmpty(); // التحقق من أن الطلب ليس له تقييمات
     }) as $item)
                             <div class="col-md-6">
                                 <div class="order-card bg-white">
@@ -161,7 +161,7 @@
                 <div class="tab-pane fade" id="past-orders" role="tabpanel" aria-labelledby="past-orders-tab">
                     <div class="row">
                         @foreach ($orders->whereIn('status', ['declined', 'completed'])->filter(function ($item) {
-        return $item->reviews->isNotEmpty(); // التحقق من أن الطلب يحتوي على تقييمات
+        return $item?->reviews->isNotEmpty(); // التحقق من أن الطلب يحتوي على تقييمات
     }) as $item)
                             <div class="col-md-6">
                                 <div class="order-card bg-white">
