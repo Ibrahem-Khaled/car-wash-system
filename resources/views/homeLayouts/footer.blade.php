@@ -117,10 +117,10 @@
             <div class="col text-center">
                 <h5>تابعنا</h5>
                 <div class="social-icons">
-                    <a href="#" class="fab fa-facebook"></a>
-                    <a href="#" class="fab fa-twitter"></a>
-                    <a href="#" class="fab fa-instagram"></a>
-                    <a href="#" class="fab fa-linkedin"></a>
+                    <a href="https://web.facebook.com/velvet.vehicle" target="_blank" class="fab fa-facebook"></a>
+                    {{-- <a href="#" class="fab fa-twitter"></a> --}}
+                    <a href="https://www.instagram.com/velvet_vehicle" target="_blank" class="fab fa-instagram"></a>
+                    {{-- <a href="#" class="fab fa-linkedin"></a> --}}
                 </div>
             </div>
 
