@@ -38,6 +38,8 @@ Route::group([], function () {
 
     Route::get('/about-us', [homeController::class, 'aboutUs'])->name('about-us');
 
+    Route::get('/privacy-policy', [homeController::class, 'privacyPolicy'])->name('privacy-policy');
+
     Route::get('/services', [homeController::class, 'services'])->name('services');
 
     Route::get('/subscribtion', [homeController::class, 'subscribtion'])->name('subscribtion');

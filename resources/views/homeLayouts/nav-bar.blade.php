@@ -105,7 +105,7 @@
                         <a class="nav-link" href="{{ route('about-us') }}">من نحن</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#privacy">سياسة الخصوصية</a>
+                        <a class="nav-link" href="{{ route('privacy-policy') }}">سياسة الخصوصية</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('contact-us') }}">تواصل معنا</a>

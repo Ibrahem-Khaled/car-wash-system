@@ -58,6 +58,13 @@ class homeController extends Controller
         return redirect()->back()->with('success', 'تم الارسال بنجاح');
     }
 
+    public function privacyPolicy()
+    {
+        return view('privacy-policy', [
+            'companyUser' => $this->companyUser,
+        ]);
+    }
+
     // About us page method
     public function aboutUs()
     {
