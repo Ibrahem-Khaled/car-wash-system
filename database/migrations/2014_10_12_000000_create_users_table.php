@@ -33,7 +33,7 @@ return new class extends Migration {
                 [
                     'name' => 'admin',
                     'email' => 'admin@admin.com',
-                    'phone' => '123456789',
+                    'phone' => '554312152',
                     'address' => 'Tehran',
                     'city' => 'Tehran',
                     'status' => 'active',

@@ -4,6 +4,14 @@
     <div class="container mt-5">
         <h2 class="mb-4">الاشتراكات</h2>
 
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+
         <!-- زر إضافة اشتراك -->
         <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addSubscriptionModal">
             إضافة اشتراك جديد
@@ -85,7 +93,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <form method="POST" action="{{ route('subscriptions.update', $subscription->id) }}">
+                                <form method="POST" action="{{ route('subscriptions.update', $subscription->id) }}" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="modal-body">
@@ -124,10 +132,18 @@
                                                     <span class="input-group-text">{{ $product->name }}</span>
                                                     <input type="number" class="form-control"
                                                         name="quantities[{{ $product->id }}]"
-                                                        value="{{ $subscription->products->where('id', $product->id)->first()->pivot->quantity ?? 1 }}">
+                                                        value="{{ $subscription->products->where('id', $product->id)->first()->pivot->quantity ?? 0 }}">
                                                     <input type="hidden" name="products[]" value="{{ $product->id }}">
                                                 </div>
                                             @endforeach
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">ارفاق الصورة</label>
+                                            <input type="file" class="form-control" name="image" accept="image/*">
+                                            @if ($subscription->image)
+                                                <img src="{{ asset('storage/' . $subscription->image) }}" class="mt-2"
+                                                    width="100" alt="الصورة">
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -144,14 +160,15 @@
         </table>
 
         <!-- Add Subscription Modal -->
-        <div class="modal fade" id="addSubscriptionModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addSubscriptionModal" tabindex="-1" aria-labelledby="addModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addModalLabel">إضافة اشتراك جديد</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form method="POST" action="{{ route('subscriptions.store') }}">
+                    <form method="POST" action="{{ route('subscriptions.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
                             <div class="mb-3">
@@ -176,10 +193,14 @@
                                     <div class="input-group mb-2">
                                         <span class="input-group-text">{{ $product->name }}</span>
                                         <input type="number" class="form-control"
-                                            name="quantities[{{ $product->id }}]" min="1" value="1">
+                                            name="quantities[{{ $product->id }}]" min="0" value="0">
                                         <input type="hidden" name="products[]" value="{{ $product->id }}">
                                     </div>
                                 @endforeach
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">ارفاق الصورة</label>
+                                <input type="file" class="form-control" name="image" accept="image/*">
                             </div>
                         </div>
                         <div class="modal-footer">

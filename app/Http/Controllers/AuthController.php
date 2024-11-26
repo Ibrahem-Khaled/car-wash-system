@@ -85,7 +85,7 @@ class AuthController extends Controller
         if (!Session::has('otp_code')) {
             $otp = rand(10000, 99999);
             Session::put('otp_code', $otp);
-
+            Log::info('Generated OTP:', ['otp' => $otp]);
             // محتوى الرسالة المحسّن
             $body = "رمز التحقق للدخول إلى منصة velvet هو: $otp. يرجى إدخال الرمز لإكمال التحقق.";
             $recipients = [Auth::user()->phone ?? ''];
