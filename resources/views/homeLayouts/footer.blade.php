@@ -131,6 +131,8 @@
                     <p><i class="fas fa-phone"></i>{{ $companyUser?->phone }}</p>
                     <p><i class="fas fa-envelope"></i>{{ $companyUser?->email }}</p>
                     <p><i class="fas fa-map-marker-alt"></i>{{ $companyUser?->address }} - {{ $companyUser?->city }}</p>
+                    <a href="https://wa.me/message/PZZU6X5DK243B1" target="_blank"><i class="fas fa-envelope"></i>تواصل
+                        معنا الان</a>
                 </div>
             </div>
         </div>
