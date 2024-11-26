@@ -7,8 +7,6 @@
     <title> تواصل معنا</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <!-- Fonts and icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
@@ -16,11 +14,9 @@
         body {
             font-family: "Cairo", sans-serif;
             direction: rtl;
-            /* لتغيير اتجاه النص للعربية */
             text-align: right;
         }
 
-        /* اللون البني الأساسي */
         .text-brown {
             color: #4a2f85;
         }
@@ -47,7 +43,16 @@
             border-color: #ed0f7d;
             box-shadow: none;
         }
+
+        .info-box {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #4a2f85;
+            margin-bottom: 20px;
+        }
     </style>
+</head>
 
 <body>
     @include('homeLayouts.nav-bar')
@@ -114,11 +119,30 @@
                     </div>
                 </div>
             </div>
+
+            <!-- قسم الإفصاحات -->
+            <div class="info-box mt-4">
+                <h3 class="text-brown fw-bold mb-3">إفصاحات هامة</h3>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-clock text-brown"></i>
+                        <strong>وقت الرد على الشكاوى:</strong> يتم الرد على الشكاوى خلال 24 ساعة عمل.
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-tools text-brown"></i>
+                        <strong>وقت معالجة الشكاوى:</strong> يتم معالجة الشكاوى خلال 5 أيام عمل.
+                    </li>
+                    <li>
+                        <i class="fas fa-truck text-brown"></i>
+                        <strong>وقت التوصيل:</strong> يتم الإفصاح عن وقت التوصيل قبل إتمام عملية الشراء، ويظهر ذلك بوضوح
+                        في الفاتورة.
+                    </li>
+                </ul>
+            </div>
         </div>
     </section>
     @include('homeLayouts.footer')
 
-    <!-- جافا سكريبت -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
