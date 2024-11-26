@@ -31,10 +31,12 @@
                     </button>
 
                     <!-- زر حذف المستخدم -->
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                        data-bs-target="#deleteUserModal{{ $user->id }}">
-                        حذف
-                    </button>
+                    @if ($user->role != 'admin' && $user->role != 'company')
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#deleteUserModal{{ $user->id }}">
+                            حذف
+                        </button>
+                    @endif
                 </td>
             </tr>
 
@@ -92,7 +94,8 @@
                                     <select class="form-control" id="role" name="role">
                                         <option value="company" {{ $user->role == 'company' ? 'selected' : '' }}>الشركة
                                         </option>
-                                        <option value="supervisor" {{ $user->role == 'supervisor' ? 'selected' : '' }}>مشرف
+                                        <option value="supervisor" {{ $user->role == 'supervisor' ? 'selected' : '' }}>
+                                            مشرف
                                         </option>
                                         <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>مسؤول
                                         </option>

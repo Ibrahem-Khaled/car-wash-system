@@ -26,10 +26,10 @@
             <tbody>
                 @foreach ($contacts as $contact)
                     <tr>
-                        <td>{{ $contact->name }}</td>
-                        <td>{{ $contact->email }}</td>
-                        <td>{{ $contact->phone }}</td>
-                        <td>{{ $contact->message }}</td>
+                        <td>{{ $contact?->name }}</td>
+                        <td>{{ $contact?->email }}</td>
+                        <td>{{ $contact?->phone }}</td>
+                        <td>{{ $contact?->message }}</td>
                         <td>
                             <button class="btn btn-warning" data-bs-toggle="modal"
                                 data-bs-target="#editContactModal{{ $contact->id }}">
