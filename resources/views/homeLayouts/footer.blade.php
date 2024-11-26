@@ -107,10 +107,10 @@
             <!-- روابط سريعة -->
             <div class="col">
                 <h5>روابط سريعة</h5>
-                <a href="#">من نحن</a>
-                <a href="#">خدماتنا</a>
-                <a href="#">الاشتراكات</a>
-                <a href="#">سياسة الخصوصية</a>
+                <a href="{{ route('about-us') }}">من نحن</a>
+                <a href="{{ route('services') }}">خدماتنا</a>
+                <a href="{{ route('subscribtion') }}">الاشتراكات</a>
+                <a href="{{ route('privacy-policy') }}">سياسة الخصوصية</a>
             </div>
 
             <!-- وسائل التواصل الاجتماعي -->
