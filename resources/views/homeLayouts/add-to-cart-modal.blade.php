@@ -1,4 +1,13 @@
-<!-- Modal -->
+<style>
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: black;
+        background-size: 100%;
+        border-radius: 50%;
+    }
+</style>
+
+
 <div class="modal fade" id="orderModal-{{ $service->id }}" tabindex="-1" aria-labelledby="orderModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
@@ -44,33 +53,34 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="car_type" class="form-label">نوع السيارة</label>
+                            <label for="car_type_{{ $service->id }}" class="form-label">نوع السيارة</label>
                             <div class="btn-group" role="group">
                                 <input type="radio" class="btn-check" name="car_type" value="small"
-                                    id="car_type_small" required>
-                                <label class="btn btn-outline-primary" for="car_type_small">
+                                    id="car_type_small_{{ $service->id }}" required>
+                                <label class="btn btn-outline-primary" for="car_type_small_{{ $service->id }}">
                                     <i class="fas fa-car-side"></i> صغيرة - {{ $service->small_car_price }} ريال
                                 </label>
 
                                 <input type="radio" class="btn-check" name="car_type" value="medium"
-                                    id="car_type_medium">
-                                <label class="btn btn-outline-primary" for="car_type_medium">
+                                    id="car_type_medium_{{ $service->id }}">
+                                <label class="btn btn-outline-primary" for="car_type_medium_{{ $service->id }}">
                                     <i class="fas fa-car"></i> متوسطة - {{ $service->medium_car_price }} ريال
                                 </label>
 
                                 <input type="radio" class="btn-check" name="car_type" value="large"
-                                    id="car_type_large">
-                                <label class="btn btn-outline-primary" for="car_type_large">
+                                    id="car_type_large_{{ $service->id }}">
+                                <label class="btn btn-outline-primary" for="car_type_large_{{ $service->id }}">
                                     <i class="fas fa-truck-pickup"></i> كبيرة - {{ $service->large_car_price }} ريال
                                 </label>
 
                                 <input type="radio" class="btn-check" name="car_type" value="x_large"
-                                    id="car_type_x_large">
-                                <label class="btn btn-outline-primary" for="car_type_x_large">
+                                    id="car_type_x_large_{{ $service->id }}">
+                                <label class="btn btn-outline-primary" for="car_type_x_large_{{ $service->id }}">
                                     <i class="fas fa-truck"></i> كبيرة جدا - {{ $service->x_large_car_price }} ريال
                                 </label>
                             </div>
                         </div>
+
                     </div>
 
                     <!-- Step 2: إدخال المعلومات -->
@@ -78,14 +88,10 @@
                         <div class="mb-3">
                             <label for="car_color" class="form-label">لون السيارة</label>
                             <select class="form-select" name="car_color" id="car_color" required>
-                                <option value="أسود">أسود</option>
-                                <option value="أبيض">أبيض</option>
-                                <option value="أحمر">أحمر</option>
-                                <option value="أزرق">أزرق</option>
-                                <option value="رمادي">رمادي</option>
-                                <option value="فضي">فضي</option>
-                                <option value="أخضر">أخضر</option>
-                                <option value="أصفر">أصفر</option>
+                                <option>من فضلك اختر لون السيارة</option>
+                                @foreach ($colors as $color)
+                                    <option value="{{ $color }}">{{ $color }}</option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -176,6 +182,10 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFaASooWUeuiE_I7OBH0d3POE_WePF9QE&callback=initMap" async defer>
+</script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // إعداد Flatpickr لمنع اختيار تاريخ سابق
@@ -190,65 +200,102 @@
             minDate: "today",
         });
 
-        // إعداد الخطوات
-        const steps = document.querySelectorAll('.step');
-        let currentStep = 0;
-
-        function showStep(index) {
-            steps.forEach((step, i) => {
-                step.classList.toggle('d-none', i !== index);
-            });
-            document.querySelector('.step-prev')?.classList.toggle('d-none', index === 0);
-            document.querySelector('.step-next')?.classList.toggle('d-none', index === steps.length - 1);
-            document.getElementById('final-submit')?.classList.toggle('d-none', index !== steps.length - 1);
-        }
-
-        document.querySelector('.step-next')?.addEventListener('click', () => {
-            if (currentStep < steps.length - 1) {
-                currentStep++;
-                showStep(currentStep);
-            }
-        });
-
-        document.querySelector('.step-prev')?.addEventListener('click', () => {
-            if (currentStep > 0) {
-                currentStep--;
-                showStep(currentStep);
-            }
-        });
-
-        showStep(currentStep); // عرض الخطوة الأولى عند التحميل
-
-        // إعداد الخريطة داخل النافذة المنبثقة (modal)
+        // إدارة الخطوات
         document.querySelectorAll('[data-bs-toggle="modal"]').forEach((modalButton) => {
             modalButton.addEventListener('click', function() {
                 const modalId = this.getAttribute('data-bs-target');
-                const mapId = modalId.replace('#orderModal-', 'map-');
+                const modalElement = document.querySelector(modalId);
+                const steps = modalElement.querySelectorAll('.step');
+                let currentStep = 0;
 
-                setTimeout(() => {
-                    const map = L.map(mapId).setView([24.7136, 46.6753], 12);
-
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    }).addTo(map);
-
-                    const marker = L.marker([24.7136, 46.6753], {
-                        draggable: true
-                    }).addTo(map);
-
-                    marker.on('dragend', function(e) {
-                        const {
-                            lat,
-                            lng
-                        } = e.target.getLatLng();
-                        document.getElementById(
-                            `latitude-${mapId.split('-')[1]}`).value = lat;
-                        document.getElementById(
-                            `longitude-${mapId.split('-')[1]}`).value = lng;
+                function showStep(index) {
+                    steps.forEach((step, i) => {
+                        step.classList.toggle('d-none', i !== index);
                     });
 
-                    map.invalidateSize();
-                }, 200);
+                    modalElement.querySelector('.step-prev')?.classList.toggle('d-none',
+                        index === 0);
+                    modalElement.querySelector('.step-next')?.classList.toggle('d-none',
+                        index === steps.length - 1);
+                    modalElement.querySelector('#final-submit')?.classList.toggle('d-none',
+                        index !== steps.length - 1);
+                }
+
+                modalElement.querySelector('.step-next')?.addEventListener('click', () => {
+                    if (currentStep < steps.length - 1) {
+                        currentStep++;
+                        showStep(currentStep);
+                    }
+                });
+
+                modalElement.querySelector('.step-prev')?.addEventListener('click', () => {
+                    if (currentStep > 0) {
+                        currentStep--;
+                        showStep(currentStep);
+                    }
+                });
+
+                showStep(currentStep); // عرض الخطوة الأولى عند فتح المودال
+
+                // إعداد خريطة Google داخل المودال
+                modalElement.addEventListener('shown.bs.modal', function() {
+                    const mapId = modalId.replace('#orderModal-', 'map-');
+                    const mapContainer = document.getElementById(mapId);
+                    const latInput = document.getElementById(
+                        `latitude-${mapId.split('-')[1]}`);
+                    const lngInput = document.getElementById(
+                        `longitude-${mapId.split('-')[1]}`);
+
+                    if (!mapContainer._mapInstance) {
+                        const defaultLocation = {
+                            lat: 24.7136,
+                            lng: 46.6753
+                        }; // الافتراضي: الرياض
+
+                        const map = new google.maps.Map(mapContainer, {
+                            center: defaultLocation,
+                            zoom: 12,
+                        });
+
+                        const marker = new google.maps.Marker({
+                            position: defaultLocation,
+                            map: map,
+                            draggable: true,
+                        });
+
+                        google.maps.event.addListener(marker, 'dragend', function(
+                        event) {
+                            const lat = event.latLng.lat();
+                            const lng = event.latLng.lng();
+                            latInput.value = lat;
+                            lngInput.value = lng;
+                        });
+
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(
+                                (position) => {
+                                    const userLocation = {
+                                        lat: position.coords.latitude,
+                                        lng: position.coords.longitude,
+                                    };
+                                    map.setCenter(userLocation);
+                                    marker.setPosition(userLocation);
+                                    latInput.value = userLocation.lat;
+                                    lngInput.value = userLocation.lng;
+                                },
+                                () => {
+                                    alert(
+                                        "تعذر تحديد الموقع الحالي. يرجى التحقق من إعدادات الموقع.");
+                                }
+                            );
+                        }
+
+                        // تخزين المرجع لتجنب إعادة الإنشاء
+                        mapContainer._mapInstance = map;
+                    } else {
+                        google.maps.event.trigger(mapContainer._mapInstance, 'resize');
+                    }
+                });
             });
         });
     });

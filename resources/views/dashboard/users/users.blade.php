@@ -13,8 +13,11 @@
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
+        @elseif (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
         @endif
-
         <!-- Tabs للتنقل بين الأدوار -->
         <ul class="nav nav-tabs mb-3" id="userTabs" role="tablist">
             <li class="nav-item" role="presentation">
@@ -50,7 +53,9 @@
             </div>
 
             <div class="tab-pane fade show active" id="supervisor" role="tabpanel" aria-labelledby="supervisor-tab">
-                @include('dashboard.users.user_table', ['users' => $users->where('role', 'supervisor')])
+                @include('dashboard.users.user_table', [
+                    'users' => $users->where('role', 'supervisor'),
+                ])
             </div>
 
             <!-- Tab Admins -->
@@ -123,8 +128,23 @@
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">كلمة المرور</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
+                            <input type="password" class="form-control" id="password" name="password" required
+                                oninput="validatePassword(this)">
                         </div>
+
+
+                        <script>
+                            function validatePassword(input) {
+                                const englishOnly =
+                                /^[A-Za-z0-9!@#$%^&*()_+[\]{}|;:'",.<>?`~\-=/\\]*$/; // يسمح بالحروف الإنجليزية والأرقام والرموز الشائعة
+                                if (!englishOnly.test(input.value)) {
+                                    input.setCustomValidity("يجب أن تكون كلمة المرور باللغة الإنجليزية فقط.");
+                                } else {
+                                    input.setCustomValidity(""); // إلغاء الرسالة عند الإدخال الصحيح
+                                }
+                            }
+                        </script>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
                             <button type="submit" class="btn btn-primary">حفظ</button>

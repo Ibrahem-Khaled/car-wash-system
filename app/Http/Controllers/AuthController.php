@@ -69,8 +69,8 @@ class AuthController extends Controller
 
     public function otp()
     {
-        // Session::put('otp_verified', true);
-        // return redirect()->route('home')->with('info', 'يرجى إدخال رمز التحقق OTP.');
+        Session::put('otp_verified', true);
+        return redirect()->route('home')->with('info', 'يرجى إدخال رمز التحقق OTP.');
         // التحقق من حالة التحقق من OTP
         if (Session::get('otp_verified') === true) {
             return redirect()->route('home');

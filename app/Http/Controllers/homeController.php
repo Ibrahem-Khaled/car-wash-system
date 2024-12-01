@@ -78,11 +78,42 @@ class homeController extends Controller
         $mainProducts = Product::where('type', 'main')->get();
         $subProducts = Product::where('type', 'sub')->get();
         $cars = Car::all();
+        $colors = [
+            'أحمر',
+            'أزرق',
+            'أصفر',
+            'أخضر',
+            'برتقالي',
+            'أرجواني',
+            'وردي',
+            'بني',
+            'رمادي',
+            'أسود',
+            'أبيض',
+            'ذهبي',
+            'فضي',
+            'كريمي',
+            'زيتي',
+            'نيلي',
+            'فيروزي',
+            'بنفسجي',
+            'ليموني',
+            'عسلي',
+            'عنبري',
+            'خزامى',
+            'فوشيا',
+            'خردلي',
+            'كاكي',
+            'بحري',
+        ];
+
+
         return view('services', [
             'companyUser' => $this->companyUser,
             'mainProducts' => $mainProducts,
             'subProducts' => $subProducts,
-            'cars' => $cars
+            'cars' => $cars,
+            'colors' => $colors
         ]);
     }
 
