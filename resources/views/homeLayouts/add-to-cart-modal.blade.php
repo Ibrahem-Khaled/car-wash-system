@@ -183,8 +183,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFaASooWUeuiE_I7OBH0d3POE_WePF9QE&callback=initMap" async defer>
-</script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap" async
+    defer></script>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -264,7 +265,7 @@
                         });
 
                         google.maps.event.addListener(marker, 'dragend', function(
-                        event) {
+                            event) {
                             const lat = event.latLng.lat();
                             const lng = event.latLng.lng();
                             latInput.value = lat;
@@ -285,7 +286,8 @@
                                 },
                                 () => {
                                     alert(
-                                        "تعذر تحديد الموقع الحالي. يرجى التحقق من إعدادات الموقع.");
+                                        "تعذر تحديد الموقع الحالي. يرجى التحقق من إعدادات الموقع."
+                                        );
                                 }
                             );
                         }
