@@ -51,6 +51,7 @@
         .footer .contact-info p {
             margin-bottom: 8px;
             font-size: 15px;
+            margin: 5;
         }
 
         .footer .contact-info i {
