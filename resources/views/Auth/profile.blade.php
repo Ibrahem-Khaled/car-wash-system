@@ -121,7 +121,7 @@
                 </div>
                 <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
                     @csrf
-                    @method('PUT')
+                    {{-- @method('PUT') --}}
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="name" class="form-label text-dark">الاسم</label>
