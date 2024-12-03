@@ -180,7 +180,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary step-prev d-none">السابق</button>
                     <button type="button" class="btn btn-primary step-next">التالي</button>
-                    <button type="submit" class="btn btn-primary d-none" id="final-submit">أضف إلى السلة</button>
+                    <button type="submit" class="btn btn-primary d-none" id="final-submit">اطلب الخدمة الان</button>
                 </div>
             </form>
         </div>
@@ -308,7 +308,7 @@
                                 () => {
                                     alert(
                                         "تعذر تحديد الموقع الحالي. يرجى التحقق من إعدادات الموقع."
-                                        );
+                                    );
                                 }
                             );
                         }
@@ -333,13 +333,13 @@
                                     () => {
                                         alert(
                                             "تعذر تحديد الموقع الحالي. يرجى التحقق من إعدادات الموقع."
-                                            );
+                                        );
                                     }
                                 );
                             } else {
                                 alert(
                                     "ميزة تحديد الموقع غير مدعومة على هذا المتصفح."
-                                    );
+                                );
                             }
                         });
 

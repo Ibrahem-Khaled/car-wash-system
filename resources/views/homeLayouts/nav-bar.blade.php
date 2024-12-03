@@ -90,7 +90,10 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">المركبة المخملية</a>
+            <a class="navbar-brand" href="{{ route('home') }}">
+                <img src="{{ asset('assets/img/logo-ct-dark.png') }}" alt="Logo" class="user-icon">
+                المركبة المخملية
+            </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
