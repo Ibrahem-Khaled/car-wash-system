@@ -26,30 +26,61 @@
         }
 
         .service-card {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            border: none;
+            border-radius: 15px;
+            padding: 30px;
+            background-color: #fefefe;
         }
 
         .service-card:hover {
             transform: translateY(-10px);
+            background-color: #f8f9fa;
         }
 
+        .service-card i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        /* Stats Section */
         .stats-section {
             padding: 60px 20px;
             background-color: #4a2f85;
             color: white;
         }
 
+        .stats-section h3 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .stats-section p {
+            font-size: 1.2rem;
+        }
+
+        /* Testimonials Section */
         .testimonial-section {
             padding: 60px 20px;
             background-color: #f1f1f1;
         }
 
         .testimonial {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
             background: white;
-            border-radius: 10px;
+            border-radius: 15px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .testimonial:hover {
+            transform: translateY(-5px);
+        }
+
+        .testimonial h5 {
+            margin-top: 15px;
+            font-size: 1.2rem;
         }
     </style>
 </head>
@@ -64,24 +95,24 @@
             <h2 class="mb-4">خدماتنا</h2>
             <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="service-card p-4">
-                        <i class="fas fa-car-side fa-3x mb-3 text-primary"></i>
+                    <div class="service-card">
+                        <i class="fas fa-car-side text-primary"></i>
                         <h5>غسيل خارجي</h5>
-                        <p>تنظيف خارجي شامل باستخدام أفضل المعدات.</p>
+                        <p>تنظيف خارجي شامل باستخدام أحدث التقنيات والمعدات.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="service-card p-4">
-                        <i class="fas fa-car-alt fa-3x mb-3 text-success"></i>
+                    <div class="service-card">
+                        <i class="fas fa-car-alt text-success"></i>
                         <h5>غسيل داخلي</h5>
-                        <p>تنظيف داخلي دقيق للحفاظ على سيارتك كالجديدة.</p>
+                        <p>تنظيف داخلي دقيق للحفاظ على سيارتك بحالة ممتازة.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="service-card p-4">
-                        <i class="fas fa-spray-can fa-3x mb-3 text-warning"></i>
+                    <div class="service-card">
+                        <i class="fas fa-spray-can text-warning"></i>
                         <h5>تلميع السيارات</h5>
-                        <p>تلميع خارجي لإعادة بريق سيارتك.</p>
+                        <p>تلميع خارجي لإعادة بريق سيارتك وكأنها جديدة.</p>
                     </div>
                 </div>
             </div>
@@ -103,7 +134,7 @@
                 </div>
                 <div class="col-md-3">
                     <h3>20+</h3>
-                    <p>فرع</p>
+                    <p>فروع</p>
                 </div>
                 <div class="col-md-3">
                     <h3>50+</h3>
@@ -120,19 +151,19 @@
             <div class="row g-4">
                 <div class="col-md-4">
                     <div class="testimonial">
-                        <p>"خدمة ممتازة وسريعة. شكراً لكم!"</p>
+                        <p>"خدمة رائعة وسريعة. شكراً لكم على الجودة."</p>
                         <h5>- أحمد علي</h5>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="testimonial">
-                        <p>"أفضل مغسلة سيارات زرتها على الإطلاق!"</p>
+                        <p>"أفضل مغسلة سيارات جربتها على الإطلاق!"</p>
                         <h5>- سارة محمد</h5>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="testimonial">
-                        <p>"تعامل راقٍ وجودة عالية. أنصح بها بشدة."</p>
+                        <p>"تعامل ممتاز ونتائج مذهلة."</p>
                         <h5>- خالد حسن</h5>
                     </div>
                 </div>
