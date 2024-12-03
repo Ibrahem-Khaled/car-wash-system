@@ -9,6 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+
+    <link rel="icon" href="{{ asset('assets/img/logo-ct.png') }}">
+
     <style>
         body {
             font-family: 'Cairo', sans-serif;
@@ -117,7 +120,8 @@
                                                 <div>
                                                     <strong>{{ $product['name'] }}</strong>
                                                     <p class="mb-0">{{ $product['description'] }}</p>
-                                                    <span>الكمية المتاحة: {{ $product['pivot']['quantity'] }}</span><br>
+                                                    <span>الكمية المتاحة:
+                                                        {{ $product['pivot']['quantity'] }}</span><br>
                                                     <span>المتبقي: {{ $remainingQuantity }}</span>
                                                 </div>
                                             </li>

@@ -5,6 +5,13 @@
         background-size: 100%;
         border-radius: 50%;
     }
+
+    .modal-map {
+        width: 100%;
+        height: 300px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
 </style>
 
 
@@ -246,6 +253,8 @@
                         `latitude-${mapId.split('-')[1]}`);
                     const lngInput = document.getElementById(
                         `longitude-${mapId.split('-')[1]}`);
+                    const autoLocationButton = document.getElementById(
+                        `auto-location-${mapId.split('-')[1]}`);
 
                     if (!mapContainer._mapInstance) {
                         const defaultLocation = {
@@ -261,9 +270,10 @@
                         const marker = new google.maps.Marker({
                             position: defaultLocation,
                             map: map,
-                            draggable: true,
+                            draggable: true, // السماح بسحب العلامة
                         });
 
+                        // تحديث الإحداثيات عند سحب العلامة
                         google.maps.event.addListener(marker, 'dragend', function(
                             event) {
                             const lat = event.latLng.lat();
@@ -272,6 +282,17 @@
                             lngInput.value = lng;
                         });
 
+                        // تحديث الإحداثيات عند النقر على الخريطة
+                        google.maps.event.addListener(map, 'click', function(event) {
+                            const lat = event.latLng.lat();
+                            const lng = event.latLng.lng();
+                            marker.setPosition(event
+                                .latLng); // تحديث موضع العلامة
+                            latInput.value = lat;
+                            lngInput.value = lng;
+                        });
+
+                        // ميزة الموقع التلقائي
                         if (navigator.geolocation) {
                             navigator.geolocation.getCurrentPosition(
                                 (position) => {
@@ -292,12 +313,44 @@
                             );
                         }
 
+                        // زر تحديد الموقع التلقائي
+                        autoLocationButton.addEventListener('click', () => {
+                            if (navigator.geolocation) {
+                                navigator.geolocation.getCurrentPosition(
+                                    (position) => {
+                                        const userLocation = {
+                                            lat: position.coords
+                                                .latitude,
+                                            lng: position.coords
+                                                .longitude,
+                                        };
+                                        map.setCenter(userLocation);
+                                        marker.setPosition(userLocation);
+                                        latInput.value = userLocation.lat;
+                                        lngInput.value = userLocation.lng;
+                                        alert("تم تحديد الموقع بنجاح.");
+                                    },
+                                    () => {
+                                        alert(
+                                            "تعذر تحديد الموقع الحالي. يرجى التحقق من إعدادات الموقع."
+                                            );
+                                    }
+                                );
+                            } else {
+                                alert(
+                                    "ميزة تحديد الموقع غير مدعومة على هذا المتصفح."
+                                    );
+                            }
+                        });
+
                         // تخزين المرجع لتجنب إعادة الإنشاء
                         mapContainer._mapInstance = map;
                     } else {
                         google.maps.event.trigger(mapContainer._mapInstance, 'resize');
                     }
                 });
+
+
             });
         });
     });

@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha512-sA+qNc3y...="
         crossorigin="" />
 
+        <link rel="icon" href="{{ asset('assets/img/logo-ct.png') }}">
+
+
     <style>
         body {
             font-family: 'Cairo', sans-serif;
