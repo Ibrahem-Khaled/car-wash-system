@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="{{ app()->getLocale() }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> تواصل معنا</title>
+    <title>{{ __('contact.title') }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,36 +64,38 @@
         <div class="container">
             <div class="row align-items-center justify-content-between">
                 <div class="col-lg-6 bg-white p-5">
-                    <h2 class="display-6 fw-bold text-center text-brown mb-4">تواصل معنا</h2>
+                    <h2 class="display-6 fw-bold text-center text-brown mb-4">{{ __('contact.title') }}</h2>
                     <form method="POST" action="{{ route('contact-us.post') }}">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="mb-3">
-                                    <input class="form-control bg-light" name="name" placeholder="الاسم"
-                                        type="text">
+                                    <input class="form-control bg-light" name="name"
+                                        placeholder="{{ __('contact.name_placeholder') }}" type="text">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <input class="form-control bg-light" name="email" placeholder="البريد الإلكتروني"
-                                        type="text">
+                                    <input class="form-control bg-light" name="email"
+                                        placeholder="{{ __('contact.email_placeholder') }}" type="text">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <input class="form-control bg-light" name="phone" placeholder="رقم الهاتف"
-                                        type="tel">
+                                    <input class="form-control bg-light" name="phone"
+                                        placeholder="{{ __('contact.phone_placeholder') }}" type="tel">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
-                                    <textarea class="form-control bg-light" name="message" placeholder="اكتب رسالتك هنا" rows="4"></textarea>
+                                    <textarea class="form-control bg-light" name="message" placeholder="{{ __('contact.message_placeholder') }}"
+                                        rows="4"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="d-grid">
-                                    <button class="btn btn-brown" type="submit">إرسال الرسالة</button>
+                                    <button class="btn btn-brown"
+                                        type="submit">{{ __('contact.submit_button') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -101,22 +103,22 @@
                 </div>
                 <div class="col-lg-5 text-brown mt-5 mt-lg-4">
                     <div class="mb-4">
-                        <div>العنوان</div>
+                        <div>{{ __('contact.address') }}</div>
                         <div class="display-8 fw-semibold">
                             {{ $companyUser->address }}
                         </div>
                     </div>
                     <div class="mb-4">
-                        <div>الهاتف</div>
+                        <div>{{ __('contact.phone') }}</div>
                         <div class="display-8 fw-semibold">
                             {{ $companyUser->phone }}
                         </div>
                     </div>
                     <div class="mb-4">
-                        <div>البريد الإلكتروني</div>
+                        <div>{{ __('contact.email') }}</div>
                         <div class="display-8 fw-semibold text-break">
                             <a class="text-link text-brown text-decoration-none"
-                                href="mailto:samplemail@mail.com">{{ $companyUser->email }}</a>
+                                href="mailto:{{ $companyUser->email }}">{{ $companyUser->email }}</a>
                         </div>
                     </div>
                 </div>
@@ -124,20 +126,19 @@
 
             <!-- قسم الإفصاحات -->
             <div class="info-box mt-4">
-                <h3 class="text-brown fw-bold mb-3">إفصاحات هامة</h3>
+                <h3 class="text-brown fw-bold mb-3">{{ __('contact.important_disclosures') }}</h3>
                 <ul class="list-unstyled">
                     <li class="mb-2">
                         <i class="fas fa-clock text-brown"></i>
-                        <strong>وقت الرد على الشكاوى:</strong> يتم الرد على الشكاوى خلال 24 ساعة عمل.
+                        <strong>{{ __('contact.response_time') }}</strong> {{ __('contact.response_time_value') }}
                     </li>
                     <li class="mb-2">
                         <i class="fas fa-tools text-brown"></i>
-                        <strong>وقت معالجة الشكاوى:</strong> يتم معالجة الشكاوى خلال 5 أيام عمل.
+                        <strong>{{ __('contact.handling_time') }}</strong> {{ __('contact.handling_time_value') }}
                     </li>
                     <li>
                         <i class="fas fa-truck text-brown"></i>
-                        <strong>وقت التوصيل:</strong> تتم الخدمة بعد 24 ساعة من وقت الطلب، ويظهر ذلك بوضوح
-                        في الفاتورة.
+                        <strong>{{ __('contact.delivery_time') }}</strong> {{ __('contact.delivery_time_value') }}
                     </li>
                 </ul>
             </div>

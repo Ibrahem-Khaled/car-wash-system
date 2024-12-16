@@ -1,162 +1,75 @@
-<!DOCTYPE html>
-<html lang="ar">
+<section class="py-5 bg-light">
+    <div class="container">
+        <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+            <!-- المؤشرات -->
+            <div class="carousel-indicators">
+                @foreach ($products as $key => $product)
+                    <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="{{ $key }}"
+                        class="{{ $key === 0 ? 'active' : '' }}" aria-current="{{ $key === 0 ? 'true' : 'false' }}"
+                        aria-label="Slide {{ $key + 1 }}"></button>
+                @endforeach
+            </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المركبة المخملية - غسيل متنقل</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+            <!-- الشرائح -->
+            <div class="carousel-inner">
+                @foreach ($products as $key => $product)
+                    <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <img src="{{ asset('storage/' . $product->image) }}" class="d-block w-100 rounded"
+                                    alt="{{ $product->name }}">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-4 text-center text-md-end">
+                                    <h3 class="text-primary">{{ $product->name }}</h3>
+                                    <p class="text-secondary">{{ $product->description }}</p>
 
-    <style>
-        body {
-            font-family: "Cairo", sans-serif;
-            font-optical-sizing: auto;
-        }
+                                    <!-- قائمة الأسعار -->
+                                    <ul class="list-group mb-3">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <span>سعر السيارة الصغيرة</span>
+                                            <span class="badge bg-primary" style="background-color: #4a2f85;">
+                                                {{ $product->small_car_price ?? 'غير متاح' }} ريال
+                                            </span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <span>سعر السيارة المتوسطة</span>
+                                            <span class="badge bg-primary" style="background-color: #4a2f85;">
+                                                {{ $product->medium_car_price ?? 'غير متاح' }} ريال
+                                            </span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <span>سعر السيارة الكبيرة</span>
+                                            <span class="badge bg-primary" style="background-color: #4a2f85;">
+                                                {{ $product->large_car_price ?? 'غير متاح' }} ريال
+                                            </span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <span>سعر السيارة الكبيرة جدًا</span>
+                                            <span class="badge bg-primary" style="background-color: #4a2f85;">
+                                                {{ $product->x_large_car_price ?? 'غير متاح' }} ريال
+                                            </span>
+                                        </li>
+                                    </ul>
 
-        .hero-section {
-            position: relative;
-            height: 600px;
-            display: flex;
-            align-items: center;
-            color: #333;
-        }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fshop.gardenstatehonda.com%2Fwp-content%2Fuploads%2Fsites%2F21%2F2020%2F05%2Fcar-wash-2.jpg&f=1&nofb=1&ipt=edb4f4d58ba2dd2e62aa30f96691db04caed2aca9368ccbc8349b4e968d4a778&ipo=images') no-repeat center center/cover;
-            filter: blur(3px);
-            z-index: -1;
-        }
-
-        .hero-content {
-            z-index: 1;
-            max-width: 800px;
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: right;
-        }
-
-        .hero-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1D1E1F;
-        }
-
-        .hero-text {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-btns {
-            text-align: right;
-        }
-
-        .btn {
-            background-color: #4a2f85;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #ed0f7d;
-        }
-
-        .modal-dialog {
-            max-width: 600px;
-        }
-
-        .modal-body {
-            display: flex;
-            justify-content: space-between;
-            padding: 30px;
-        }
-
-        .btn-option {
-            width: 48%;
-            padding: 15px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-align: center;
-            border-radius: 10px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .btn-option:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-        }
-
-        .btn-services {
-            background-color: #4a2f85;
-            color: #fff;
-        }
-
-        .btn-services:hover {
-            background-color: #333;
-        }
-
-        .btn-subscriptions {
-            background-color: #f8f9fa;
-            border: 2px solid #4a2f85;
-            color: #4a2f85;
-        }
-
-        .btn-subscriptions:hover {
-            background-color: #4a2f85;
-            color: #fff;
-        }
-    </style>
-</head>
-
-<body>
-
-    <!-- Hero Section -->
-    <section class="hero-section d-flex align-items-center">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 hero-content order-md-2">
-                    <p class="lead">مغسلة متنقلة لخدمة سيارتك بكل احترافية.</p>
-                    <h4 class="hero-title">اشترك الآن واستمتع بنظافة سيارتك في أي وقت وأي مكان</h4>
-                    <p class="hero-text">نوفر لك خدمة غسيل متنقل تتيح لك الحفاظ على نظافة سيارتك بسهولة. اطلب الخدمة
-                        وسنأتي إليك أينما كنت!</p>
-                    <div class="hero-btns">
-                        <button class="btn" data-bs-toggle="modal" data-bs-target="#serviceModal">احجز الآن</button>
+                                    <a href="{{ route('services') }}" class="btn btn-primary"
+                                        style="background-color: #4a2f85;">طلب الآن</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="col-md-6 order-md-1">
-                    <!-- صورة إضافية أو محتوى فارغ -->
-                </div>
+                @endforeach
             </div>
-        </div>
-    </section>
 
-    <!-- Modal -->
-    <div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="serviceModalLabel">اختر الخدمة أو الاشتراك</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <a href="{{ route('subscribtion') }}" class="btn-option btn-subscriptions">الاشتراكات</a>
-                    <a href="{{ route('services') }}" class="btn-option btn-services">الخدمات</a>
-                </div>
-            </div>
+            {{-- <!-- أدوات التنقل -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">السابق</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">التالي</span>
+            </button> --}}
         </div>
     </div>
-
-</body>
-
-</html>
+</section>

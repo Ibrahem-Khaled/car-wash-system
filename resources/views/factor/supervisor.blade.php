@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="{{ app()->getLocale() }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متابعة الطلبات</title>
+    <title>{{ __('orders.title') }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
     <link rel="icon" href="{{ asset('assets/img/logo-ct.png') }}">
 
     <style>
@@ -68,23 +67,24 @@
 
     <section class="py-5">
         <div class="container">
-            <h2 class="section-title">متابعة الطلبات</h2>
+            <h2 class="section-title">{{ __('orders.title') }}</h2>
 
             <div class="row">
                 @foreach ($orders as $item)
                     <div class="col-md-6">
                         <div class="order-card bg-white">
-                            <h5>طلب رقم #{{ $item->id }}</h5>
-                            <p><strong>المنتج:</strong> {{ $item->product->name }}</p>
-                            <p><strong>السعر:</strong> {{ $item->price }} ريال</p>
-                            <p><strong>نوع السيارة:</strong> {{ $item->car_type }}</p>
-                            <p><strong>موديل السيارة:</strong> {{ $item->car_model }}</p>
-                            <p><strong>لون السيارة:</strong> {{ $item->car_color }}</p>
-                            <p><strong>رقم السيارة:</strong> {{ $item->car_number }}</p>
-                            <p><strong>تاريخ الغسيل:</strong> {{ $item->car_wash }}</p>
-                            <p><strong>الإحداثيات:</strong> {{ $item->latitude }}, {{ $item->longitude }}</p>
+                            <h5>{{ __('orders.order_number') }} #{{ $item->id }}</h5>
+                            <p><strong>{{ __('orders.product') }}:</strong> {{ $item->product->name }}</p>
+                            <p><strong>{{ __('orders.price') }}:</strong> {{ $item->price }} ريال</p>
+                            <p><strong>{{ __('orders.car_type') }}:</strong> {{ $item->car_type }}</p>
+                            <p><strong>{{ __('orders.car_model') }}:</strong> {{ $item->car_model }}</p>
+                            <p><strong>{{ __('orders.car_color') }}:</strong> {{ $item->car_color }}</p>
+                            <p><strong>{{ __('orders.car_number') }}:</strong> {{ $item->car_number }}</p>
+                            <p><strong>{{ __('orders.car_wash_date') }}:</strong> {{ $item->car_wash }}</p>
+                            <p><strong>{{ __('orders.coordinates') }}:</strong> {{ $item->latitude }},
+                                {{ $item->longitude }}</p>
 
-                            <p class="order-status">حالة الطلب:
+                            <p class="order-status">{{ __('orders.status') }}:
                                 <span
                                     class="badge 
                                     @if ($item->status == 'declined') bg-danger 
@@ -95,7 +95,7 @@
                             </p>
 
                             @if ($item->status == 'declined' && $item->decline_reason)
-                                <p><strong>سبب الرفض:</strong> {{ $item->decline_reason }}</p>
+                                <p><strong>{{ __('orders.decline_reason') }}:</strong> {{ $item->decline_reason }}</p>
                             @endif
 
                             <form action="{{ route('updateOrderStatus', $item->id) }}" method="POST">
@@ -103,37 +103,37 @@
                                 @method('PUT')
 
                                 <div class="mb-3">
-                                    <p>تغيير حالة الطلب:</p>
+                                    <p>{{ __('orders.change_status') }}:</p>
 
                                     @if ($item->status == 'unpaid')
                                         <button class="btn btn-success" name="status" value="acepted"
-                                            type="submit">قبول الطلب</button>
+                                            type="submit">{{ __('orders.accept_order') }}</button>
                                     @elseif ($item->status == 'acepted')
                                         <button class="btn btn-warning" name="status" value="pending"
-                                            type="submit">قيد التنفيذ</button>
+                                            type="submit">{{ __('orders.in_progress') }}</button>
                                     @elseif ($item->status == 'pending')
                                         <button class="btn btn-success" name="status" value="completed"
-                                            type="submit">اكتمل</button>
+                                            type="submit">{{ __('orders.complete') }}</button>
                                     @endif
 
-                                    <button class="btn btn-danger" type="button" id="declineButton">رفض
-                                        الطلب</button>
+                                    <button class="btn btn-danger" type="button"
+                                        id="declineButton">{{ __('orders.decline_order') }}</button>
                                 </div>
 
                                 <div class="mb-3" id="reasonContainer" style="display: none;">
-                                    <label for="decline_reason" class="form-label">سبب الرفض</label>
+                                    <label for="decline_reason"
+                                        class="form-label">{{ __('orders.decline_reason') }}</label>
                                     <textarea class="form-control" name="decline_reason" id="decline_reason" rows="3"></textarea>
                                     <button class="btn btn-danger mt-2" name="status" value="declined"
-                                        type="submit">تأكيد الرفض</button>
+                                        type="submit">{{ __('orders.confirm_decline') }}</button>
                                 </div>
-
-
                             </form>
+
                             @if (Auth::check() && !in_array(auth()->user()->role, ['factor', 'company', 'customer']))
                                 <div class="mb-3">
-                                    <label for="worker_id" class="form-label">تحديد العامل المسؤول</label>
+                                    <label for="worker_id" class="form-label">{{ __('orders.assign_worker') }}</label>
                                     <select class="form-select" name="worker_id" id="worker_id">
-                                        <option value="">-- اختر العامل --</option>
+                                        <option value="">{{ __('orders.select_worker') }}</option>
                                         @foreach ($workers as $worker)
                                             <option value="{{ $worker->id }}"
                                                 {{ $item->worker_id == $worker->id ? 'selected' : '' }}>
@@ -146,7 +146,7 @@
 
                             <button class="btn btn-secondary mt-3"
                                 onclick="openMap({{ $item->latitude }}, {{ $item->longitude }})">
-                                عرض الموقع على الخريطة
+                                {{ __('orders.view_map') }}
                             </button>
                         </div>
                     </div>
@@ -165,7 +165,7 @@
                 const googleMapUrl = `https://www.google.com/maps?q=${lat},${lng}`;
                 window.open(googleMapUrl, '_blank');
             } else {
-                alert('إحداثيات الموقع غير متوفرة.');
+                alert('{{ __('orders.no_coordinates') }}');
             }
         }
     </script>

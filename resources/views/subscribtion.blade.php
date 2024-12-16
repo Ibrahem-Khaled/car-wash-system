@@ -64,7 +64,7 @@
 
     <section class="py-5 bg-light">
         <div class="container">
-            <h2 class="section-title">باقات الاشتراك</h2>
+            <h2 class="section-title">{{ __('home.subscribtion') }}</h2>
             <div class="row gy-4">
                 @foreach ($subscriptions as $subscription)
                     <div class="col-md-6 col-lg-4">
@@ -89,7 +89,7 @@
                                 <input type="hidden" name="subscription_id" value="{{ $subscription->id }}">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#paymentModal-{{ $subscription->id }}">
-                                    اشترك الآن
+                                    {{ __('home.subscribe_now') }}
                                 </button>
                             </form>
                         </div>

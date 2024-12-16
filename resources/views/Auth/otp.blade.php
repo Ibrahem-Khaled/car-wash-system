@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="{{ app()->getLocale() }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>تأكيد OTP</title>
+    <title>{{ __('auth.title') }}</title>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;400;700&display=swap" rel="stylesheet" />
@@ -77,21 +77,19 @@
 
 <body>
     <div class="otp-container text-center">
-        <h4 class="mb-3">أدخل رمز OTP</h4>
+        <h4 class="mb-3">{{ __('otp.title') }}</h4>
         <form id="otpForm" method="POST" action="{{ route('verifyOtp') }}">
             @csrf
             <div class="d-flex justify-content-center mb-4">
-                <input type="text" class="otp-input" maxlength="1" pattern="\d" required>
-                <input type="text" class="otp-input" maxlength="1" pattern="\d" required>
-                <input type="text" class="otp-input" maxlength="1" pattern="\d" required>
-                <input type="text" class="otp-input" maxlength="1" pattern="\d" required>
-                <input type="text" class="otp-input" maxlength="1" pattern="\d" required>
+                @for ($i = 0; $i < 5; $i++)
+                    <input type="text" class="otp-input" maxlength="1" pattern="\d" required>
+                @endfor
             </div>
             <input type="hidden" name="otp" id="otpHiddenInput">
-            <button type="submit" class="btn btn-primary w-100 mb-3">تأكيد</button>
+            <button type="submit" class="btn btn-primary w-100 mb-3">{{ __('otp.submit') }}</button>
         </form>
         <p id="timer" class="text-muted"></p>
-        <a id="resendLink" class="resend-link disabled">إعادة إرسال الرمز</a>
+        <a id="resendLink" class="resend-link disabled">{{ __('otp.resend') }}</a>
     </div>
 
     <script>
@@ -101,21 +99,27 @@
         let resendAttempts = 2;
         let timerDuration = 30; // المدة الزمنية للعداد بالثواني
 
+        const messages = {
+            timer: "{{ __('otp.timer_message', ['seconds' => ':seconds']) }}",
+            resendSuccess: "{{ __('otp.resend_success') }}",
+            resendDisabled: "{{ __('otp.resend_disabled') }}"
+        };
+
         function startTimer() {
             resendLink.classList.add('disabled');
             let remainingTime = timerDuration;
-            timerElement.textContent = `يمكنك إعادة الإرسال خلال ${remainingTime} ثانية`;
+            timerElement.textContent = messages.timer.replace(':seconds', remainingTime);
 
             const timer = setInterval(() => {
                 remainingTime--;
-                timerElement.textContent = `يمكنك إعادة الإرسال خلال ${remainingTime} ثانية`;
+                timerElement.textContent = messages.timer.replace(':seconds', remainingTime);
                 if (remainingTime <= 0) {
                     clearInterval(timer);
                     if (resendAttempts > 0) {
                         resendLink.classList.remove('disabled');
                         timerElement.textContent = '';
                     } else {
-                        timerElement.textContent = 'لا يمكن إعادة الإرسال الآن. حاول مرة أخرى بعد ساعتين.';
+                        timerElement.textContent = messages.resendDisabled;
                     }
                 }
             }, 1000);
@@ -124,7 +128,7 @@
         resendLink.addEventListener('click', () => {
             if (resendAttempts > 0) {
                 resendAttempts--;
-                alert('تمت إعادة إرسال الرمز!');
+                alert(messages.resendSuccess);
                 startTimer();
             }
         });
@@ -145,7 +149,6 @@
 
         startTimer();
 
-
         const otpForm = document.getElementById('otpForm');
         const otpHiddenInput = document.getElementById('otpHiddenInput');
 
@@ -154,9 +157,10 @@
             otpInputs.forEach(input => {
                 otpValue += input.value;
             });
-            otpHiddenInput.value = otpValue; // ضع القيم المجمعة في الحقل المخفي
+            otpHiddenInput.value = otpValue;
         });
     </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 

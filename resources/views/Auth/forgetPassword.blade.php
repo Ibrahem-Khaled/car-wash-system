@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="{{ app()->getLocale() }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>استعادة كلمة المرور</title>
+    <title>{{ __('auth.title') }}</title>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;400;700&display=swap" rel="stylesheet" />
@@ -93,15 +93,17 @@
             <div class="logo-container">
                 <img src="{{ asset('assets/img/logo-ct-dark.png') }}" alt="Logo">
             </div>
-            <h3 class="mb-4 text-center">استعادة كلمة المرور</h3>
+            <h3 class="mb-4 text-center">{{ __('auth.title') }}</h3>
             <form method="POST" action="{{ route('resetPassword') }}">
                 @csrf
                 <div class="form-group mb-4">
-                    <label for="email" class="form-label">البريد الإلكتروني</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="أدخل بريدك الإلكتروني" required>
+                    <label for="email" class="form-label">{{ __('auth.email_label') }}</label>
+                    <input type="email" id="email" name="email" class="form-control"
+                        placeholder="{{ __('auth.email_placeholder') }}" required>
                 </div>
-                <button type="submit" class="btn btn-primary w-100 mb-3">إرسال رابط استعادة كلمة المرور</button>
-                <p class="text-center text-muted">تذكرت كلمة المرور؟ <a href="{{ route('login') }}">تسجيل الدخول</a></p>
+                <button type="submit" class="btn btn-primary w-100 mb-3">{{ __('auth.submit') }}</button>
+                <p class="text-center text-muted">{{ __('auth.remember_password') }} <a
+                        href="{{ route('login') }}">{{ __('auth.login') }}</a></p>
             </form>
         </div>
     </div>

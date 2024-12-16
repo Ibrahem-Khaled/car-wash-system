@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha512-sA+qNc3y...="
         crossorigin="" />
 
-        <link rel="icon" href="{{ asset('assets/img/logo-ct.png') }}">
+    <link rel="icon" href="{{ asset('assets/img/logo-ct.png') }}">
 
 
     <style>
@@ -72,7 +72,7 @@
         @endif
 
         <div class="container">
-            <h2 class="section-title">خدمات المغسلة المتنقلة</h2>
+            <h2 class="section-title">{{ __('home.services') }}</h2>
             <div class="row gy-4">
 
                 @foreach ($mainProducts as $service)
@@ -84,7 +84,7 @@
                             <p class="text-secondary">{{ $service->description }}</p>
                             <button class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#orderModal-{{ $service->id }}">
-                                اطلب الخدمة
+                                {{ __('home.request_service') }}
                             </button>
                         </div>
                     </div>

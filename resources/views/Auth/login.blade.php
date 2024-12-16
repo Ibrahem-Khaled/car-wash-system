@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="{{ app()->getLocale() }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>تسجيل الدخول</title>
+    <title>{{ __('auth.title_login') }}</title>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;400;700&display=swap" rel="stylesheet" />
@@ -115,21 +115,21 @@
             <div class="logo-container">
                 <img src="{{ asset('assets/img/logo-ct-dark.png') }}" alt="Logo">
             </div>
-            <h3 class="mb-4 text-center">تسجيل الدخول</h3>
+            <h3 class="mb-4 text-center">{{ __('auth.title_login') }}</h3>
             <form method="POST" action="{{ route('customLogin') }}">
                 @csrf
 
                 <div class="form-group mb-4">
-                    <label for="email" class="form-label">البريد الإلكتروني</label>
+                    <label for="email" class="form-label">{{ __('auth.email_label') }}</label>
                     <input type="email" id="email" name="email" class="form-control"
-                        placeholder="أدخل بريدك الإلكتروني" required>
+                        placeholder="{{ __('auth.email_placeholder') }}" required>
                 </div>
 
                 <div class="form-group mb-4">
-                    <label for="password" class="form-label">كلمة المرور</label>
+                    <label for="password" class="form-label">{{ __('auth.password_label') }}</label>
                     <div class="input-group">
                         <input type="password" id="password" name="password" class="form-control"
-                            placeholder="أدخل كلمة المرور" required>
+                            placeholder="{{ __('auth.password_placeholder') }}" required>
                         <button type="button" class="btn btn-outline-secondary" id="togglePassword">
                             <i class="fas fa-eye"></i>
                         </button>
@@ -139,9 +139,9 @@
                 <div class="form-group form-check mb-3 d-flex justify-content-between align-items-center">
                     <div>
                         <input type="checkbox" class="form-check-input" id="chk1" name="chk">
-                        <label class="form-check-label" for="chk1">تذكرني</label>
+                        <label class="form-check-label" for="chk1">{{ __('auth.remember_me') }}</label>
                     </div>
-                    <a href="{{ route('forgetPassword') }}" class="text-muted">نسيت كلمة المرور؟</a>
+                    <a href="{{ route('forgetPassword') }}" class="text-muted">{{ __('auth.forgot_password') }}</a>
                 </div>
 
                 <!-- Google reCAPTCHA -->
@@ -149,20 +149,21 @@
                     <div class="g-recaptcha" data-sitekey="6LcHi3gqAAAAAJ05RrvUlAZIwul9-dQGqPoI8TIN"></div>
                 </div>
 
-                <button type="submit" class="btn btn-primary w-100 mb-3">دخول</button>
+                <button type="submit" class="btn btn-primary w-100 mb-3">{{ __('auth.login') }}</button>
 
                 <div class="d-flex justify-content-between">
-                    <a href="#" class="btn btn-google w-48"><i class="fab fa-google me-2"></i>Google</a>
-                    <a href="#" class="btn btn-facebook w-48"><i class="fab fa-facebook-f me-2"></i>Facebook</a>
+                    <a href="#" class="btn btn-google w-48"><i
+                            class="fab fa-google me-2"></i>{{ __('auth.google') }}</a>
+                    <a href="#" class="btn btn-facebook w-48"><i
+                            class="fab fa-facebook-f me-2"></i>{{ __('auth.facebook') }}</a>
                 </div>
 
-                <p class="text-center text-muted mt-3">ليس لديك حساب؟ <a href="{{ route('register') }}">إنشاء حساب</a>
-                </p>
+                <p class="text-center text-muted mt-3">{{ __('auth.no_account') }} <a
+                        href="{{ route('register') }}">{{ __('auth.register') }}</a></p>
             </form>
         </div>
     </div>
 
-    <!-- reCAPTCHA API -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <script>
@@ -170,11 +171,8 @@
         const passwordInput = document.getElementById('password');
 
         togglePassword.addEventListener('click', function() {
-            // تغيير نوع الإدخال بين "password" و "text"
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
-
-            // تغيير أيقونة العين
             this.querySelector('i').classList.toggle('fa-eye');
             this.querySelector('i').classList.toggle('fa-eye-slash');
         });

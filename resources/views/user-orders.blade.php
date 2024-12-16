@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="{{ app()->getLocale() }}">
 
 <head>
     <meta charset="UTF-8">
@@ -72,18 +72,19 @@
 
     <section class="py-5">
         <div class="container">
-            <h2 class="section-title">طلبات المغسلة</h2>
+            <h2 class="section-title">{{ __('orders.title') }}</h2>
 
             <ul class="nav nav-tabs mb-4" id="orderTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="current-orders-tab" data-bs-toggle="tab"
                         data-bs-target="#current-orders" type="button" role="tab" aria-controls="current-orders"
-                        aria-selected="true">الطلبات الحالية</button>
+                        aria-selected="true">{{ __('orders.current_orders') }}</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="past-orders-tab" data-bs-toggle="tab" data-bs-target="#past-orders"
-                        type="button" role="tab" aria-controls="past-orders" aria-selected="false">الطلبات
-                        السابقة</button>
+                        type="button" role="tab" aria-controls="past-orders" aria-selected="false">
+                        {{ __('orders.past_orders') }}
+                    </button>
                 </li>
             </ul>
 
@@ -98,17 +99,18 @@
     }) as $item)
                             <div class="col-md-6">
                                 <div class="order-card bg-white">
-                                    <h5>طلب رقم #{{ $item->id }}</h5>
+                                    <h5> {{ __('orders.order_number') }} #{{ $item->id }}</h5>
                                     <p>{{ $item->product->name }}</p>
-                                    <p><strong>تاريخ الطلب:</strong> {{ $item->created_at->format('Y-m-d') }}</p>
+                                    <p><strong>{{ __('orders.order_date') }}:</strong>
+                                        {{ $item->created_at->format('Y-m-d') }}</p>
                                     <p
                                         class="order-status status-{{ $item->status == 'completed' ? 'completed' : 'pending' }}">
-                                        {{ $item->status == 'completed' ? 'مكتمل' : 'قيد التنفيذ' }}
+                                        {{ $item->status == 'completed' ? 'مكتمل' : ' التنفيذ' }}
                                     </p>
-                                    <a href="#" class="btn btn-primary">تفاصيل الطلب</a>
+                                    <a href="#" class="btn btn-primary">{{ __('orders.order_details') }}</a>
                                     @if ($item->status == 'completed')
                                         <button type="button" class="btn btn-success mt-2" data-bs-toggle="modal"
-                                            data-bs-target="#reviewModal-{{ $item->id }}">تقييم العامل</button>
+                                            data-bs-target="#reviewModal-{{ $item->id }}">{{ __('orders.rate_worker') }}</button>
                                     @endif
                                 </div>
                             </div>
@@ -130,7 +132,8 @@
                                                 <input type="hidden" name="order_id" value="{{ $item->id }}">
                                                 <div class="mb-3">
                                                     <label for="rating-{{ $item->id }}" class="form-label">التقييم
-                                                        (من 1 إلى 5)</label>
+                                                        (من 1 إلى 5)
+                                                    </label>
                                                     <select class="form-select" id="rating-{{ $item->id }}"
                                                         name="rating" required>
                                                         <option value="1">1 - ضعيف</option>

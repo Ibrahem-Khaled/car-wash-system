@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="{{ app()->getLocale() }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تقييم العامل</title>
+    <title>{{ __('rating.title') }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
-
     <link rel="icon" href="{{ asset('assets/img/logo-ct.png') }}">
 
     <style>
@@ -49,7 +48,7 @@
 
     <section class="py-5">
         <div class="container">
-            <h2 class="section-title">تقييم العامل</h2>
+            <h2 class="section-title">{{ __('rating.title') }}</h2>
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="form-container">
@@ -57,20 +56,19 @@
                             @csrf
                             <input type="hidden" name="order_id" value="{{ $order->id }}">
                             <div class="mb-3">
-                                <label for="rating" class="form-label">التقييم (من 1 إلى 5)</label>
+                                <label for="rating" class="form-label">{{ __('rating.rating_label') }}</label>
                                 <select class="form-select" id="rating" name="rating" required>
-                                    <option value="1">1 - ضعيف</option>
-                                    <option value="2">2 - مقبول</option>
-                                    <option value="3">3 - جيد</option>
-                                    <option value="4">4 - جيد جدًا</option>
-                                    <option value="5">5 - ممتاز</option>
+                                    @foreach (__('rating.rating_options') as $key => $value)
+                                        <option value="{{ $key }}">{{ $value }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="comment" class="form-label">تعليق</label>
-                                <textarea class="form-control" id="comment" name="comment" rows="4" placeholder="اكتب تعليقك هنا..."></textarea>
+                                <label for="comment" class="form-label">{{ __('rating.comment_label') }}</label>
+                                <textarea class="form-control" id="comment" name="comment" rows="4"
+                                    placeholder="{{ __('rating.comment_placeholder') }}"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">إرسال التقييم</button>
+                            <button type="submit" class="btn btn-primary">{{ __('rating.submit') }}</button>
                         </form>
                     </div>
                 </div>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang={{ app()->getLocale() }}>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سياسة الخصوصية</title>
+    <title>{{ __('privacy.title') }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +17,7 @@
         body {
             font-family: "Cairo", sans-serif;
             direction: rtl;
-            text-align: right;
+            text-align: center;
             background-color: #f8f9fa;
         }
 
@@ -49,25 +49,26 @@
 <body>
     @include('homeLayouts.nav-bar')
     <div class="container py-5">
-        <h1 class="text-center text-brown mb-5">سياسة الخصوصية</h1>
+        <h1 class="text-center text-brown mb-5">{{ __('privacy.title') }}</h1>
 
         <!-- سياسة الخصوصية -->
         <div class="content-box">
             <h2 class="section-title text-brown">
                 <i class="fas fa-user-shield icon"></i>
-                خصوصيتك تهمنا
+                {{ __('privacy.privacy.title') }}
             </h2>
-            <p>نحن ملتزمون بحماية معلوماتك الشخصية. يتم جمع واستخدام بياناتك لتقديم خدمات أفضل، مثل تحديد موقعك للخدمات
-                المتنقلة. لن نشارك معلوماتك مع أطراف ثالثة دون إذنك، باستثناء الحالات الضرورية لتحسين الخدمة.</p>
-            <h3 class="text-brown">المعلومات التي نجمعها:</h3>
+            <p>{{ __('privacy.privacy.description') }}</p>
+            <h3 class="text-brown">{{ __('privacy.privacy.data_collected') }}</h3>
             <ul>
-                <li>الاسم، رقم الهاتف، الموقع.</li>
-                <li>تفاصيل السيارة.</li>
+                @foreach (__('privacy.privacy.data_list') as $item)
+                    <li>{{ $item }}</li>
+                @endforeach
             </ul>
-            <h3 class="text-brown">كيف نحمي بياناتك:</h3>
+            <h3 class="text-brown">{{ __('privacy.privacy.protection') }}</h3>
             <ul>
-                <li>تخزين آمن للمعلومات باستخدام تقنيات التشفير.</li>
-                <li>تحديد الوصول إلى المعلومات للموظفين المعنيين فقط.</li>
+                @foreach (__('privacy.privacy.protection_list') as $item)
+                    <li>{{ $item }}</li>
+                @endforeach
             </ul>
         </div>
 
@@ -75,22 +76,24 @@
         <div class="content-box">
             <h2 class="section-title text-brown">
                 <i class="fas fa-file-contract icon"></i>
-                سياسة الأحكام والشروط
+                {{ __('privacy.terms.title') }}
             </h2>
             <ul>
-                <li>استخدام الموقع أو التطبيق يعني موافقتك على هذه الشروط.</li>
-                <li>الخدمة متاحة ضمن النطاق الجغرافي المحدد.</li>
-                <li>الحجز يعتمد على المواعيد المتاحة.</li>
+                @foreach (__('privacy.terms.terms_list') as $item)
+                    <li>{{ $item }}</li>
+                @endforeach
             </ul>
-            <h3 class="text-brown">الدفع:</h3>
+            <h3 class="text-brown">{{ __('privacy.terms.payment') }}</h3>
             <ul>
-                <li>يتم الدفع مقدمًا عند الحجز.</li>
-                <li>تشمل الأسعار المعلنة ضريبة القيمة المضافة.</li>
+                @foreach (__('privacy.terms.payment_list') as $item)
+                    <li>{{ $item }}</li>
+                @endforeach
             </ul>
-            <h3 class="text-brown">إلغاء الخدمة:</h3>
+            <h3 class="text-brown">{{ __('privacy.terms.cancellation') }}</h3>
             <ul>
-                <li>يمكن الإلغاء قبل موعد الخدمة بـ 6 ساعات.</li>
-                <li>في حالة التأخر عن الموعد المحدد، يحُتسب كموعد منفذ.</li>
+                @foreach (__('privacy.terms.cancellation_list') as $item)
+                    <li>{{ $item }}</li>
+                @endforeach
             </ul>
         </div>
 
@@ -98,17 +101,19 @@
         <div class="content-box">
             <h2 class="section-title text-brown">
                 <i class="fas fa-undo icon"></i>
-                سياسة الاسترجاع
+                {{ __('privacy.refund.title') }}
             </h2>
-            <h3 class="text-brown">في حالة وجود مشكلة في الخدمة:</h3>
+            <h3 class="text-brown">{{ __('privacy.refund.problem') }}</h3>
             <ul>
-                <li>يمكن تقديم طلب استرجاع خلال 24 ساعة من تنفيذ الخدمة.</li>
-                <li>يشمل الاسترجاع الحالات التي يتم فيها تقديم خدمة غير مرضية أو عدم تنفيذ الخدمة وفقًا للوصف.</li>
+                @foreach (__('privacy.refund.problem_list') as $item)
+                    <li>{{ $item }}</li>
+                @endforeach
             </ul>
-            <h3 class="text-brown">كيف يتم الاسترجاع؟</h3>
+            <h3 class="text-brown">{{ __('privacy.refund.how_to_refund') }}</h3>
             <ul>
-                <li>تقديم طلب عبر البريد الإلكتروني أو رقم خدمة العملاء.</li>
-                <li>يتم معالجة الطلب خلال 5 أيام عمل، واسترجاع المبلغ إلى الحساب البنكي.</li>
+                @foreach (__('privacy.refund.how_to_refund_list') as $item)
+                    <li>{{ $item }}</li>
+                @endforeach
             </ul>
         </div>
 
@@ -116,12 +121,12 @@
         <div class="content-box">
             <h2 class="section-title text-brown">
                 <i class="fas fa-edit icon"></i>
-                سياسة الإلغاء والتعديل
+                {{ __('privacy.modification.title') }}
             </h2>
             <ul>
-                <li>يمكن تعديل أو إلغاء موعد الحجز قبل 6 ساعات من الموعد المحدد.</li>
-                <li>في حال الإلغاء بعد هذا الوقت، لن يتم استرداد المبلغ.</li>
-                <li>تعديل المواعيد متاح بناءً على الجدولة المتوفرة.</li>
+                @foreach (__('privacy.modification.modification_list') as $item)
+                    <li>{{ $item }}</li>
+                @endforeach
             </ul>
         </div>
     </div>

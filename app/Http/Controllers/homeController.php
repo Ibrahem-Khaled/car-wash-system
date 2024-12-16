@@ -28,7 +28,7 @@ class homeController extends Controller
     // Home page method
     public function index()
     {
-        $products = Product::all();
+        $products = Product::take(4)->get();
         return view('home', [
             'products' => $products,
             'companyUser' => $this->companyUser,

@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="{{ app()->getLocale() }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متابعة الطلبات</title>
+    <title>{{ __('orders.title') }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
     <link rel="icon" href="{{ asset('assets/img/logo-ct.png') }}">
 
     <style>
@@ -39,12 +38,6 @@
             box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
         }
 
-        .order-status {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
         .btn-primary {
             background-color: #4a2f85;
             border: none;
@@ -52,11 +45,6 @@
 
         .btn-primary:hover {
             background-color: #ed0f7d;
-        }
-
-        .input-group {
-            max-width: 300px;
-            margin: auto;
         }
     </style>
 </head>
@@ -68,41 +56,42 @@
 
     <section class="py-5">
         <div class="container">
-            <h2 class="section-title">متابعة الطلبات</h2>
+            <h2 class="section-title">{{ __('orders.title') }}</h2>
 
             <ul class="nav nav-tabs mb-4" id="orderTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="current-orders-tab" data-bs-toggle="tab"
                         data-bs-target="#current-orders" type="button" role="tab" aria-controls="current-orders"
-                        aria-selected="true">الطلبات الجديدة</button>
+                        aria-selected="true">{{ __('orders.tabs.current_orders') }}</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="past-orders-tab" data-bs-toggle="tab" data-bs-target="#past-orders"
-                        type="button" role="tab" aria-controls="past-orders" aria-selected="false">الطلبات
-                        {{ auth()->user()->role == 'factor' ? 'السابقة' : 'الرجيعة' }}</button>
+                        type="button" role="tab" aria-controls="past-orders"
+                        aria-selected="false">{{ __('orders.tabs.past_orders') }}</button>
                 </li>
                 @if (auth()->user()->role == 'supervisor')
-                    <!-- إضافة تبويبات لحالات الطلبات إذا كان المستخدم مشرفًا -->
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="accepted-orders-tab" data-bs-toggle="tab"
                             data-bs-target="#accepted-orders" type="button" role="tab"
-                            aria-controls="accepted-orders" aria-selected="false">الطلبات قيد التنفيذ</button>
+                            aria-controls="accepted-orders"
+                            aria-selected="false">{{ __('orders.tabs.accepted_orders') }}</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="declined-orders-tab" data-bs-toggle="tab"
                             data-bs-target="#declined-orders" type="button" role="tab"
-                            aria-controls="declined-orders" aria-selected="false">الطلبات المرفوضة</button>
+                            aria-controls="declined-orders"
+                            aria-selected="false">{{ __('orders.tabs.declined_orders') }}</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="completed-orders-tab" data-bs-toggle="tab"
                             data-bs-target="#completed-orders" type="button" role="tab"
-                            aria-controls="completed-orders" aria-selected="false">الطلبات المكتملة</button>
+                            aria-controls="completed-orders"
+                            aria-selected="false">{{ __('orders.tabs.completed_orders') }}</button>
                     </li>
                 @endif
             </ul>
 
             <div class="tab-content" id="orderTabsContent">
-                <!-- الطلبات الحالية -->
                 <div class="tab-pane fade show active" id="current-orders" role="tabpanel"
                     aria-labelledby="current-orders-tab">
                     <div class="row">
@@ -112,7 +101,6 @@
                     </div>
                 </div>
 
-                <!-- الطلبات السابقة -->
                 <div class="tab-pane fade" id="past-orders" role="tabpanel" aria-labelledby="past-orders-tab">
                     <div class="row">
                         @foreach ($orders->whereIn('status', ['completed', 'declined']) as $item)
@@ -122,7 +110,6 @@
                 </div>
 
                 @if (auth()->user()->role == 'supervisor')
-                    <!-- الطلبات المقبولة -->
                     <div class="tab-pane fade" id="accepted-orders" role="tabpanel"
                         aria-labelledby="accepted-orders-tab">
                         <div class="row">
@@ -132,7 +119,6 @@
                         </div>
                     </div>
 
-                    <!-- الطلبات المرفوضة -->
                     <div class="tab-pane fade" id="declined-orders" role="tabpanel"
                         aria-labelledby="declined-orders-tab">
                         <div class="row">
@@ -142,7 +128,6 @@
                         </div>
                     </div>
 
-                    <!-- الطلبات المكتملة -->
                     <div class="tab-pane fade" id="completed-orders" role="tabpanel"
                         aria-labelledby="completed-orders-tab">
                         <div class="row">
@@ -158,24 +143,18 @@
 
     @include('homeLayouts.footer')
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <script>
         function openMap(lat, lng) {
             if (lat && lng) {
                 const googleMapUrl = `https://www.google.com/maps?q=${lat},${lng}`;
                 window.open(googleMapUrl, '_blank');
             } else {
-                alert('إحداثيات الموقع غير متوفرة.');
+                alert('{{ __('orders.no_coordinates') }}');
             }
         }
     </script>
 
-    <script>
-        document.getElementById('declineButton').addEventListener('click', function() {
-            document.getElementById('reasonContainer').style.display = 'block';
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

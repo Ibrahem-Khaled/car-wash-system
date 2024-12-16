@@ -14,6 +14,7 @@ use App\Http\Controllers\dashboard\UserRatingController;
 use App\Http\Controllers\homeController;
 use App\Http\Controllers\UserCartController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 require __DIR__ . '/auth.php';
+
+Route::post('/change-language', function (Request $request) {
+    $language = $request->language;
+
+    session(['language' => $language]);
+    return redirect()->back();
+})->name('change-language');
+
 
 Route::group([], function () {
     //this home screen
@@ -61,7 +70,7 @@ Route::group([], function () {
     //this route add subscriptions
     Route::post('add-subscription', [homeController::class, 'addSubscribtionToUser'])->name('add.subscription')->middleware(['auth', 'checkOtpVerification']);
     Route::post('request-service', [homeController::class, 'requestService'])->name('user.requestService')->middleware(['auth', 'checkOtpVerification']);
-    
+
     //this add review routes
     Route::get('/add-review/{cart}', [addRatingsController::class, 'index'])->name('add.review')->middleware(['auth', 'checkOtpVerification']);
     Route::post('/add-review', [addRatingsController::class, 'store'])->name('worker.rate')->middleware(['auth', 'checkOtpVerification']);
