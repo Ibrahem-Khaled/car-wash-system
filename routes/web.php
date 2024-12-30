@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\addRatingsController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\dashboard\CarController;
 use App\Http\Controllers\dashboard\CartController;
 use App\Http\Controllers\dashboard\ContactUsController;
@@ -75,10 +76,20 @@ Route::group([], function () {
     Route::get('/add-review/{cart}', [addRatingsController::class, 'index'])->name('add.review')->middleware(['auth', 'checkOtpVerification']);
     Route::post('/add-review', [addRatingsController::class, 'store'])->name('worker.rate')->middleware(['auth', 'checkOtpVerification']);
 
+    //this chat routes
+    Route::get('/chat/messages', [ChatController::class, 'fetchMessages'])->middleware('auth')->name('chat.messages');
+    Route::post('/chat/send', [ChatController::class, 'sendMessage'])->middleware('auth')->name('chat.send');
 });
 
 
-Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'checkAdmin', 'checkOtpVerification']], function () {
+Route::group([
+    'prefix' => 'dashboard',
+    'middleware' => [
+        'auth',
+        'checkAdmin',
+        //'checkOtpVerification'
+    ]
+], function () {
 
     Route::get('/', [DashboardController::class, 'index'])->name('home.dashboard')->middleware('auth');
 
@@ -111,4 +122,9 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'checkAdmin', 'c
     //this user route supscription
     Route::resource('subscriptions', SubscriptionController::class);
     Route::delete('subscriptions/{subscriptionId}/{productId}/removeProduct', [SubscriptionController::class, 'subscriptionsRemoveProduct'])->name('subscriptions.removeProduct');
+
+    //this chat messages routes
+    Route::get('/live/chat', [\App\Http\Controllers\dashboard\ChatController::class, 'index'])->name('live.chat');
+    Route::get('/users/{userId}/messages', [\App\Http\Controllers\dashboard\ChatController::class, 'getUserMessages']);
+    Route::post('/messages/reply', [\App\Http\Controllers\dashboard\ChatController::class, 'replyToMessage']);
 });

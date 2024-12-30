@@ -97,6 +97,12 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link text-white" href="{{ route('live.chat') }}">
+                    <i class="fas fa-comments"></i>
+                    <span class="nav-link-text ms-1">محادثة مباشرة</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link text-white" href="{{ route('contact-us.index') }}">
                     <i class="fas fa-envelope"></i>
                     <span class="nav-link-text ms-1"> التواصل معنا</span>

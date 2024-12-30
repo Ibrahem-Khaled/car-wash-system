@@ -89,7 +89,7 @@
 <body>
     @include('homeLayouts.nav-bar')
     @include('homeLayouts.hero-section')
- 
+
     <!-- Services Section -->
     <section id="services" class="services-section">
         <div class="container text-center">
@@ -172,11 +172,15 @@
         </div>
     </section>
 
+    @include('components.float-button-form')
     @include('homeLayouts.float-buttons')
     @include('homeLayouts.footer')
 
     <!-- جافا سكريبت -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/ar.min.js"></script>
+
 </body>
 
 </html>
