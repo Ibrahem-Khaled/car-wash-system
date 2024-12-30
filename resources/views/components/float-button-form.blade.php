@@ -123,7 +123,7 @@
                 chatMessages.innerHTML += `
             <div class="${alignment} mb-3">
                 <div class="d-inline-block p-2 rounded ${bgColor}" style="max-width: 70%;">
-                    <strong>{{ auth()->user()->name }}:</strong>
+                    <strong>{{ auth()?->user()?->name }}:</strong>
                     <span>${newMessage.message}</span>
                 </div>
             </div>`;

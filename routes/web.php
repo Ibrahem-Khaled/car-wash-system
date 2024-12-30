@@ -87,7 +87,7 @@ Route::group([
     'middleware' => [
         'auth',
         'checkAdmin',
-        //'checkOtpVerification'
+        'checkOtpVerification'
     ]
 ], function () {
 
