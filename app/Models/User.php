@@ -12,6 +12,11 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
+    // تعريف الأدوار كثوابت لسهولة الاستخدام
+    const ROLE_ADMIN = 'admin';
+    const ROLE_EMPLOYEE = 'factor';
+    const ROLE_CUSTOMER = 'customer';
+
 
     protected $fillable = [
         'name',
@@ -26,6 +31,7 @@ class User extends Authenticatable implements JWTSubject
         'role',
         'image',
         'expo_push_token',
+        'qr_code_identifier',
         'points',
     ];
 
@@ -72,6 +78,34 @@ class User extends Authenticatable implements JWTSubject
     public function chatMessages()
     {
         return $this->hasMany(ChatMessage::class, 'user_id');
+    }
+
+
+    // علاقة العميل مع سجل الخدمات
+    public function serviceLogs()
+    {
+        return $this->hasMany(ServiceLog::class, 'customer_id', 'id');
+    }
+
+    // دالة لحساب عدد الخدمات التي لم تكن هدية
+    public function getServicesCountAttribute()
+    {
+        // تأكد من أن هذه الدالة تُحسب فقط للعملاء
+        if ($this->role === self::ROLE_CUSTOMER) {
+            return $this->serviceLogs()->where('is_reward', false)->count();
+        }
+        return 0;
+    }
+
+    // دوال مساعدة للتحقق من الدور
+    public function isCustomer()
+    {
+        return $this->role === self::ROLE_CUSTOMER;
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === self::ROLE_ADMIN;
     }
 
     public function getJWTIdentifier()

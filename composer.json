@@ -11,6 +11,7 @@
         "laravel/sanctum": "^3.2",
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.8",
+        "simplesoftwareio/simple-qrcode": "^4.2",
         "taqnyat/php": "^1.0",
         "tymon/jwt-auth": "^2.1",
         "yieldstudio/laravel-expo-notifier": "^0.0.15",
@@ -18,6 +19,7 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
+        "jn-jairo/laravel-ngrok": "^3.0",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
