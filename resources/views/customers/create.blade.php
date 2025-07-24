@@ -184,23 +184,12 @@
     <div class="form-container animate__animated animate__fadeInUp">
 
         <div class="logo-section">
-            <div class="logo-icon"><i class="fa-solid fa-car-on"></i></div>
+            <div class="logo-icon"><img src="{{ asset('assets/img/logo-ct-dark.png') }}" alt="Logo"></div>
             <h1 class="business-name">المركبة المخملية</h1>
             <p class="tagline">خطوة واحدة تفصلك عن الهدايا والمكافآت!</p>
         </div>
 
-        @if ($errors->any())
-            <div class="alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        @if (session('error'))
-            <div class="alert-danger">{{ session('error') }}</div>
-        @endif
+        @include('components.alerts')
 
         <form action="{{ route('customers.store') }}" method="POST">
             @csrf
