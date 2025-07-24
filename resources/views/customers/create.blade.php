@@ -184,7 +184,7 @@
     <div class="form-container animate__animated animate__fadeInUp">
 
         <div class="logo-section">
-            <div class="logo-icon"><img src="{{ asset('assets/img/logo-ct-dark.png') }}" alt="Logo"></div>
+            <div class="logo-icon"><img src="{{ asset('assets/img/logo-ct-dark.png') }}" class="img-fluid w-50 h-50"  alt="Logo"></div>
             <h1 class="business-name">المركبة المخملية</h1>
             <p class="tagline">خطوة واحدة تفصلك عن الهدايا والمكافآت!</p>
         </div>
