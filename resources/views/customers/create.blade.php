@@ -8,12 +8,11 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <style>
-        /* CSS Variables */
         :root {
             --primary-purple: #6f42c1;
             --primary-purple-dark: #5a349b;
@@ -26,7 +25,6 @@
             --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
-        /* General Styles */
         body {
             font-family: 'Cairo', sans-serif;
             background: linear-gradient(to top, #f2f2f7, #ffffff);
@@ -39,7 +37,6 @@
             color: var(--dark-text);
         }
 
-        /* Form Container */
         .form-container {
             background-color: var(--white-bg);
             padding: 40px;
@@ -55,21 +52,31 @@
             transform: translateY(-5px);
         }
 
-        /* Form Title */
-        .form-container h2 {
-            font-size: 2rem;
-            font-weight: 700;
+        /* [إضافة جديدة] قسم الشعار */
+        .logo-section {
+            margin-bottom: 20px;
+        }
+
+        .logo-icon {
+            font-size: 4.5rem;
             color: var(--primary-purple);
+            line-height: 1;
             margin-bottom: 10px;
         }
 
-        .form-container p {
+        .business-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--dark-text);
+            letter-spacing: -1px;
+        }
+
+        .tagline {
             color: #6c757d;
             margin-top: -5px;
             margin-bottom: 30px;
         }
 
-        /* Form Elements */
         .form-group {
             margin-bottom: 20px;
             text-align: right;
@@ -81,7 +88,7 @@
             margin-bottom: 8px;
         }
 
-        .form-group input {
+        .form-group input[type="text"] {
             width: 100%;
             padding: 12px 15px;
             border-radius: 8px;
@@ -92,13 +99,45 @@
             box-sizing: border-box;
         }
 
-        .form-group input:focus {
+        .form-group input[type="text"]:focus {
             outline: none;
             border-color: var(--primary-purple);
             box-shadow: 0 0 0 3px rgba(111, 66, 193, 0.2);
         }
 
-        /* Submit Button */
+        /* [إضافة جديدة] تصميم حقل اختيار الجنس */
+        .gender-selector {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+        .gender-selector input[type="radio"] {
+            display: none;
+        }
+
+        .gender-selector label {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+        }
+
+        .gender-selector label i {
+            margin-left: 8px;
+        }
+
+        .gender-selector input[type="radio"]:checked+label {
+            background-color: var(--primary-purple);
+            color: white;
+            border-color: var(--primary-purple-dark);
+            box-shadow: 0 4px 10px rgba(111, 66, 193, 0.3);
+        }
+
         .submit-btn {
             width: 100%;
             padding: 15px;
@@ -111,7 +150,7 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 10px;
+            margin-top: 25px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -121,10 +160,8 @@
         .submit-btn:hover {
             background: var(--primary-purple-dark);
             transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
-        /* Error Alert Styling */
         .alert-danger {
             padding: 15px;
             background-color: var(--error-bg);
@@ -144,12 +181,14 @@
 </head>
 
 <body>
-
     <div class="form-container animate__animated animate__fadeInUp">
-        <h2>📝 انضم لبرنامج الولاء</h2>
-        <p>خطوة واحدة تفصلك عن الهدايا والمكافآت!</p>
 
-        {{-- لعرض أخطاء التحقق من الصحة --}}
+        <div class="logo-section">
+            <div class="logo-icon"><i class="fa-solid fa-car-on"></i></div>
+            <h1 class="business-name">المركبة المخملية</h1>
+            <p class="tagline">خطوة واحدة تفصلك عن الهدايا والمكافآت!</p>
+        </div>
+
         @if ($errors->any())
             <div class="alert-danger">
                 <ul>
@@ -159,14 +198,9 @@
                 </ul>
             </div>
         @endif
-
-        {{-- لعرض أي خطأ عام من المتحكم --}}
         @if (session('error'))
-            <div class="alert-danger">
-                {{ session('error') }}
-            </div>
+            <div class="alert-danger">{{ session('error') }}</div>
         @endif
-
 
         <form action="{{ route('customers.store') }}" method="POST">
             @csrf
@@ -182,12 +216,24 @@
                     placeholder="سيتم استخدامه لربط نقاطك" required>
             </div>
 
+            <div class="form-group">
+                <label>الجنس</label>
+                <div class="gender-selector">
+                    <input type="radio" id="male" name="gender" value="male"
+                        {{ old('gender') == 'male' ? 'checked' : '' }}>
+                    <label for="male"><i class="fa-solid fa-person"></i> ذكر</label>
+
+                    <input type="radio" id="female" name="gender" value="female"
+                        {{ old('gender') == 'female' ? 'checked' : '' }}>
+                    <label for="female"><i class="fa-solid fa-person-dress"></i> أنثى</label>
+                </div>
+            </div>
+
             <button type="submit" class="submit-btn">
                 <i class="fas fa-award"></i> أنشئ بطاقتي الآن
             </button>
         </form>
     </div>
-
 </body>
 
 </html>

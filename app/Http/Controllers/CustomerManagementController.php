@@ -22,29 +22,29 @@ class CustomerManagementController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            // تحسين التحقق من صحة رقم الهاتف
-            'phone' => 'required|string|unique:users,phone',
+            'phone' => 'required|string|unique:users,phone|regex:/^01[0-2,5]{1}[0-9]{8}$/',
+            'gender' => 'required|in:male,female', // <-- إضافة التحقق من الجنس
         ], [
             'phone.unique' => 'رقم الهاتف هذا مسجل بالفعل.',
-            'phone.regex' => 'الرجاء إدخال رقم هاتف مصري صحيح.'
+            'phone.regex' => 'الرجاء إدخال رقم هاتف مصري صحيح.',
+            'gender.required' => 'الرجاء اختيار الجنس.',
         ]);
 
         try {
             $customer = User::create([
                 'name' => $request->name,
                 'phone' => $request->phone,
-                // كلمة سر عشوائية قوية
-                'password' => Hash::make(Str::random(16)),
-                'role' => User::ROLE_CUSTOMER,
+                'gender' => $request->gender, // <-- إضافة الجنس هنا
+                'password' => \Illuminate\Support\Facades\Hash::make(\Illuminate\Support\Str::random(16)),
+                'role' => \App\Models\User::ROLE_CUSTOMER,
                 'status' => 'active',
-                'qr_code_identifier' => (string) Str::uuid(),
+                'qr_code_identifier' => (string) \Illuminate\Support\Str::uuid(),
             ]);
 
-            // توجيه العميل إلى صفحته الشخصية مع رسالة ترحيب
             return redirect()->route('customers.show', $customer)
                 ->with('success', 'أهلاً بك! تم إنشاء بطاقة الولاء الخاصة بك بنجاح.');
         } catch (\Exception $e) {
-            Log::error('Failed to create customer: ' . $e->getMessage());
+            \Illuminate\Support\Facades\Log::error('Failed to create customer: ' . $e->getMessage());
             return back()->with('error', 'حدث خطأ غير متوقع، الرجاء المحاولة مرة أخرى.')->withInput();
         }
     }
