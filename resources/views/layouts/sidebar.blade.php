@@ -2,7 +2,7 @@
 
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
         <div class="sidebar-brand-icon">
-            <img src="../assets/img/logo-ct-dark.png" class="h-100" alt="main_logo">
+            <img src="../assets/img/logo-ct-dark.png" class="h-50 w-50" alt="main_logo">
         </div>
         <div class="sidebar-brand-text mx-3">تطبيق غسيل السيارات</div>
     </a>
