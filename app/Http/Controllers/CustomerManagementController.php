@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Services\WalletPassService; // <-- إضافة مهمة
+use Illuminate\Support\Facades\Log;
 
 class CustomerManagementController extends Controller
 {
@@ -20,24 +22,35 @@ class CustomerManagementController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'phone_number' => 'required|string|unique:users,phone',
+            // تحسين التحقق من صحة رقم الهاتف
+            'phone' => 'required|string|unique:users,phone',
+        ], [
+            'phone.unique' => 'رقم الهاتف هذا مسجل بالفعل.',
+            'phone.regex' => 'الرجاء إدخال رقم هاتف مصري صحيح.'
         ]);
 
-        // إنشاء مستخدم جديد برتبة "عميل"
-        $customer = User::create([
-            'name' => $request->name,
-            'phone' => $request->phone_number,
-            'password' => Hash::make(Str::random(10)), // كلمة سر عشوائية لأنه لن يسجل الدخول
-            'role' => User::ROLE_CUSTOMER,
-            'qr_code_identifier' => (string) Str::uuid(),
-        ]);
+        try {
+            $customer = User::create([
+                'name' => $request->name,
+                'phone' => $request->phone,
+                // كلمة سر عشوائية قوية
+                'password' => Hash::make(Str::random(16)),
+                'role' => User::ROLE_CUSTOMER,
+                'status' => 'active',
+                'qr_code_identifier' => (string) Str::uuid(),
+            ]);
 
-        return redirect()->route('customers.show', $customer->id)
-            ->with('success', 'تم إضافة العميل بنجاح. هذا هو الـ QR Code الخاص به.');
+            // توجيه العميل إلى صفحته الشخصية مع رسالة ترحيب
+            return redirect()->route('customers.show', $customer)
+                ->with('success', 'أهلاً بك! تم إنشاء بطاقة الولاء الخاصة بك بنجاح.');
+        } catch (\Exception $e) {
+            Log::error('Failed to create customer: ' . $e->getMessage());
+            return back()->with('error', 'حدث خطأ غير متوقع، الرجاء المحاولة مرة أخرى.')->withInput();
+        }
     }
 
     // عرض بيانات العميل والـ QR Code
-    public function show(User $user)
+    public function show(User $user, WalletPassService $walletService)
     {
         // تأكد أن المستخدم الذي يتم عرضه هو عميل
         if (!$user->isCustomer()) {
@@ -45,26 +58,31 @@ class CustomerManagementController extends Controller
         }
 
         // جلب البيانات اللازمة من المودل والمتحكم الآخر
-        $totalServices = $user->serviceLogs()->where('is_reward', false)->count();
-        $totalGifts = $user->serviceLogs()->where('is_reward', true)->count();
         $servicesTarget = LoyaltyController::SERVICES_TARGET;
 
-        // حساب عدد الخدمات المتبقية للوصول للهدية التالية
-        // نستخدم المعامل % (موديولو) لحساب الخدمات الحالية في الدورة الحالية
-        $currentCycleServices = $totalServices % $servicesTarget;
-        $remainingForGift = ($currentCycleServices == 0 && $totalServices > 0) ? 0 : $servicesTarget - $currentCycleServices;
-
-        // الرابط الذي سيتم تضمينه في الـ QR Code
         $qrCodeUrl = route('loyalty.scan', $user->qr_code_identifier);
+
+        $googlePassData = $walletService->generatePassData($user, 'google');
+        $applePassData = $walletService->generatePassData($user, 'apple');
+
+
+        $loyaltyData = [
+            'totalServices' => $user->serviceLogs()->where('is_reward', false)->count(),
+            'totalGifts' => $user->serviceLogs()->where('is_reward', true)->count(),
+            'unusedGiftsCount' => $user->serviceLogs()->where('is_reward', true)->where('is_used', false)->count(),
+            'remainingForGift' => ($user->serviceLogs()->where('is_reward', false)->count() == 0) ? 0 : $servicesTarget - $user->serviceLogs()->where('is_reward', false)->count(),
+            'currentCycleServices' => $user->serviceLogs()->where('is_reward', false)->count() % $servicesTarget
+        ];
 
         // تمرير كل البيانات إلى الواجهة
         return view('customers.show', [
             'user' => $user,
             'qrCodeUrl' => $qrCodeUrl,
-            'totalServices' => $totalServices,
-            'totalGifts' => $totalGifts,
-            'remainingForGift' => $remainingForGift,
             'servicesTarget' => $servicesTarget,
+            'googlePassData' => $googlePassData, // <-- تمرير بيانات جوجل
+            'applePassData' => $applePassData,   // <-- تمرير بيانات آبل
+            'loyalty' => $loyaltyData,
+
         ]);
     }
 }

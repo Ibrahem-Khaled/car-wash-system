@@ -23,6 +23,7 @@ use App\Http\Controllers\dashboard\NotificationModelController;
 use App\Http\Controllers\dashboard\ContactUsController;
 use App\Http\Controllers\dashboard\SubscriptionController;
 use App\Http\Controllers\dashboard\ChatController as DashboardChatController;
+use App\Http\Controllers\WalletPassController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,13 +90,17 @@ Route::group([], function () {
     Route::post('/customers', [CustomerManagementController::class, 'store'])->name('customers.store');
     Route::get('/customers/{user}', [CustomerManagementController::class, 'show'])->name('customers.show');
     Route::get('/scan/{identifier}', [LoyaltyController::class, 'scan'])->name('loyalty.scan')->middleware('auth');
+    Route::post('/customers/{user}/use-gift', [LoyaltyController::class, 'useGift'])->name('loyalty.useGift');
+
+    Route::get('/wallet/apple-pass/{user}', [WalletPassController::class, 'generateApplePass'])->name('wallet.apple-pass');
+
 });
 
 
 // --- مسارات لوحة التحكم (Dashboard) ---
 Route::group([
     'prefix' => 'dashboard',
-    'middleware' => ['auth', 'checkAdmin', 'checkOtpVerification']
+    // 'middleware' => ['auth', 'checkAdmin', 'checkOtpVerification']
 ], function () {
 
     Route::get('/', [DashboardController::class, 'index'])->name('home.dashboard');

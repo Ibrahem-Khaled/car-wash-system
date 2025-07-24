@@ -9,7 +9,7 @@ class ServiceLog extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['customer_id', 'scanned_by_user_id', 'is_reward', 'gifted_to_phone_number'];
+    protected $fillable = ['customer_id', 'scanned_by_user_id', 'is_reward', 'is_used', 'gifted_to_phone_number'];
 
     // علاقة السجل مع العميل
     public function customer()

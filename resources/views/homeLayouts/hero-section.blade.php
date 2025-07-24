@@ -1,10 +1,10 @@
 <section class="py-5 bg-light">
     <div class="container">
-        <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div id="productCarousel" class="carousel slide" data-ride="carousel">
             <!-- المؤشرات -->
             <div class="carousel-indicators">
                 @foreach ($products as $key => $product)
-                    <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="{{ $key }}"
+                    <button type="button" data-target="#productCarousel" data-slide-to="{{ $key }}"
                         class="{{ $key === 0 ? 'active' : '' }}" aria-current="{{ $key === 0 ? 'true' : 'false' }}"
                         aria-label="Slide {{ $key + 1 }}"></button>
                 @endforeach
@@ -62,11 +62,11 @@
             </div>
 
             {{-- <!-- أدوات التنقل -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-target="#productCarousel" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">السابق</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-target="#productCarousel" data-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">التالي</span>
             </button> --}}

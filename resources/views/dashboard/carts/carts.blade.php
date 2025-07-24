@@ -4,7 +4,7 @@
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h3>السلة</h3>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCartModal">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCartModal">
                 إضافة إلى السلة
             </button>
         </div>
@@ -26,7 +26,7 @@
         ] as $key => $label)
                 <li class="nav-item" role="presentation">
                     <button class="nav-link {{ $loop->first ? 'active' : '' }}" id="{{ $key }}-tab"
-                        data-bs-toggle="tab" data-bs-target="#{{ $key }}" type="button" role="tab"
+                        data-toggle="tab" data-target="#{{ $key }}" type="button" role="tab"
                         aria-controls="{{ $key }}" aria-selected="{{ $loop->first ? 'true' : 'false' }}">
                         {{ $label }}
                     </button>

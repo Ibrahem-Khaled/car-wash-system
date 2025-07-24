@@ -82,8 +82,8 @@
                                 class="img-fluid mb-3" style="max-height: 150px;">
                             <h3 class="h5 mb-3">{{ $service->name }}</h3>
                             <p class="text-secondary">{{ $service->description }}</p>
-                            <button class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#orderModal-{{ $service->id }}">
+                            <button class="btn btn-primary" data-toggle="modal"
+                                data-target="#orderModal-{{ $service->id }}">
                                 {{ __('home.request_service') }}
                             </button>
                         </div>

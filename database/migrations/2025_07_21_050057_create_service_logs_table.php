@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignId('scanned_by_user_id')->constrained('users')->onDelete('cascade'); // من قام بالمسح
             $table->boolean('is_reward')->default(false); // هل هذه الخدمة كانت هدية؟
             $table->string('gifted_to_phone_number')->nullable(); // الرقم الذي تم إهداء الخدمة له
+            $table->boolean('is_used')->default(false)->after('is_reward');
+
             $table->timestamps();
         });
     }

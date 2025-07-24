@@ -87,8 +87,8 @@
                             <form method="POST" action="#">
                                 @csrf
                                 <input type="hidden" name="subscription_id" value="{{ $subscription->id }}">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#paymentModal-{{ $subscription->id }}">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#paymentModal-{{ $subscription->id }}">
                                     {{ __('home.subscribe_now') }}
                                 </button>
                             </form>
@@ -103,7 +103,7 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="paymentModalLabel-{{ $subscription->id }}">إتمام الدفع
                                     </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    <button type="button" class="btn-close" data-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">

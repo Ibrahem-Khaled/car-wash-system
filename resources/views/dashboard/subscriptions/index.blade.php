@@ -13,7 +13,7 @@
         @endif
 
         <!-- زر إضافة اشتراك -->
-        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addSubscriptionModal">
+        <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addSubscriptionModal">
             إضافة اشتراك جديد
         </button>
 
@@ -68,8 +68,8 @@
                         </td>
                         <td>
                             <!-- زر تعديل -->
-                            <button class="btn btn-warning mb-1" data-bs-toggle="modal"
-                                data-bs-target="#editSubscriptionModal-{{ $subscription->id }}">
+                            <button class="btn btn-warning mb-1" data-toggle="modal"
+                                data-target="#editSubscriptionModal-{{ $subscription->id }}">
                                 تعديل
                             </button>
 
@@ -90,7 +90,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="editModalLabel-{{ $subscription->id }}">تعديل الاشتراك</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    <button type="button" class="btn-close" data-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <form method="POST" action="{{ route('subscriptions.update', $subscription->id) }}" enctype="multipart/form-data">
@@ -148,7 +148,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">إغلاق</button>
+                                            data-dismiss="modal">إغلاق</button>
                                         <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
                                     </div>
                                 </form>
@@ -166,7 +166,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addModalLabel">إضافة اشتراك جديد</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form method="POST" action="{{ route('subscriptions.store') }}" enctype="multipart/form-data">
                         @csrf
@@ -204,7 +204,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
                             <button type="submit" class="btn btn-primary">حفظ</button>
                         </div>
                     </form>

@@ -129,8 +129,8 @@
                                     </ul>
                                 </div>
 
-                                <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal"
-                                    data-bs-target="#requestServiceModal-{{ $subscription['id'] }}">طلب خدمة</button>
+                                <button type="button" class="btn btn-primary mt-3" data-toggle="modal"
+                                    data-target="#requestServiceModal-{{ $subscription['id'] }}">طلب خدمة</button>
 
 
                             </div>
@@ -144,7 +144,7 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="requestServiceModalLabel">طلب خدمة من الاشتراك -
                                             {{ $subscription['name'] }}</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        <button type="button" class="btn-close" data-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <form method="POST" action="{{ route('user.requestService') }}">
@@ -191,7 +191,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">إلغاء</button>
+                                                data-dismiss="modal">إلغاء</button>
                                             <button type="submit" class="btn btn-primary">تقديم الطلب</button>
                                         </div>
                                     </form>

@@ -91,6 +91,6 @@
 </div>
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
     <button type="submit" class="btn btn-primary">حفظ</button>
 </div>

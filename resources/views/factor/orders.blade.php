@@ -60,31 +60,31 @@
 
             <ul class="nav nav-tabs mb-4" id="orderTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="current-orders-tab" data-bs-toggle="tab"
-                        data-bs-target="#current-orders" type="button" role="tab" aria-controls="current-orders"
+                    <button class="nav-link active" id="current-orders-tab" data-toggle="tab"
+                        data-target="#current-orders" type="button" role="tab" aria-controls="current-orders"
                         aria-selected="true">{{ __('orders.tabs.current_orders') }}</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="past-orders-tab" data-bs-toggle="tab" data-bs-target="#past-orders"
+                    <button class="nav-link" id="past-orders-tab" data-toggle="tab" data-target="#past-orders"
                         type="button" role="tab" aria-controls="past-orders"
                         aria-selected="false">{{ __('orders.tabs.past_orders') }}</button>
                 </li>
                 @if (auth()->user()->role == 'supervisor')
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="accepted-orders-tab" data-bs-toggle="tab"
-                            data-bs-target="#accepted-orders" type="button" role="tab"
+                        <button class="nav-link" id="accepted-orders-tab" data-toggle="tab"
+                            data-target="#accepted-orders" type="button" role="tab"
                             aria-controls="accepted-orders"
                             aria-selected="false">{{ __('orders.tabs.accepted_orders') }}</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="declined-orders-tab" data-bs-toggle="tab"
-                            data-bs-target="#declined-orders" type="button" role="tab"
+                        <button class="nav-link" id="declined-orders-tab" data-toggle="tab"
+                            data-target="#declined-orders" type="button" role="tab"
                             aria-controls="declined-orders"
                             aria-selected="false">{{ __('orders.tabs.declined_orders') }}</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="completed-orders-tab" data-bs-toggle="tab"
-                            data-bs-target="#completed-orders" type="button" role="tab"
+                        <button class="nav-link" id="completed-orders-tab" data-toggle="tab"
+                            data-target="#completed-orders" type="button" role="tab"
                             aria-controls="completed-orders"
                             aria-selected="false">{{ __('orders.tabs.completed_orders') }}</button>
                     </li>

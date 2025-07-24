@@ -21,7 +21,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="orderModalLabel">طلب خدمة - {{ $service->name }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="POST" action="{{ route('user.carts.store') }}">
                 @csrf
@@ -32,7 +32,7 @@
                     <div class="step step-1">
                         <div class="mb-3">
                             <label for="car_model" class="form-label">السيارة</label>
-                            <div id="carCarousel-{{ $service->id }}" class="carousel slide" data-bs-ride="carousel">
+                            <div id="carCarousel-{{ $service->id }}" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
                                     @foreach ($cars as $index => $car)
                                         <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
@@ -48,12 +48,12 @@
                                     @endforeach
                                 </div>
                                 <button class="carousel-control-prev" type="button"
-                                    data-bs-target="#carCarousel-{{ $service->id }}" data-bs-slide="prev">
+                                    data-target="#carCarousel-{{ $service->id }}" data-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">السابق</span>
                                 </button>
                                 <button class="carousel-control-next" type="button"
-                                    data-bs-target="#carCarousel-{{ $service->id }}" data-bs-slide="next">
+                                    data-target="#carCarousel-{{ $service->id }}" data-slide="next">
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">التالي</span>
                                 </button>
@@ -209,9 +209,9 @@
         });
 
         // إدارة الخطوات
-        document.querySelectorAll('[data-bs-toggle="modal"]').forEach((modalButton) => {
+        document.querySelectorAll('[data-toggle="modal"]').forEach((modalButton) => {
             modalButton.addEventListener('click', function() {
-                const modalId = this.getAttribute('data-bs-target');
+                const modalId = this.getAttribute('data-target');
                 const modalElement = document.querySelector(modalId);
                 const steps = modalElement.querySelectorAll('.step');
                 let currentStep = 0;

@@ -4,7 +4,7 @@
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h3>Cars</h3>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCarModal">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCarModal">
                 Add Car
             </button>
         </div>
@@ -31,8 +31,8 @@
                             <td><img src="{{ asset('storage/' . $car->image) }}" alt="{{ $car->name }}" width="50">
                             </td>
                             <td>
-                                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                    data-bs-target="#editCarModal{{ $car->id }}">
+                                <button type="button" class="btn btn-warning" data-toggle="modal"
+                                    data-target="#editCarModal{{ $car->id }}">
                                     Edit
                                 </button>
                                 <form action="{{ route('cars.destroy', $car->id) }}" method="POST"
@@ -51,7 +51,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="editCarModalLabel">Edit Car</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        <button type="button" class="btn-close" data-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -70,7 +70,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
+                                                    data-dismiss="modal">Close</button>
                                                 <button type="submit" class="btn btn-primary">Save changes</button>
                                             </div>
                                         </form>
@@ -93,7 +93,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addCarModalLabel">Add Car</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('cars.store') }}" method="POST" enctype="multipart/form-data">
@@ -107,7 +107,7 @@
                             <input type="file" class="form-control" id="image" name="image">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Save changes</button>
                         </div>
                     </form>

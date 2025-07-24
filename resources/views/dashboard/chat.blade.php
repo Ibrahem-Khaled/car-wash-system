@@ -21,7 +21,7 @@
                             <td>{{ $user->total_messages }}</td>
                             <td>{{ $user->unreplied_messages }}</td>
                             <td>
-                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#userChatModal"
+                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#userChatModal"
                                     onclick="loadUserMessages({{ $user->id }}, '{{ $user->name }}')">
                                     عرض الرسائل
                                 </button>
@@ -39,7 +39,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="userChatModalLabel">رسائل المستخدم</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    <button type="button" class="btn-close btn-close-white" data-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

@@ -4,50 +4,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إضافة عميل جديد</title>
+    <title>إنشاء بطاقة ولاء جديدة</title>
 
-    <!-- Import Cairo Font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <style>
-        /* CSS Variables for easy theme management */
+        /* CSS Variables */
         :root {
             --primary-purple: #6f42c1;
-            /* لون بنفسجي عصري */
             --primary-purple-dark: #5a349b;
-            --light-gray: #f8f9fa;
+            --light-bg: #f8f9fa;
+            --white-bg: #ffffff;
             --dark-text: #343a40;
             --border-color: #dee2e6;
             --error-bg: #f8d7da;
-            --error-text: #721c24;
-            --error-border: #f5c6cb;
-            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --error-text: #842029;
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
-        /* General Body Styles */
+        /* General Styles */
         body {
             font-family: 'Cairo', sans-serif;
             background: linear-gradient(to top, #f2f2f7, #ffffff);
-            /* خلفية بيضاء مع تدرج خفيف */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            padding: 20px;
             color: var(--dark-text);
         }
 
-        /* Main Form Container */
+        /* Form Container */
         .form-container {
-            background-color: #ffffff;
+            background-color: var(--white-bg);
             padding: 40px;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
             width: 100%;
             max-width: 450px;
-            box-sizing: border-box;
             text-align: center;
             transition: transform 0.3s ease;
         }
@@ -61,10 +60,16 @@
             font-size: 2rem;
             font-weight: 700;
             color: var(--primary-purple);
-            margin-bottom: 25px;
+            margin-bottom: 10px;
         }
 
-        /* Form Group for inputs and labels */
+        .form-container p {
+            color: #6c757d;
+            margin-top: -5px;
+            margin-bottom: 30px;
+        }
+
+        /* Form Elements */
         .form-group {
             margin-bottom: 20px;
             text-align: right;
@@ -74,29 +79,26 @@
             display: block;
             font-weight: 700;
             margin-bottom: 8px;
-            color: var(--dark-text);
         }
 
-        /* Input Fields Styling */
-        .form-group input[type="text"] {
+        .form-group input {
             width: 100%;
             padding: 12px 15px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
             font-family: 'Cairo', sans-serif;
             font-size: 1rem;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
             box-sizing: border-box;
-            /* Ensures padding doesn't affect width */
         }
 
-        .form-group input[type="text"]:focus {
+        .form-group input:focus {
             outline: none;
             border-color: var(--primary-purple);
             box-shadow: 0 0 0 3px rgba(111, 66, 193, 0.2);
         }
 
-        /* Submit Button Styling */
+        /* Submit Button */
         .submit-btn {
             width: 100%;
             padding: 15px;
@@ -108,13 +110,18 @@
             font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: all 0.3s ease;
             margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .submit-btn:hover {
             background: var(--primary-purple-dark);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         /* Error Alert Styling */
@@ -122,7 +129,7 @@
             padding: 15px;
             background-color: var(--error-bg);
             color: var(--error-text);
-            border: 1px solid var(--error-border);
+            border: 1px solid #f5c2c7;
             border-radius: 8px;
             margin-bottom: 20px;
             text-align: right;
@@ -131,33 +138,53 @@
         .alert-danger ul {
             margin: 0;
             padding-right: 20px;
+            list-style: none;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="form-container">
-        <h2>📝 إضافة عميل جديد</h2>
+    <div class="form-container animate__animated animate__fadeInUp">
+        <h2>📝 انضم لبرنامج الولاء</h2>
+        <p>خطوة واحدة تفصلك عن الهدايا والمكافآت!</p>
 
-        {{-- Blade syntax to display validation errors --}}
-       @include('components.alerts')
+        {{-- لعرض أخطاء التحقق من الصحة --}}
+        @if ($errors->any())
+            <div class="alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        {{-- لعرض أي خطأ عام من المتحكم --}}
+        @if (session('error'))
+            <div class="alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
 
         <form action="{{ route('customers.store') }}" method="POST">
             @csrf
             <div class="form-group">
-                <label for="name">اسم العميل</label>
+                <label for="name">اسمك الكامل</label>
                 <input type="text" id="name" name="name" value="{{ old('name') }}"
                     placeholder="مثال: محمد أحمد" required>
             </div>
 
             <div class="form-group">
-                <label for="phone_number">رقم الهاتف</label>
-                <input type="text" id="phone_number" name="phone_number" value="{{ old('phone_number') }}"
-                    placeholder="مثال: 01012345678" required>
+                <label for="phone">رقم هاتفك</label>
+                <input type="text" id="phone" name="phone" value="{{ old('phone') }}"
+                    placeholder="سيتم استخدامه لربط نقاطك" required>
             </div>
 
-            <button type="submit" class="submit-btn">إضافة العميل</button>
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-award"></i> أنشئ بطاقتي الآن
+            </button>
         </form>
     </div>
 

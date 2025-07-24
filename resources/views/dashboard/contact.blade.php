@@ -9,7 +9,7 @@
         @endif
 
         <!-- زر إضافة رسالة جديدة -->
-        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addContactModal">
+        <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addContactModal">
             إضافة رسالة جديدة
         </button>
 
@@ -31,12 +31,12 @@
                         <td>{{ $contact?->phone }}</td>
                         <td>{{ $contact?->message }}</td>
                         <td>
-                            <button class="btn btn-warning" data-bs-toggle="modal"
-                                data-bs-target="#editContactModal{{ $contact->id }}">
+                            <button class="btn btn-warning" data-toggle="modal"
+                                data-target="#editContactModal{{ $contact->id }}">
                                 تعديل
                             </button>
-                            <button class="btn btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#deleteContactModal{{ $contact->id }}">
+                            <button class="btn btn-danger" data-toggle="modal"
+                                data-target="#deleteContactModal{{ $contact->id }}">
                                 حذف
                             </button>
                         </td>
@@ -48,7 +48,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">تعديل الرسالة</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    <button type="button" class="btn-close" data-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
                                     <form action="{{ route('contact-us.update', $contact->id) }}" method="POST">
@@ -86,7 +86,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">تأكيد الحذف</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    <button type="button" class="btn-close" data-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
                                     <p>هل أنت متأكد أنك تريد حذف هذه الرسالة؟</p>
@@ -96,7 +96,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">إلغاء</button>
+                                            data-dismiss="modal">إلغاء</button>
                                         <button type="submit" class="btn btn-danger">حذف</button>
                                     </form>
                                 </div>
@@ -114,7 +114,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">إضافة رسالة جديدة</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('contact-us.store') }}" method="POST">

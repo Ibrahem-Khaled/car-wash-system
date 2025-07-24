@@ -108,7 +108,7 @@
             <p><strong>المدينة:</strong> {{ $user->city ?? 'غير متوفر' }}</p>
             <p><strong>نوع الحساب:</strong> {{ ucfirst($user->role) }}</p>
         </div>
-        <button class="btn btn-edit mt-3" data-bs-toggle="modal" data-bs-target="#editModal">تعديل البيانات</button>
+        <button class="btn btn-edit mt-3" data-toggle="modal" data-target="#editModal">تعديل البيانات</button>
     </div>
 
     <!-- Edit Modal -->
@@ -117,7 +117,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editModalLabel">تعديل بيانات الملف الشخصي</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
                     @csrf
@@ -154,7 +154,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">إلغاء</button>
                         <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
                     </div>
                 </form>

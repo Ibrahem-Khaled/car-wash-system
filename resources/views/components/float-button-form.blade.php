@@ -15,7 +15,7 @@
                         <h5 class="modal-title fw-bold" id="chatModalLabel">
                             <i class="fa fa-comments me-2"></i> الدردشة
                         </h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        <button type="button" class="btn-close btn-close-white" data-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
 

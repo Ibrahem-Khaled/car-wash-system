@@ -4,7 +4,7 @@
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h3>User Ratings</h3>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRatingModal">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRatingModal">
                 Add Rating
             </button>
         </div>
@@ -36,8 +36,8 @@
                             <td>{{ $rating->comment }}</td>
                             <td>{{ $rating->status }}</td>
                             <td>
-                                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                    data-bs-target="#editRatingModal{{ $rating->id }}">
+                                <button type="button" class="btn btn-warning" data-toggle="modal"
+                                    data-target="#editRatingModal{{ $rating->id }}">
                                     Edit
                                 </button>
                                 <form action="{{ route('user_ratings.destroy', $rating->id) }}" method="POST"
@@ -61,7 +61,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="editRatingModalLabel">Edit Rating</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        <button type="button" class="btn-close" data-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -110,7 +110,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
+                                                    data-dismiss="modal">Close</button>
                                                 <button type="submit" class="btn btn-primary">Save changes</button>
                                             </div>
                                         </form>
@@ -133,7 +133,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addRatingModalLabel">Add Rating</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('user_ratings.store') }}" method="POST">
@@ -171,7 +171,7 @@
                             </select>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Save changes</button>
                         </div>
                     </form>

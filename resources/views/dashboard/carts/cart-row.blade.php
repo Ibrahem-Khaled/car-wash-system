@@ -54,8 +54,8 @@
         @endswitch
     </td>
     <td>
-        <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-            data-bs-target="#editCartModal{{ $cart->id }}">
+        <button type="button" class="btn btn-warning" data-toggle="modal"
+            data-target="#editCartModal{{ $cart->id }}">
             تعديل
         </button>
         <form action="{{ route('carts.destroy', $cart->id) }}" method="POST" class="d-inline">
@@ -91,8 +91,8 @@
         <form action="{{ route('dashboard.carts.updateStatus', [$cart->id, 'declined']) }}" method="POST"
             class="d-inline">
             @csrf
-            <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                data-bs-target="#declineReasonModal{{ $cart->id }}">رفض</button>
+            <button type="button" class="btn btn-secondary" data-toggle="modal"
+                data-target="#declineReasonModal{{ $cart->id }}">رفض</button>
         </form> --}}
     </td>
 </tr>
@@ -108,13 +108,13 @@
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="declineReasonLabel">سبب الرفض</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <textarea class="form-control" name="decline_reason" rows="3" required></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
                     <button type="submit" class="btn btn-danger">رفض الطلب</button>
                 </div>
             </form>

@@ -4,7 +4,7 @@
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h3>الخدمات</h3>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductModal">
                 إضافة خدمة
             </button>
         </div>
@@ -43,8 +43,8 @@
                             <td>{{ $product->large_car_price }}</td>
                             <td>{{ $product->x_large_car_price }}</td>
                             <td>
-                                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                    data-bs-target="#editProductModal{{ $product->id }}">
+                                <button type="button" class="btn btn-warning" data-toggle="modal"
+                                    data-target="#editProductModal{{ $product->id }}">
                                     تعديل
                                 </button>
                                 <form action="{{ route('products.destroy', $product->id) }}" method="POST"
@@ -63,7 +63,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="editProductModalLabel">تعديل المنتج</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        <button type="button" class="btn-close" data-dismiss="modal"
                                             aria-label="إغلاق"></button>
                                     </div>
                                     <div class="modal-body">
@@ -117,7 +117,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">إغلاق</button>
+                                                    data-dismiss="modal">إغلاق</button>
                                                 <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
                                             </div>
                                         </form>
@@ -141,7 +141,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addProductModalLabel">إضافة منتج</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="إغلاق"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
@@ -183,7 +183,7 @@
                             <input type="number" class="form-control" id="x_large_car_price" name="x_large_car_price">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
                             <button type="submit" class="btn btn-primary">حفظ</button>
                         </div>
                     </form>

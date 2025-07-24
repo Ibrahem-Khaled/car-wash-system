@@ -137,7 +137,7 @@
             المركبة المخملية
         </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon">
                 <i class="bi bi-list" style="font-size: 1.5rem; color: #4a2f85;"></i>
@@ -185,7 +185,7 @@
                     <!-- User Dropdown -->
                     <div class="dropdown">
                         <a href="#" class="d-flex align-items-center text-decoration-none" id="userDropdown"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                            data-toggle="dropdown" aria-expanded="false">
                             <img src="{{ Auth::user()->image ?? asset('images/default-avatar.png') }}"
                                 alt="User Avatar" class="user-icon me-2">
                             <span>{{ Auth::user()->name }}</span>

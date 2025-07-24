@@ -76,12 +76,12 @@
 
             <ul class="nav nav-tabs mb-4" id="orderTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="current-orders-tab" data-bs-toggle="tab"
-                        data-bs-target="#current-orders" type="button" role="tab" aria-controls="current-orders"
+                    <button class="nav-link active" id="current-orders-tab" data-toggle="tab"
+                        data-target="#current-orders" type="button" role="tab" aria-controls="current-orders"
                         aria-selected="true">{{ __('orders.current_orders') }}</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="past-orders-tab" data-bs-toggle="tab" data-bs-target="#past-orders"
+                    <button class="nav-link" id="past-orders-tab" data-toggle="tab" data-target="#past-orders"
                         type="button" role="tab" aria-controls="past-orders" aria-selected="false">
                         {{ __('orders.past_orders') }}
                     </button>
@@ -109,8 +109,8 @@
                                     </p>
                                     <a href="#" class="btn btn-primary">{{ __('orders.order_details') }}</a>
                                     @if ($item->status == 'completed')
-                                        <button type="button" class="btn btn-success mt-2" data-bs-toggle="modal"
-                                            data-bs-target="#reviewModal-{{ $item->id }}">{{ __('orders.rate_worker') }}</button>
+                                        <button type="button" class="btn btn-success mt-2" data-toggle="modal"
+                                            data-target="#reviewModal-{{ $item->id }}">{{ __('orders.rate_worker') }}</button>
                                     @endif
                                 </div>
                             </div>
@@ -123,7 +123,7 @@
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="reviewModalLabel-{{ $item->id }}">تقييم
                                                 العامل - طلب رقم #{{ $item->id }}</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            <button type="button" class="btn-close" data-dismiss="modal"
                                                 aria-label="إغلاق"></button>
                                         </div>
                                         <form action="{{ route('worker.rate', $item->id) }}" method="POST">
@@ -152,7 +152,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">إغلاق</button>
+                                                    data-dismiss="modal">إغلاق</button>
                                                 <button type="submit" class="btn btn-primary">إرسال التقييم</button>
                                             </div>
                                         </form>
