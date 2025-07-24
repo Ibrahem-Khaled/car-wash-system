@@ -58,9 +58,6 @@
         }
 
         .logo-icon {
-            font-size: 4.5rem;
-            color: var(--primary-purple);
-            line-height: 1;
             margin-bottom: 10px;
         }
 
