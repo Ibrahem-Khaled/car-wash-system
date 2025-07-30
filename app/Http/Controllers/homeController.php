@@ -6,41 +6,61 @@ use App\Models\Car;
 use App\Models\Cart;
 use App\Models\ContactUs;
 use App\Models\Product;
+use App\Models\SlideShow;
 use App\Models\Subscription;
 use App\Models\SubscriptionPrpduct;
 use App\Models\User;
+use App\Models\UserRating;
 use App\Models\UserSubscription;
 use App\Models\UserSubscriptionProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class homeController extends Controller
 {
-    protected $companyUser;
-
-    // Constructor to initialize the company user
-    public function __construct()
-    {
-        $this->companyUser = User::where('role', 'company')->first();
-    }
-
     // Home page method
-    public function index()
+     public function index(): View
     {
-        $products = Product::take(4)->get();
-        return view('home', [
-            'products' => $products,
-            'companyUser' => $this->companyUser,
-        ]);
+        // Fetch active slide shows for the hero section slider
+        $slideShows = SlideShow::where('status', 'active')->latest()->get();
+
+        // Fetch main services (products of type 'main')
+        $mainServices = Product::where('type', 'main')->latest()->take(4)->get();
+
+        // Fetch latest sub-products to display
+        $latestSubProducts = Product::where('type', 'sub')->latest()->take(4)->get();
+
+        // Fetch active subscriptions to display in the new section
+        $subscriptions = Subscription::where('status', 1)->latest()->take(3)->get();
+
+        // Fetch latest active reviews, eager loading the user's data (name, image)
+        $latestReviews = UserRating::with('user')
+            ->where('status', 'active')
+            ->latest()
+            ->take(3)
+            ->get();
+
+        // Fetch company user data for the footer
+        $companyUser = User::where('role', 'company')->first();
+
+
+        // Pass all the fetched data to the view
+        return view('home', compact(
+            'slideShows',
+            'mainServices',
+            'latestSubProducts',
+            'subscriptions',
+            'latestReviews',
+            'companyUser'
+        ));
     }
 
     // Contact us page method
     public function contactUs()
     {
-        return view('contact-us', [
-            'companyUser' => $this->companyUser,
-        ]);
+        return view('contact-us');
     }
 
     // Handle contact us form submission
@@ -60,17 +80,13 @@ class homeController extends Controller
 
     public function privacyPolicy()
     {
-        return view('privacy-policy', [
-            'companyUser' => $this->companyUser,
-        ]);
+        return view('privacy-policy');
     }
 
     // About us page method
     public function aboutUs()
     {
-        return view('about-us', [
-            'companyUser' => $this->companyUser,
-        ]);
+        return view('about-us');
     }
 
     public function services()
@@ -109,7 +125,6 @@ class homeController extends Controller
 
 
         return view('services', [
-            'companyUser' => $this->companyUser,
             'mainProducts' => $mainProducts,
             'subProducts' => $subProducts,
             'cars' => $cars,
@@ -136,9 +151,10 @@ class homeController extends Controller
     public function subscribtion()
     {
         $subscriptions = Subscription::with('products')->get();
+        $mainServices = Product::where('type', 'main')->get();
         return view('subscribtion', [
-            'companyUser' => $this->companyUser,
             'subscriptions' => $subscriptions,
+            'mainServices' => $mainServices,
         ]);
     }
 
@@ -226,7 +242,6 @@ class homeController extends Controller
             $allOrdersToSupervisor = Cart::get();
 
             return view('factor.orders', [
-                'companyUser' => $this->companyUser,
                 'orders' => $orders,
                 'workers' => $workers,
                 'allOrdersToSupervisor' => $allOrdersToSupervisor
@@ -238,7 +253,6 @@ class homeController extends Controller
                 ->get(); // التأكد من جلب المنتجات مع الطلبات
 
             return view('user-orders', [
-                'companyUser' => $this->companyUser,
                 'orders' => $orders
             ]);
         }
@@ -272,7 +286,6 @@ class homeController extends Controller
         $subscriptions = $user->subscriptions()->with('products')->get();
         $cars = Car::all();
         return view('user-subscriptions', [
-            'companyUser' => $this->companyUser,
             'subscriptions' => $subscriptions,
             'cars' => $cars
         ]);

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Pkpass\Pkpass;
 use App\Models\WalletTemplate;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class WalletPassController extends Controller
 {
@@ -63,7 +64,7 @@ class WalletPassController extends Controller
             // 5. إنشاء وتنزيل الملف
             $pass->create(true);
         } catch (\Exception $e) {
-            \Log::error("Apple Pass Generation Failed for user {$user->id}: " . $e->getMessage());
+            Log::error("Apple Pass Generation Failed for user {$user->id}: " . $e->getMessage());
             abort(500, 'حدث خطأ أثناء إنشاء بطاقتك.');
         }
     }

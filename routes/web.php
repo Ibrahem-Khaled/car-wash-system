@@ -23,6 +23,7 @@ use App\Http\Controllers\dashboard\NotificationModelController;
 use App\Http\Controllers\dashboard\ContactUsController;
 use App\Http\Controllers\dashboard\SubscriptionController;
 use App\Http\Controllers\dashboard\ChatController as DashboardChatController;
+use App\Http\Controllers\dashboard\SettingController;
 use App\Http\Controllers\WalletPassController;
 
 /*
@@ -48,7 +49,7 @@ Route::post('/change-language', function (Request $request) {
 Route::group([], function () {
 
     // -- الصفحات الرئيسية والمعلوماتية --
-    Route::get('/', [DashboardController::class, 'homePage'])->name('home');
+    Route::get('/', [homeController::class, 'index'])->name('home');
     Route::get('/contact-us', [homeController::class, 'contactUs'])->name('contact-us');
     Route::post('/contact-us', [homeController::class, 'contactUsPost'])->name('contact-us.post');
     Route::get('/about-us', [homeController::class, 'aboutUs'])->name('about-us');
@@ -93,7 +94,6 @@ Route::group([], function () {
     Route::post('/customers/{user}/use-gift', [LoyaltyController::class, 'useGift'])->name('loyalty.useGift');
 
     Route::get('/wallet/apple-pass/{user}', [WalletPassController::class, 'generateApplePass'])->name('wallet.apple-pass');
-
 });
 
 
@@ -125,4 +125,8 @@ Route::group([
     Route::get('/live/chat', [DashboardChatController::class, 'index'])->name('live.chat');
     Route::get('/users/{userId}/messages', [DashboardChatController::class, 'getUserMessages']);
     Route::post('/messages/reply', [DashboardChatController::class, 'replyToMessage']);
+
+    // Route to display the settings page
+    Route::get('settings', [SettingController::class, 'edit'])->name('dashboard.settings.edit');
+    Route::put('settings', [SettingController::class, 'update'])->name('dashboard.settings.update');
 });

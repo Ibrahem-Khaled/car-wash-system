@@ -1,163 +1,87 @@
+{{--
+    This is the fully refactored Supervisor Orders page.
+    It uses a tabbed interface and includes a detailed order-card partial.
+--}}
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ __('orders.title') }}</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+    <title>{{ __('orders.title') }} - لوحة تحكم المشرف</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <!-- Alpine.js for interactivity -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="icon" href="{{ asset('assets/img/logo-ct.png') }}">
 
     <style>
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: #f9f9f9;
-            direction: rtl;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #4a2f85;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .order-card {
-            border-radius: 10px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .order-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .order-status {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .btn-primary {
-            background-color: #4a2f85;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background-color: #ed0f7d;
-        }
-
-        .input-group {
-            max-width: 300px;
-            margin: auto;
-        }
+        body { font-family: 'Cairo', sans-serif; background-color: #f8f9fa; scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background-color: #1e1b4b; }
+        ::-webkit-scrollbar-thumb { background-color: #8b5cf6; border-radius: 10px; border: 2px solid #1e1b4b; }
     </style>
+
+    <script>
+        // Customizing Tailwind theme
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'velvet': '#4a2f85', 'velvet-light': '#6d44a6', 'velvet-dark': '#3a236a',
+                        'brand-pink': '#ed0f7d', 'glow': 'rgba(167, 139, 250, 0.5)',
+                    },
+                    fontFamily: { cairo: ['Cairo', 'sans-serif'] },
+                    boxShadow: { 'glow-violet': '0 0 25px rgba(167, 139, 250, 0.6)' }
+                }
+            }
+        }
+    </script>
 </head>
 
-<body>
+<body class="bg-gray-100 font-cairo">
 
-    @include('homeLayouts.nav-bar')
-    @include('homeLayouts.float-buttons')
+    @include('web.header')
 
-    <section class="py-5">
-        <div class="container">
-            <h2 class="section-title">{{ __('orders.title') }}</h2>
-
-            <div class="row">
-                @foreach ($orders as $item)
-                    <div class="col-md-6">
-                        <div class="order-card bg-white">
-                            <h5>{{ __('orders.order_number') }} #{{ $item->id }}</h5>
-                            <p><strong>{{ __('orders.product') }}:</strong> {{ $item->product->name }}</p>
-                            <p><strong>{{ __('orders.price') }}:</strong> {{ $item->price }} ريال</p>
-                            <p><strong>{{ __('orders.car_type') }}:</strong> {{ $item->car_type }}</p>
-                            <p><strong>{{ __('orders.car_model') }}:</strong> {{ $item->car_model }}</p>
-                            <p><strong>{{ __('orders.car_color') }}:</strong> {{ $item->car_color }}</p>
-                            <p><strong>{{ __('orders.car_number') }}:</strong> {{ $item->car_number }}</p>
-                            <p><strong>{{ __('orders.car_wash_date') }}:</strong> {{ $item->car_wash }}</p>
-                            <p><strong>{{ __('orders.coordinates') }}:</strong> {{ $item->latitude }},
-                                {{ $item->longitude }}</p>
-
-                            <p class="order-status">{{ __('orders.status') }}:
-                                <span
-                                    class="badge 
-                                    @if ($item->status == 'declined') bg-danger 
-                                    @elseif ($item->status == 'completed') bg-success 
-                                    @else bg-warning @endif">
-                                    {{ $item->status }}
-                                </span>
-                            </p>
-
-                            @if ($item->status == 'declined' && $item->decline_reason)
-                                <p><strong>{{ __('orders.decline_reason') }}:</strong> {{ $item->decline_reason }}</p>
-                            @endif
-
-                            <form action="{{ route('updateOrderStatus', $item->id) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-
-                                <div class="mb-3">
-                                    <p>{{ __('orders.change_status') }}:</p>
-
-                                    @if ($item->status == 'unpaid')
-                                        <button class="btn btn-success" name="status" value="acepted"
-                                            type="submit">{{ __('orders.accept_order') }}</button>
-                                    @elseif ($item->status == 'acepted')
-                                        <button class="btn btn-warning" name="status" value="pending"
-                                            type="submit">{{ __('orders.in_progress') }}</button>
-                                    @elseif ($item->status == 'pending')
-                                        <button class="btn btn-success" name="status" value="completed"
-                                            type="submit">{{ __('orders.complete') }}</button>
-                                    @endif
-
-                                    <button class="btn btn-danger" type="button"
-                                        id="declineButton">{{ __('orders.decline_order') }}</button>
-                                </div>
-
-                                <div class="mb-3" id="reasonContainer" style="display: none;">
-                                    <label for="decline_reason"
-                                        class="form-label">{{ __('orders.decline_reason') }}</label>
-                                    <textarea class="form-control" name="decline_reason" id="decline_reason" rows="3"></textarea>
-                                    <button class="btn btn-danger mt-2" name="status" value="declined"
-                                        type="submit">{{ __('orders.confirm_decline') }}</button>
-                                </div>
-                            </form>
-
-                            @if (Auth::check() && !in_array(auth()->user()->role, ['factor', 'company', 'customer']))
-                                <div class="mb-3">
-                                    <label for="worker_id" class="form-label">{{ __('orders.assign_worker') }}</label>
-                                    <select class="form-select" name="worker_id" id="worker_id">
-                                        <option value="">{{ __('orders.select_worker') }}</option>
-                                        @foreach ($workers as $worker)
-                                            <option value="{{ $worker->id }}"
-                                                {{ $item->worker_id == $worker->id ? 'selected' : '' }}>
-                                                {{ $worker->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            @endif
-
-                            <button class="btn btn-secondary mt-3"
-                                onclick="openMap({{ $item->latitude }}, {{ $item->longitude }})">
-                                {{ __('orders.view_map') }}
-                            </button>
-                        </div>
-                    </div>
-                @endforeach
+    <main>
+        <!-- Page Header Section -->
+        <section class="bg-gradient-to-br from-velvet-dark to-indigo-900 text-white pt-32 pb-20">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-5xl font-extrabold drop-shadow-lg">{{ __('orders.title') }}</h1>
+                <p class="text-lg text-gray-300 mt-4 max-w-2xl mx-auto">إدارة وتتبع جميع الطلبات بكفاءة وسهولة.</p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    @include('homeLayouts.footer')
+        <!-- Orders Section with Tabs -->
+        <section class="py-24" x-data="{ activeTab: 'pending' }">
+            <div class="container mx-auto px-6">
+                <!-- Tab Buttons -->
+                <div class="flex flex-wrap justify-center mb-12 border-b border-gray-300">
+                    <button @click="activeTab = 'pending'" :class="{ 'border-velvet text-velvet': activeTab === 'pending', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-400': activeTab !== 'pending' }" class="py-4 px-6 block font-semibold border-b-2 focus:outline-none transition-colors duration-300"><i class="fas fa-clock mr-2"></i> {{ __('orders.tabs.pending_orders') }}</button>
+                    <button @click="activeTab = 'accepted'" :class="{ 'border-velvet text-velvet': activeTab === 'accepted', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-400': activeTab !== 'accepted' }" class="py-4 px-6 block font-semibold border-b-2 focus:outline-none transition-colors duration-300"><i class="fas fa-check-circle mr-2"></i> {{ __('orders.tabs.accepted_orders') }}</button>
+                    <button @click="activeTab = 'completed'" :class="{ 'border-velvet text-velvet': activeTab === 'completed', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-400': activeTab !== 'completed' }" class="py-4 px-6 block font-semibold border-b-2 focus:outline-none transition-colors duration-300"><i class="fas fa-star mr-2"></i> {{ __('orders.tabs.completed_orders') }}</button>
+                    <button @click="activeTab = 'declined'" :class="{ 'border-velvet text-velvet': activeTab === 'declined', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-400': activeTab !== 'declined' }" class="py-4 px-6 block font-semibold border-b-2 focus:outline-none transition-colors duration-300"><i class="fas fa-times-circle mr-2"></i> {{ __('orders.tabs.declined_orders') }}</button>
+                </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                <!-- Orders Content -->
+                <div x-show="activeTab === 'pending'">@include('partials.supervisor-order-list', ['orders' => $orders->where('status', 'unpaid')])</div>
+                <div x-show="activeTab === 'accepted'" style="display: none;">@include('partials.supervisor-order-list', ['orders' => $orders->where('status', 'acepted')])</div>
+                <div x-show="activeTab === 'completed'" style="display: none;">@include('partials.supervisor-order-list', ['orders' => $orders->where('status', 'completed')])</div>
+                <div x-show="activeTab === 'declined'" style="display: none;">@include('partials.supervisor-order-list', ['orders' => $orders->where('status', 'declined')])</div>
+            </div>
+        </section>
+    </main>
+
+    @include('web.footer')
 
     <script>
         function openMap(lat, lng) {
@@ -165,10 +89,9 @@
                 const googleMapUrl = `https://www.google.com/maps?q=${lat},${lng}`;
                 window.open(googleMapUrl, '_blank');
             } else {
-                alert('{{ __('orders.no_coordinates') }}');
+                alert('{{ __("orders.no_coordinates") }}');
             }
         }
     </script>
 </body>
-
 </html>

@@ -53,12 +53,17 @@ class CustomerManagementController extends Controller
     public function show(User $user, WalletPassService $walletService)
     {
         // تأكد أن المستخدم الذي يتم عرضه هو عميل
-        if (!$user->isCustomer()) {
-            abort(404, 'المستخدم المطلوب ليس عميلاً.');
-        }
+        // if (!$user->isCustomer()) {
+        //     abort(404, 'المستخدم المطلوب ليس عميلاً.');
+        // }
 
         // جلب البيانات اللازمة من المودل والمتحكم الآخر
         $servicesTarget = LoyaltyController::SERVICES_TARGET;
+
+        if (!$user->qr_code_identifier) {
+            $user->qr_code_identifier = (string) \Illuminate\Support\Str::uuid();
+            $user->save();
+        }
 
         $qrCodeUrl = route('loyalty.scan', $user->qr_code_identifier);
 

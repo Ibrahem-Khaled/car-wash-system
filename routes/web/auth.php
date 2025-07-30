@@ -17,7 +17,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('otp', [AuthController::class, 'otp'])->name('otp');
     Route::post('verifyOtp', [AuthController::class, 'verifyOtp'])->name('verifyOtp');
 
-    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('profile', [AuthController::class, 'profile'])->name('profile')->middleware(['auth', 'checkOtpVerification']);
     Route::post('/profile', [AuthController::class, 'update'])->name('profile.update')->middleware(['auth', 'checkOtpVerification']);

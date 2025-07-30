@@ -39,12 +39,4 @@ class DashboardController extends Controller
             )
         );
     }
-
-    public function homePage()
-    {
-        $products = Product::all();
-        $workers = User::where('role', 'factor')->get();
-        $companyUser = User::where('role', 'company')->first();
-        return view('home', compact('products', 'workers', 'companyUser'));
-    }
 }

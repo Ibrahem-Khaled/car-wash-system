@@ -2,9 +2,9 @@
 
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
         <div class="sidebar-brand-icon">
-            <img src="../assets/img/logo-ct-dark.png" class="h-50 w-50" alt="main_logo">
+            <img src="{{ asset('storage/' . $companyUser->image) }}" class="h-50 w-50 rounded-circle" alt="main_logo">
         </div>
-        <div class="sidebar-brand-text mx-3">تطبيق غسيل السيارات</div>
+        <div class="sidebar-brand-text mx-3">{{$companyUser->name}}</div>
     </a>
 
     <hr class="sidebar-divider my-0">
@@ -84,6 +84,25 @@
         </a>
     </li>
 
+
+    <hr class="sidebar-divider">
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSiteManagement"
+            aria-expanded="true" aria-controls="collapseSiteManagement">
+            <i class="fas fa-fw fa-cogs"></i>
+            <span>إدارة الموقع</span>
+        </a>
+        <div id="collapseSiteManagement" class="collapse" aria-labelledby="headingSiteManagement" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">إعدادات الموقع:</h6>
+                <a class="collapse-item" href="{{ route('dashboard.settings.edit') }}">بيانات الموقع</a>
+                <a class="collapse-item" href="#">التصميم والمظهر</a>
+                <a class="collapse-item" href="#">سياسة الخصوصية</a>
+                <a class="collapse-item" href="#">شروط الاستخدام</a>
+            </div>
+        </div>
+    </li>
     <hr class="sidebar-divider">
 
     <div class="sidebar-heading">
