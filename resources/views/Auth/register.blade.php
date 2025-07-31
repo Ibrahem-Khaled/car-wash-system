@@ -135,24 +135,6 @@
                         </div>
                     </div>
 
-                    <!-- Address Field -->
-                    <div class="space-y-1">
-                        <label for="address" class="block text-sm font-semibold text-gray-700">
-                            {{ __('auth.address') }}
-                        </label>
-                        <div class="relative">
-                            <input type="text"
-                                   id="address"
-                                   name="address"
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 pl-12"
-                                   placeholder="{{ __('auth.address_placeholder') }}"
-                                   required>
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-map-marker-alt text-gray-400"></i>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Password Field -->
                     <div class="space-y-1">
                         <label for="password" class="block text-sm font-semibold text-gray-700">

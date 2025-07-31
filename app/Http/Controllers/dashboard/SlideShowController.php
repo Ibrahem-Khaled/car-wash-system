@@ -9,63 +9,94 @@ use Illuminate\Support\Facades\Storage;
 
 class SlideShowController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $slides = SlideShow::paginate(10);
-        return view('dashboard.slide_shows', compact('slides'));
+        // الاستعلام الأساسي للشرائح
+        $query = SlideShow::query();
+
+        // البحث عن شريحة
+        if ($search = $request->input('search')) {
+            $query->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+        }
+
+        // جلب الشرائح مع الترقيم
+        $slideShows = $query->latest()->paginate(10);
+
+        // حساب الإحصائيات
+        $stats = [
+            'total' => SlideShow::count(),
+            'active' => SlideShow::where('status', 'active')->count(),
+            'inactive' => SlideShow::where('status', 'inactive')->count(),
+        ];
+
+        return view('dashboard.slide_shows.index', compact('slideShows', 'stats'));
     }
 
+    /**
+     * تخزين شريحة جديدة في قاعدة البيانات.
+     */
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+            'link' => 'nullable|url|max:255',
             'status' => 'required|in:active,inactive',
-            'link' => 'nullable|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
-        $data = $request->all();
+        $data = $request->except('image');
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('images', 'public');
+            $data['image'] = $request->file('image')->store('slide_shows', 'public');
         }
 
         SlideShow::create($data);
 
-        return redirect()->back()->with('success', 'Slide Show created successfully.');
+        return redirect()->route('slide_shows.index')->with('success', 'تمت إضافة الشريحة بنجاح.');
     }
 
-    public function update(Request $request, SlideShow $slide)
+    /**
+     * تحديث بيانات شريحة موجودة.
+     */
+    public function update(Request $request, SlideShow $slideShow)
     {
         $request->validate([
-            'title' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+            'link' => 'nullable|url|max:255',
             'status' => 'required|in:active,inactive',
-            'link' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
-        $data = $request->all();
+        $data = $request->except('image');
 
         if ($request->hasFile('image')) {
-            if ($slide->image) {
-                Storage::disk('public')->delete($slide->image);
+            // حذف الصورة القديمة إذا كانت موجودة
+            if ($slideShow->image) {
+                Storage::disk('public')->delete($slideShow->image);
             }
-            $data['image'] = $request->file('image')->store('images', 'public');
+            $data['image'] = $request->file('image')->store('slide_shows', 'public');
         }
 
-        $slide->update($data);
+        $slideShow->update($data);
 
-        return redirect()->back()->with('success', 'Slide Show updated successfully.');
+        return redirect()->route('slide_shows.index')->with('success', 'تم تحديث الشريحة بنجاح.');
     }
 
-    public function destroy(SlideShow $slide)
+    /**
+     * حذف شريحة من قاعدة البيانات.
+     */
+    public function destroy(SlideShow $slideShow)
     {
-        if ($slide->image) {
-            Storage::disk('public')->delete($slide->image);
+        // حذف الصورة المرتبطة
+        if ($slideShow->image) {
+            Storage::disk('public')->delete($slideShow->image);
         }
-        $slide->delete();
-        return redirect()->back()->with('success', 'Slide Show deleted successfully.');
+
+        $slideShow->delete();
+
+        return redirect()->route('slide_shows.index')->with('success', 'تم حذف الشريحة بنجاح.');
     }
 }
