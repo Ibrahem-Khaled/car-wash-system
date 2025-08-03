@@ -25,16 +25,16 @@ class WalletPassController extends Controller
 
         // 2. إنشاء كائن PassGenerator
         // نستخدم معرّف العميل لتمييز البطاقة
-        $pass = new PassGenerator($user->id);
+        $pass = new PassGenerator(Str::uuid()->toString());
 
         // 4. بناء تعريف البطاقة (من نوع storeCard)
         $pass_definition = [
             "description"        => "Your Loyalty Card",
             "formatVersion"      => 1,
             "organizationName"   => "velvet-vehicle",
-            "passTypeIdentifier" => "pass.com.velvet-vehicle.loyalty", // يجب أن يكون ثابتًا
+            "passTypeIdentifier" => env('PASS_TYPE_IDENTIFIER'), // يجب أن يكون ثابتًا
             "serialNumber"       => Str::uuid()->toString(), // رقم تسلسلي فريد لكل مرة يتم فيها إنشاء البطاقة
-            "teamIdentifier"     => env('APPLE_TEAM_ID'),
+            "teamIdentifier"     => env('TEAM_IDENTIFIER'),
             "foregroundColor"    => "rgb(255, 255, 255)",
             "backgroundColor"    => "rgb(60, 65, 70)",
             "logoText"           => "Velvet Loyalty",
