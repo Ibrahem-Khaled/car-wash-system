@@ -93,7 +93,7 @@ Route::group([], function () {
     Route::get('/scan/{identifier}', [LoyaltyController::class, 'scan'])->name('loyalty.scan')->middleware('auth');
     Route::post('/customers/{user}/use-gift', [LoyaltyController::class, 'useGift'])->name('loyalty.useGift');
 
-    Route::get('/user/{user}/apple-pass', [WalletPassController::class, 'generateApplePass'])
+    Route::get('/user/{user}/apple-pass', [WalletPassController::class, 'generateLoyaltyPass'])
         ->name('wallet.apple.generate');
 });
 
