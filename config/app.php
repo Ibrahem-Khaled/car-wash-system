@@ -186,6 +186,8 @@ return [
          * Package Service Providers...
          */
 
+        Thenextweb\PassGeneratorServiceProvider::class,
+
         /*
          * Application Service Providers...
          */

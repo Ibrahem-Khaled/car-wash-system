@@ -88,7 +88,7 @@ class WalletPassService
         return [
             'success' => true,
             // هذا الراوت سيقوم بإنشاء وتنزيل الملف عند طلبه
-            'downloadUrl' => route('wallet.apple-pass', ['user' => $customer->id]),
+            'downloadUrl' => route('wallet.apple.generate', $customer->id),
         ];
     }
 }

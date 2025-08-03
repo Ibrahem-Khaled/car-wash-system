@@ -11,9 +11,9 @@
         "laravel/sanctum": "^3.2",
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.8",
-        "pkpass/pkpass": "^2.4",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "taqnyat/php": "^1.0",
+        "thenextweb/passgenerator": "^0.5.0",
         "tymon/jwt-auth": "^2.1",
         "yieldstudio/laravel-expo-notifier": "^0.0.15",
         "yoeunes/toastr": "^2.3"

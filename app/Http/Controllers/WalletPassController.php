@@ -3,69 +3,140 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Pkpass\Pkpass;
-use App\Models\WalletTemplate;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Config;
+use Thenextweb\PassGenerator;
+
 
 class WalletPassController extends Controller
 {
     public function generateApplePass(User $user)
     {
-        // 1. التحقق من أن المستخدم عميل
-        if (!$user->isCustomer()) {
-            abort(404, 'User is not a customer.');
-        }
+        $pass_identifier = '1001';  // This, if set, it would allow for retrieval later on of the created Pass
 
-        // 2. جلب قالب بطاقة آبل النشط من قاعدة البيانات
-        $template = WalletTemplate::where('platform', 'apple')->where('is_active', true)->first();
-        if (!$template) {
-            abort(500, 'Active Apple Wallet template not found.');
-        }
+        $pass = new PassGenerator($pass_identifier);
 
-        try {
-            // 3. إعداد بيانات البطاقة
-            // ستحتاج إلى شهادات من حساب مطوري آبل وتخزينها بأمان
-            $pass = new Pkpass(config('services.apple.pass_certificate_path'), config('services.apple.pass_certificate_password'));
-
-            $pass->setData([
-                'passTypeIdentifier' => $template->pass_type_id,
-                'formatVersion' => 1,
-                'serialNumber' => $user->qr_code_identifier,
-                'teamIdentifier' => config('services.apple.team_id'),
-                'organizationName' => 'اسم شركتك',
-                'description' => 'بطاقة ولاء العملاء',
-                'logoText' => $template->logo_text,
-                'foregroundColor' => $template->foreground_color,
-                'backgroundColor' => $template->background_color,
-                'labelColor'    => $template->label_color,
-                'loyalty' => [
-                    'primaryFields' => [
-                        [
-                            'key' => 'points',
-                            'label' => 'النقاط',
-                            'value' => $user->points,
-                        ],
-                    ],
-                    'secondaryFields' => [
-                        [
-                            'key' => 'customerName',
-                            'label' => 'اسم العميل',
-                            'value' => $user->name,
-                        ],
-                    ],
+        $pass_definition = [
+            "description"       => "description",
+            "formatVersion"     => 1,
+            "organizationName"  => "velvet-vehicle",
+            "passTypeIdentifier" => "pass.com.velvet-vehicle.loyalty",
+            "serialNumber"      => "123456",
+            "teamIdentifier"    => env('APPLE_TEAM_ID'),
+            "foregroundColor"   => "rgb(99, 99, 99)",
+            "backgroundColor"   => "rgb(212, 212, 212)",
+            "barcode" => [
+                "message"   => "encodedmessageonQR",
+                "format"    => "PKBarcodeFormatQR",
+                "altText"   => "altextfortheQR",
+                "messageEncoding" => "utf-8",
+            ],
+            "boardingPass" => [
+                "headerFields" => [
+                    [
+                        "key" => "destinationDate",
+                        "label" => "Trip to: BCN-SANTS",
+                        "value" => "15/09/2015"
+                    ]
                 ],
-            ]);
+                "primaryFields" => [
+                    [
+                        "key" => "boardingTime",
+                        "label" => "MURCIA",
+                        "value" => "13:54",
+                        "changeMessage" => "Boarding time has changed to %@"
+                    ],
+                    [
+                        "key" => "destination",
+                        "label" => "BCN-SANTS",
+                        "value" => "21:09"
+                    ]
 
-            // 4. إضافة الصور اللازمة للبطاقة (icon, logo)
-            // $pass->addFile(public_path('images/wallet/icon.png'));
-            // $pass->addFile(public_path('images/wallet/logo.png'));
+                ],
+                "secondaryFields" => [
+                    [
+                        "key" => "passenger",
+                        "label" => "Passenger",
+                        "value" => "J.DOE"
+                    ],
+                    [
+                        "key" => "bookingref",
+                        "label" => "Booking Reference",
+                        "value" => "4ZK6FG"
+                    ]
+                ],
+                "auxiliaryFields" => [
+                    [
+                        "key" => "train",
+                        "label" => "Train TALGO",
+                        "value" => "00264"
+                    ],
+                    [
+                        "key" => "car",
+                        "label" => "Car",
+                        "value" => "009"
+                    ],
+                    [
+                        "key" => "seat",
+                        "label" => "Seat",
+                        "value" => "04A"
+                    ],
+                    [
+                        "key" => "classfront",
+                        "label" => "Class",
+                        "value" => "Tourist"
+                    ]
+                ],
+                "backFields" => [
+                    [
+                        "key" => "ticketNumber",
+                        "label" => "Ticket Number",
+                        "value" => "7612800569875"
+                    ],
+                    [
+                        "key" => "passenger-name",
+                        "label" => "Passenger",
+                        "value" => "John Doe"
+                    ],
+                    [
+                        "key" => "classback",
+                        "label" => "Class",
+                        "value" => "Tourist"
+                    ]
+                ],
+                "locations" => [
+                    [
+                        "latitude" => 37.97479,
+                        "longitude" => -1.131522,
+                        "relevantText" => "Departure station"
+                    ]
+                ],
+                "transitType" => "PKTransitTypeTrain"
+            ],
+        ];
 
-            // 5. إنشاء وتنزيل الملف
-            $pass->create(true);
-        } catch (\Exception $e) {
-            Log::error("Apple Pass Generation Failed for user {$user->id}: " . $e->getMessage());
-            abort(500, 'حدث خطأ أثناء إنشاء بطاقتك.');
-        }
+        $pass->setPassDefinition($pass_definition);
+
+        // Definitions can also be set from a JSON string
+        // $pass->setPassDefinition(file_get_contents('/path/to/pass.json));
+
+        // Add assets to the PKPass package
+        // $pass->addAsset(base_path('public/images/wallet/background.png'));
+        // $pass->addAsset(base_path('public/images/wallet/thumbnail.png'));
+        $pass->addAsset(base_path('public/images/wallet/icon.png'));
+        $pass->addAsset(base_path('public/images/wallet/logo.png'));
+
+        $pkpass = $pass->create();
+
+
+        return response($pkpass, 200, [
+            'Content-Transfer-Encoding' => 'binary',
+            'Content-Description' => 'File Transfer',
+            'Content-Disposition' => 'attachment; filename="pass.pkpass"',
+            'Content-length' => strlen($pkpass),
+            'Content-Type' => PassGenerator::getPassMimeType(),
+            'Pragma' => 'no-cache',
+        ]);
     }
 }
