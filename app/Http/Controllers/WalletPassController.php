@@ -13,7 +13,7 @@ class WalletPassController extends Controller
 {
     public function generateApplePass(User $user)
     {
-        $pass_identifier = '1001';  // This, if set, it would allow for retrieval later on of the created Pass
+        $pass_identifier = '1002';  // This, if set, it would allow for retrieval later on of the created Pass
 
         $pass = new PassGenerator($pass_identifier);
 
