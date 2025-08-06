@@ -135,7 +135,7 @@
                     </button>
 
                     <!-- Social Login Buttons -->
-                    <div class="relative">
+                    {{-- <div class="relative">
                         <div class="absolute inset-0 flex items-center">
                             <div class="w-full border-t border-gray-300"></div>
                         </div>
@@ -155,7 +155,7 @@
                             <i class="fab fa-facebook-f text-facebook group-hover:scale-110 transition-transform duration-200 mr-2"></i>
                             <span class="font-medium">{{ __('auth.facebook') }}</span>
                         </a>
-                    </div>
+                    </div> --}}
 
                     <!-- Register Link -->
                     <div class="text-center pt-4">

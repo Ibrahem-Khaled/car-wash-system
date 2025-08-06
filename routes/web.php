@@ -24,6 +24,7 @@ use App\Http\Controllers\dashboard\ContactUsController;
 use App\Http\Controllers\dashboard\SubscriptionController;
 use App\Http\Controllers\dashboard\ChatController as DashboardChatController;
 use App\Http\Controllers\dashboard\SettingController;
+use App\Http\Controllers\dashboard\WalletTemplateController;
 use App\Http\Controllers\WalletPassController;
 
 /*
@@ -130,4 +131,9 @@ Route::group([
     // Route to display the settings page
     Route::get('settings', [SettingController::class, 'edit'])->name('dashboard.settings.edit');
     Route::put('settings', [SettingController::class, 'update'])->name('dashboard.settings.update');
+
+
+    // مسارات قوالب المحفظة
+    Route::get('wallet-templates', [WalletTemplateController::class, 'edit'])->name('wallet.edit');
+    Route::put('wallet-templates', [WalletTemplateController::class, 'update'])->name('wallet.update');
 });

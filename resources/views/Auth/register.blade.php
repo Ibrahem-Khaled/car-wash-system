@@ -211,7 +211,7 @@
                         {{ __('auth.register') }}
                     </button>
 
-                    <!-- Social Login Buttons -->
+                    {{-- <!-- Social Login Buttons -->
                     <div class="relative mt-6">
                         <div class="absolute inset-0 flex items-center">
                             <div class="w-full border-t border-gray-300"></div>
@@ -232,7 +232,7 @@
                             <i class="fab fa-facebook-f text-facebook group-hover:scale-110 transition-transform duration-200 mr-2"></i>
                             <span class="font-medium">{{ __('auth.facebook') }}</span>
                         </a>
-                    </div>
+                    </div> --}}
 
                     <!-- Login Link -->
                     <div class="text-center pt-4">
