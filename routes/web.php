@@ -90,7 +90,7 @@ Route::group([], function () {
     // -- مسارات نظام الولاء --
     Route::get('/customers/create', [CustomerManagementController::class, 'create'])->name('customers.create');
     Route::post('/customers', [CustomerManagementController::class, 'store'])->name('customers.store');
-    Route::get('/customers/{user}', [CustomerManagementController::class, 'show'])->name('customers.show');
+    Route::get('/customers', [CustomerManagementController::class, 'show'])->name('customers.show')->middleware('auth');
     Route::get('/scan/{identifier}', [LoyaltyController::class, 'scan'])->name('loyalty.scan')->middleware('auth');
     Route::post('/customers/{user}/use-gift', [LoyaltyController::class, 'useGift'])->name('loyalty.useGift');
 

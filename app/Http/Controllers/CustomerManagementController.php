@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Services\WalletPassService; // <-- إضافة مهمة
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class CustomerManagementController extends Controller
@@ -50,13 +51,13 @@ class CustomerManagementController extends Controller
     }
 
     // عرض بيانات العميل والـ QR Code
-    public function show(User $user, WalletPassService $walletService)
+    public function show(WalletPassService $walletService)
     {
         // تأكد أن المستخدم الذي يتم عرضه هو عميل
         // if (!$user->isCustomer()) {
         //     abort(404, 'المستخدم المطلوب ليس عميلاً.');
         // }
-
+        $user = Auth::user();
         // جلب البيانات اللازمة من المودل والمتحكم الآخر
         $servicesTarget = LoyaltyController::SERVICES_TARGET;
 
