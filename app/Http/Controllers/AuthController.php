@@ -33,9 +33,9 @@ class AuthController extends Controller
         $remember = $request->has('remember');
 
         if (Auth::attempt($credentials, $remember)) {
-            // Session::put('otp_verified', false); // ضبط حالة التحقق من OTP على غير محقق
-            // return redirect()->route('otp')->with('info', 'يرجى إدخال رمز التحقق OTP.');
-            return redirect()->intended(route('home'))->with('success', 'تم تسجيل الدخول بنجاح.');
+            Session::put('otp_verified', false); // ضبط حالة التحقق من OTP على غير محقق
+            return redirect()->route('otp')->with('info', 'يرجى إدخال رمز التحقق OTP.');
+            // return redirect()->intended(route('home'))->with('success', 'تم تسجيل الدخول بنجاح.');
         } else {
             return redirect()->back()->with('error', 'تفاصيل تسجيل الدخول غير صحيحة. يرجى المحاولة مرة أخرى.');
         }
