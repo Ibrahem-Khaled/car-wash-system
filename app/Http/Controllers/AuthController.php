@@ -120,7 +120,7 @@ class AuthController extends Controller
         if ($request->input('otp') == Session::get('otp_code')) {
             Session::put('otp_verified', true);
             Session::forget('otp_code');
-            return redirect()->route('home')->with('success', 'تم التحقق من OTP بنجاح.');
+            return redirect()->intended(route('home'))->with('success', 'تم تسجيل الدخول بنجاح.');
         } else {
             return redirect()->back()->with('error', 'رمز OTP غير صحيح. يرجى المحاولة مرة أخرى.');
         }
